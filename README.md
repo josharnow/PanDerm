@@ -6,7 +6,7 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 First clone the repo and cd into the directory:
 ```shell
 git clone https://github.com/SiyuanYan1/PanDerm
-cd PanDerm,
+cd PanDerm
 ```
 Then create a conda env and install the dependencies:
 ```shell
