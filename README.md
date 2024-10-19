@@ -17,4 +17,6 @@ pip install -r requirements.txt
 ```
 
 1. Download PanDerm pre-trained weights
-The model weights can be found here: https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing.
+The model weights can be found [here](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
+
+
