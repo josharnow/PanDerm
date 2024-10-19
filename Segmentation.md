@@ -34,7 +34,7 @@ pip install -r requirements.txt
    cd Skin_Seg
    bash run.sh
    ```
-   Note: Adjust `save_name` config to your desired storage path.
+   Note: Adjust the path config to your desired storage path.
 
 4. **Evaluation**
    - Add `--evaluate` to `run.sh` for evaluation mode
