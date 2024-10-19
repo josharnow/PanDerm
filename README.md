@@ -31,7 +31,7 @@ After downloading, you need to update the model weights path in the code:
 ```python
 root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
-## 2. Data Organization
+## 2. Data Organization for classification
 
 We've pre-processed the public datasets used in this study to prevent data leakage between splits. To reproduce the results reported in our paper, please use these processed datasets.
 
