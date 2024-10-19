@@ -26,9 +26,5 @@ pip install -r requirements.txt
 <tr><td align="left">Colour fundus image</td>
 <td align="center"><a href="https://drive.google.com/file/d/1l62zbWUFTlp214SvK6eMwPQZAzcwoeBE/view?usp=sharing">download</a></td>
 </tr>
-<!-- TABLE BODY -->
-<tr><td align="left">OCT</td>
-<td align="center"><a href="https://drive.google.com/file/d/1m6s7QYkjyjJDlpEuXm7Xp3PmjN-elfW2/view?usp=sharing">download</a></td>
-</tr>
 </tbody></table>
 
