@@ -53,5 +53,10 @@ If you wish to use our model with your own dataset, please organize it in the sa
 
 **Note:** The processed datasets may differ slightly from those provided on the official websites. To ensure reproducibility of our paper's results, please use the processed data links provided above.
 
+## 3.  Linear Evaluation on Downstream tasks
+
+```
+```
 
 
+Start fine-tuning (use IDRiD as example). A fine-tuned checkpoint will be saved during training. Evaluation will be run after training.
