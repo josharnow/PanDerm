@@ -83,6 +83,7 @@ Please refer the bash scripts for useage detail for other evaluation datasets. Y
 
 ```
 cd LP_Eval
+
 bash script/lp.sh
 ```
 
