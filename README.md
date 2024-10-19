@@ -31,4 +31,7 @@ After downloading, you need to update the model weights path in the code:
 ```python
 root_path = '/path/to/your/PanDerm/Model_Weights/'
 
+## 2. Organise your data into this directory (Public datasets used in this study can be downloaded [here](BENCHMARK.md))
+
+
 
