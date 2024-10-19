@@ -31,7 +31,20 @@ After downloading, you need to update the model weights path in the code:
 ```python
 root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
-## 2. Organise your data into this directory (Public datasets used in this study can be downloaded [here](BENCHMARK.md))
+## 2. Organise your data into this directory (Public datasets used in this study can be downloaded here)
+
+### Data split
+| Dataset | Download Link 1 |   Download Link 2 |
+| ------------- | ------------------ |------------------ |
+| APTOS2019 | [Google Drive](https://drive.google.com/file/d/162YPf4OhMVxj9TrQH0GnJv0n7z7gJWpj/view?usp=sharing)     
+| MESSIDOR2 | [Google Drive](https://drive.google.com/file/d/1vOLBUK9xdzNV8eVkRjVdNrRwhPfaOmda/view?usp=sharing)       
+| IDRID | [Google Drive](https://drive.google.com/file/d/1c6zexA705z-ANEBNXJOBsk6uCvRnzmr3/view?usp=sharing)       
+| PAPILA | [Google Drive](https://drive.google.com/file/d/1JltYs7WRWEU0yyki1CQw5-10HEbqCMBE/view?usp=sharing)      
+| Glaucoma_fundus | [Google Drive](https://drive.google.com/file/d/18vSazOYDsUGdZ64gGkTg3E6jiNtcrUrI/view?usp=sharing)       
+| JSIEC | [Google Drive](https://drive.google.com/file/d/1q0GFQb-dYwzIx8AwlaFZenUJItix4s8z/view?usp=sharing)       
+| Retina | [Google Drive](https://drive.google.com/file/d/1vdmjMRDoUm9yk83HMArLiPcLDk_dm92Q/view?usp=sharing)     
+| OCTID | [Google Drive](https://drive.google.com/file/d/1I7nAvbkJG4UF29J3HcyIW53rVEFcKRgm/view?usp=sharing)       
+
 
 
 
