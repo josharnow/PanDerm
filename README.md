@@ -3,7 +3,7 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 
 
 ## Installation
-First clone the repo and cd into the directory:
+First, clone the repo and cd into the directory:
 ```shell
 git clone https://github.com/SiyuanYan1/PanDerm
 cd PanDerm
@@ -31,7 +31,7 @@ After downloading, you need to update the model weights path in the code:
 ```python
 root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
-## 2. Data Organization for classification
+## 2. Data Organization for Classification
 
 We've pre-processed the public datasets used in this study to prevent data leakage between splits. To reproduce the results reported in our paper, please use these processed datasets.
 
@@ -89,7 +89,7 @@ bash script/lp.sh
 ```
 ### Starter Code for Beginners: Loading and Using Our Model
 
-Check out our easy-to-follow Jupyter notebook:
+Check out our easy-to-follow Jupyter Notebook:
 
 [**HAM_clean_evaluation.ipynb**](LP_Eval/notebooks/HAM_clean_evaluation.ipynb)
 
