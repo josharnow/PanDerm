@@ -36,7 +36,7 @@ root_path = '/path/to/your/PanDerm/Model_Weights/'
 ### Data split
 | Dataset | Download Link 1 |   Download Link 2 |
 | ------------- | ------------------ |------------------ |
-| APTOS2019 | [Google Drive](https://drive.google.com/file/d/162YPf4OhMVxj9TrQH0GnJv0n7z7gJWpj/view?usp=sharing)     
+| APTOS2019 | [Google Drive](https://drive.google.com/file/d/162YPf4OhMVxj9TrQH0GnJv0n7z7gJWpj/view?usp=sharing) |
 | MESSIDOR2 | [Google Drive](https://drive.google.com/file/d/1vOLBUK9xdzNV8eVkRjVdNrRwhPfaOmda/view?usp=sharing)       
 | IDRID | [Google Drive](https://drive.google.com/file/d/1c6zexA705z-ANEBNXJOBsk6uCvRnzmr3/view?usp=sharing)       
 | PAPILA | [Google Drive](https://drive.google.com/file/d/1JltYs7WRWEU0yyki1CQw5-10HEbqCMBE/view?usp=sharing)      
