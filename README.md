@@ -33,17 +33,20 @@ root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
 ## 2. Organise your data into this directory (Public datasets used in this study can be downloaded here)
 
+Notice we clean these datasets when possible to avoid data leakage between splits, can be found in Download link, which is slightly different from the dataset provided in official website.
+
 ### Data split
-| Dataset | Download Link 1 |   Download Link 2 |
+| Dataset | Download Link  |   Official Website |
 | ------------- | ------------------ |------------------ |
-| APTOS2019 | [Google Drive](https://drive.google.com/file/d/162YPf4OhMVxj9TrQH0GnJv0n7z7gJWpj/view?usp=sharing) |
-| MESSIDOR2 | [Google Drive](https://drive.google.com/file/d/1vOLBUK9xdzNV8eVkRjVdNrRwhPfaOmda/view?usp=sharing)       
-| IDRID | [Google Drive](https://drive.google.com/file/d/1c6zexA705z-ANEBNXJOBsk6uCvRnzmr3/view?usp=sharing)       
-| PAPILA | [Google Drive](https://drive.google.com/file/d/1JltYs7WRWEU0yyki1CQw5-10HEbqCMBE/view?usp=sharing)      
-| Glaucoma_fundus | [Google Drive](https://drive.google.com/file/d/18vSazOYDsUGdZ64gGkTg3E6jiNtcrUrI/view?usp=sharing)       
-| JSIEC | [Google Drive](https://drive.google.com/file/d/1q0GFQb-dYwzIx8AwlaFZenUJItix4s8z/view?usp=sharing)       
-| Retina | [Google Drive](https://drive.google.com/file/d/1vdmjMRDoUm9yk83HMArLiPcLDk_dm92Q/view?usp=sharing)     
-| OCTID | [Google Drive](https://drive.google.com/file/d/1I7nAvbkJG4UF29J3HcyIW53rVEFcKRgm/view?usp=sharing)       
+| HAM10000 | [Google Drive](https://drive.google.com/file/d/1D9Q4B50Z5tyj5fd5EE9QWmFrg66vGvfA/view?usp=sharing) | https://challenge.isic-archive.com/data/#2018
+| BCN20000 | [Google Drive](https://drive.google.com/file/d/1jn1h1jWjd4go7BQ5fFWMRBMtq7poSlfi/view?usp=sharing)       
+| DDI| [Google Drive](https://drive.google.com/file/d/1F5RVqBUIxYcub1OkBm6yHTyV2TkHc65B/view?usp=sharing)       
+| Derm7pt | [Google Drive](https://drive.google.com/file/d/1OYAmqG93eWLdf7dIkulY_fr0ZScvRLRg/view?usp=sharing)      
+| Dermnet | [Google Drive](https://drive.google.com/file/d/1WrvReon2gA3sF9rqQGqivglG7HLFJ8he/view?usp=sharing)       
+| HIBA| [Google Drive](https://drive.google.com/file/d/1Sg0gFhfBaNNoeunF7C0HZgDbp5EDV436/view?usp=sharing)       
+| MSKCC | [Google Drive](https://drive.google.com/file/d/17ma4tREXHAq1ZcBT7lZBhwO-3UHSbDW2/view?usp=sharing)     
+| PAD-UFES | [Google Drive](https://drive.google.com/file/d/1NLv0EH3QENuRxW-_-BSf4KMP9cPjBk9o/view?usp=sharing)       
+| PATCH16 | [Google Drive](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing)  
 
 
 
