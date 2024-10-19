@@ -37,7 +37,7 @@ We've pre-processed the public datasets used in this study to prevent data leaka
 
 If you wish to use our model with your own dataset, please organize it in the same format as these pre-processed datasets.
 
-### Dataset Links and Splits
+### Public Dataset Links and Splits
 
 | Dataset | Processed Data | Original Data |
 |---------|----------------|---------------|
