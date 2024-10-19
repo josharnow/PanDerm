@@ -13,13 +13,13 @@ pip install -r requirements.txt
 
 ## Data preparation
 
-Please download [ISIC2018](https://challenge.isic-archive.com/data/#2018) and [Ham10000](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000). After downloading the dataset, please change the function `_load_name()` in `./datasets/dataset_seg.py` to your data storage path. 
+Please download [ISIC2018 task1](https://challenge.isic-archive.com/data/#2018) and [HAM10000](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000). After downloading the dataset, please change the function `_load_name()` in `./datasets/dataset_seg.py` to your data storage path. 
 
 ## Fine-tuning with PanDerm Weight
 
 To finetune the PanDerm on skin lesion segmentation, please follow these steps: 
 
-1. Download PanDerm pretrained weight. 
+1. Download PanDerm pretrained weight [here](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing). 
 2. Set pretrained path. This can be done by:
     * Change `cae_weight` in `./models/cae_seg.py`. 
     * Change parameter `pretrained` in `run.sh`. 
