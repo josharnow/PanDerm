@@ -24,4 +24,8 @@ To finetune the PanDerm on skin lesion segmentation, please follow these steps:
     * Change `cae_weight` in `./models/cae_seg.py`. 
     * Change parameter `pretrained` in `run.sh`. 
 3. Start training. You can directly run `run.sh`. Note: you should change `save_name` config to your own storage path. 
-4. For evaluation, you can add configuration `--evaluate` at the end of `run.sh`. It will directly load the checkpoint from your model storage path for evaluating. 
+4. For evaluation, you can add configuration `--evaluate` at the end of `run.sh`. It will directly load the checkpoint from your model storage path for evaluating.
+```bash
+cd Skin_Seg
+bash run.sh
+```
