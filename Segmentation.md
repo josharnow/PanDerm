@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 4. **Evaluation**
    - Add `--evaluate` to `run.sh` for evaluation mode
-   - [Pretrained weights for HAM10000](https://drive.google.com/drive/folders/1BsSjl1h3mxU6JNSbqvgZdyiTvV_2QBsH?usp=sharing)
+   - Model fine-tuned weights for evaluation on HAM10000 dataset[Download here](https://drive.google.com/drive/folders/1BsSjl1h3mxU6JNSbqvgZdyiTvV_2QBsH?usp=sharing)
    ```bash
    cd Skin_Seg
    bash run.sh --evaluate
