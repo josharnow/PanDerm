@@ -33,20 +33,20 @@ root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
 ## 2. Organise your data into this directory (Public datasets used in this study can be downloaded here)
 
-Notice we clean these datasets when possible to avoid data leakage between splits, can be found in Download link, which is slightly different from the dataset provided in official website.
+Notice we pre-processed these datasets when possible to avoid data leakage between splits, can be found in Download link, which is slightly different from the dataset provided in official website.
 
 ### Data split
 | Dataset | Download Link  |   Official Website |
 | ------------- | ------------------ |------------------ |
-| HAM10000 | [Google Drive](https://drive.google.com/file/d/1D9Q4B50Z5tyj5fd5EE9QWmFrg66vGvfA/view?usp=sharing) | [Link](https://challenge.isic-archive.com/data/#2018)
-| BCN20000 | [Google Drive](https://drive.google.com/file/d/1jn1h1jWjd4go7BQ5fFWMRBMtq7poSlfi/view?usp=sharing)  | [Link](https://figshare.com/articles/journal_contribution/BCN20000_Dermoscopic_Lesions_in_the_Wild/24140028/1)
-| DDI| [Google Drive](https://drive.google.com/file/d/1F5RVqBUIxYcub1OkBm6yHTyV2TkHc65B/view?usp=sharing)       
-| Derm7pt | [Google Drive](https://drive.google.com/file/d/1OYAmqG93eWLdf7dIkulY_fr0ZScvRLRg/view?usp=sharing)      
-| Dermnet | [Google Drive](https://drive.google.com/file/d/1WrvReon2gA3sF9rqQGqivglG7HLFJ8he/view?usp=sharing)       
-| HIBA| [Google Drive](https://drive.google.com/file/d/1Sg0gFhfBaNNoeunF7C0HZgDbp5EDV436/view?usp=sharing)       
-| MSKCC | [Google Drive](https://drive.google.com/file/d/17ma4tREXHAq1ZcBT7lZBhwO-3UHSbDW2/view?usp=sharing)     
-| PAD-UFES | [Google Drive](https://drive.google.com/file/d/1NLv0EH3QENuRxW-_-BSf4KMP9cPjBk9o/view?usp=sharing)       
-| PATCH16 | [Google Drive](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing)  
+| HAM10000 | [Processed Data Link](https://drive.google.com/file/d/1D9Q4B50Z5tyj5fd5EE9QWmFrg66vGvfA/view?usp=sharing) | [Original Data Link](https://challenge.isic-archive.com/data/#2018)
+| BCN20000 | [Original Data Link](https://drive.google.com/file/d/1jn1h1jWjd4go7BQ5fFWMRBMtq7poSlfi/view?usp=sharing)  | [Original Data Link](https://figshare.com/articles/journal_contribution/BCN20000_Dermoscopic_Lesions_in_the_Wild/24140028/1)
+| DDI| [Original Data Link](https://drive.google.com/file/d/1F5RVqBUIxYcub1OkBm6yHTyV2TkHc65B/view?usp=sharing)   | [Original Data Link](https://ddi-dataset.github.io/index.html)     
+| Derm7pt | [Original Data Link](https://drive.google.com/file/d/1OYAmqG93eWLdf7dIkulY_fr0ZScvRLRg/view?usp=sharing)    | [Original Data Link](https://derm.cs.sfu.ca/Welcome.html)   
+| Dermnet | [Original Data Link](https://drive.google.com/file/d/1WrvReon2gA3sF9rqQGqivglG7HLFJ8he/view?usp=sharing)    | [Original Data Link](https://www.kaggle.com/datasets/shubhamgoel27/dermnet)    
+| HIBA| [Original Data Link](https://drive.google.com/file/d/1Sg0gFhfBaNNoeunF7C0HZgDbp5EDV436/view?usp=sharing)     | [Original Data Link](https://www.isic-archive.com)   
+| MSKCC | [Original Data Link](https://drive.google.com/file/d/17ma4tREXHAq1ZcBT7lZBhwO-3UHSbDW2/view?usp=sharing)      | [Original Data Link](https://www.isic-archive.com)
+| PAD-UFES | [Original Data Link](https://drive.google.com/file/d/1NLv0EH3QENuRxW-_-BSf4KMP9cPjBk9o/view?usp=sharing)    | [Original Data Link](https://www.kaggle.com/datasets/mahdavi1202/skin-cancer)    
+| PATCH16 | [Original Data Link](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing)   | [Original Data Link](https://heidata.uni-heidelberg.de/dataset.xhtml?persistentId=doi:10.11588/data/7QCR8S)
 
 
 
