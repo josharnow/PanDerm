@@ -21,24 +21,29 @@ pip install -r requirements.txt
 ## Fine-tuning with PanDerm Weight
 
 ### Steps:
-1. Download PanDerm pretrained weights from [here](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
-2. Set pretrained path:
-   - Change `cae_weight` in `./models/cae_seg.py`.
-   - Change parameter `pretrained` in `run.sh`.
-3. Start training:
+
+1. **Download Pretrained Weights**
+   - PanDerm weights: [Download here](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
+
+2. **Set Pretrained Path**
+   - Update `cae_weight` in `./models/cae_seg.py`
+   - Modify `pretrained` parameter in `run.sh`
+
+3. **Start Training**
    ```bash
    cd Skin_Seg
    bash run.sh
    ```
-   Note: Change `save_name` config to your own storage path.
+   Note: Adjust `save_name` config to your desired storage path.
 
-4. For evaluation:
-   Add `--evaluate` at the end of `run.sh`:
+4. **Evaluation**
+   - Add `--evaluate` to `run.sh` for evaluation mode
+   - Pretrained weights for HAM10000 evaluation: [Download here](https://drive.google.com/drive/folders/1BsSjl1h3mxU6JNSbqvgZdyiTvV_2QBsH?usp=sharing)
    ```bash
    cd Skin_Seg
    bash run.sh --evaluate
    ```
-   This will load the checkpoint from your model storage path for evaluation.
+   This command loads the checkpoint from your specified model storage path for evaluation.
 
 ## Starter Code for Segmenting Your Own Dermoscopic Images
 
