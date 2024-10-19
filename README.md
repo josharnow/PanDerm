@@ -87,17 +87,15 @@ To run the evaluations:
 cd LP_Eval
 bash script/lp.sh
 ```
-### Detailed Starter Code for Loading and Using Our Model
+### Starter Code for Beginners: Loading and Using Our Model
 
-For a more in-depth guide on how to load and use the model for feature extraction and classification, please refer to our Jupyter notebook:
+Check out our easy-to-follow Jupyter notebook:
 
 [**HAM_clean_evaluation.ipynb**](notebooks/HAM_clean_evaluation.ipynb)
 
-This notebook provides step-by-step instructions and code examples to help you get started with:
+This notebook shows you how to:
+- Load our pre-trained model
+- Use it for feature extraction
+- Perform basic classification
 
-- Loading the pre-trained model
-- Extracting features from images
-- Performing classification tasks
-
-We recommend going through this notebook to familiarize yourself with the model's capabilities and usage patterns.
 
