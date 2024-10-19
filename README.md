@@ -17,14 +17,4 @@ pip install -r requirements.txt
 ```
 
 1. Download PanDerm pre-trained weights
-<table><tbody>
-<!-- START TABLE -->
-<!-- TABLE HEADER -->
-<th valign="bottom"></th>
-<th valign="bottom">ViT-Large</th>
-<!-- TABLE BODY -->
-<tr><td align="left">Colour fundus image</td>
-<td align="center"><a href="https://drive.google.com/file/d/1l62zbWUFTlp214SvK6eMwPQZAzcwoeBE/view?usp=sharing">download</a></td>
-</tr>
-</tbody></table>
-
+The model weights can be found here: https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing.
