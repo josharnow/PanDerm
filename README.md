@@ -91,7 +91,7 @@ bash script/lp.sh
 
 Check out our easy-to-follow Jupyter notebook:
 
-[**HAM_clean_evaluation.ipynb**](notebooks/HAM_clean_evaluation.ipynb)
+[**HAM_clean_evaluation.ipynb**](LP_Eval/notebooks/HAM_clean_evaluation.ipynb)
 
 This notebook shows you how to:
 - Load our pre-trained model
