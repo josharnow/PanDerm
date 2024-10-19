@@ -53,10 +53,21 @@ If you wish to use our model with your own dataset, please organize it in the sa
 
 **Note:** The processed datasets may differ slightly from those provided on the official websites. To ensure reproducibility of our paper's results, please use the processed data links provided above.
 
-## 3.  Linear Evaluation on Downstream tasks
+## 3. Linear Evaluation on Downstream Tasks
 
-```
-```
+This section demonstrates how to perform training and evaluation using HAM10000 as an example. You'll need to adjust the paths and parameters to match your specific dataset and requirements.
 
+### Running the Evaluation Script
 
-Start fine-tuning (use IDRiD as example). A fine-tuned checkpoint will be saved during training. Evaluation will be run after training.
+Use the following command to run the linear evaluation:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
+  --batch_size 1000 \
+  --model 'PanDerm' \
+  --nb_classes 7 \
+  --percent_data 1.0 \
+  --csv_filename 'PanDerm_results.csv' \
+  --output_dir "/path/to/output/directory/PanDerm_res/" \
+  --csv_path "/path/to/your/dataset/HAM_clean.csv" \
+  --root_path "/path/to/your/dataset/ISIC2018/"
