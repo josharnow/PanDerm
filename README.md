@@ -72,6 +72,6 @@ CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
   --nb_classes 7 \
   --percent_data 1.0 \
   --csv_filename 'PanDerm_results.csv' \
-  --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/"PanDerm_res/" \
-  --csv_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
-  --root_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018/"
+  --output_dir "/path/to/your/PanDerm/LP_Eval/output_dir2/ID_Res/PanDerm_res/" \
+  --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
+  --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
