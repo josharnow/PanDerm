@@ -38,8 +38,8 @@ Notice we clean these datasets when possible to avoid data leakage between split
 ### Data split
 | Dataset | Download Link  |   Official Website |
 | ------------- | ------------------ |------------------ |
-| HAM10000 | [Google Drive](https://drive.google.com/file/d/1D9Q4B50Z5tyj5fd5EE9QWmFrg66vGvfA/view?usp=sharing) | https://challenge.isic-archive.com/data/#2018
-| BCN20000 | [Google Drive](https://drive.google.com/file/d/1jn1h1jWjd4go7BQ5fFWMRBMtq7poSlfi/view?usp=sharing)  | https://figshare.com/articles/journal_contribution/BCN20000_Dermoscopic_Lesions_in_the_Wild/24140028/1
+| HAM10000 | [Google Drive](https://drive.google.com/file/d/1D9Q4B50Z5tyj5fd5EE9QWmFrg66vGvfA/view?usp=sharing) | [Link](https://challenge.isic-archive.com/data/#2018)
+| BCN20000 | [Google Drive](https://drive.google.com/file/d/1jn1h1jWjd4go7BQ5fFWMRBMtq7poSlfi/view?usp=sharing)  | [Link](https://figshare.com/articles/journal_contribution/BCN20000_Dermoscopic_Lesions_in_the_Wild/24140028/1)
 | DDI| [Google Drive](https://drive.google.com/file/d/1F5RVqBUIxYcub1OkBm6yHTyV2TkHc65B/view?usp=sharing)       
 | Derm7pt | [Google Drive](https://drive.google.com/file/d/1OYAmqG93eWLdf7dIkulY_fr0ZScvRLRg/view?usp=sharing)      
 | Dermnet | [Google Drive](https://drive.google.com/file/d/1WrvReon2gA3sF9rqQGqivglG7HLFJ8he/view?usp=sharing)       
