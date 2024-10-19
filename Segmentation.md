@@ -34,3 +34,13 @@ cd Skin_Seg
 bash run.sh --evaluate
 ```
 
+## Starter Code for segmenting your own dermoscopic images
+
+Check out our easy-to-follow Jupyter Notebook:
+
+[**evaluate.ipynb**](Skin_Seg/evaluate.ipynb)
+
+This notebook shows you how to:
+- Load our pre-trained model
+- Use it for skin lesion segmentation
+
