@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ## 1. Download PanDerm Pre-trained Weights
 
 1. Download weights: [Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
-2. Update model path in `PanDerm/LP_Eval/models/builder.py`:
+2. Update model path in line 42 in `PanDerm/LP_Eval/models/builder.py`:
 
 ```python
 root_path = '/path/to/your/PanDerm/Model_Weights/'
