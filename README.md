@@ -16,7 +16,13 @@ pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https
 pip install -r requirements.txt
 ```
 
-1. Download PanDerm pre-trained weights
+### 1. Download PanDerm pre-trained weights
 The model weights can be found [here](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
+
+Modify line 42 in PanDerm/LP_Eval/models/builder.py. Replace it to the folder path you saved the model weights
+```
+roo_path='/home/share/FM_Code/PanDerm/Model_Weights/'`
+```
+
 
 
