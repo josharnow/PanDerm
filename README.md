@@ -98,4 +98,6 @@ This notebook shows you how to:
 - Use it for feature extraction
 - Perform basic classification
 
+## 4. Skin Lesion Segmentation
 
+Please refer to details [here](Segmentation.md).
