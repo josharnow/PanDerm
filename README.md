@@ -77,13 +77,13 @@ CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
   --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
   --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
 ```
-### More suage cases
+### More Usage Cases
 
-Please refer the bash scripts for useage detail for other evaluation datasets. You can choose the model from models, we provided 9 running code to evaluate on 9 public datasets.
+For additional evaluation datasets, please refer to the bash scripts for detailed usage. We provide running code to evaluate on 9 public datasets. You can choose the model from the available options.
 
-```
+To run the evaluations:
+
+```bash
 cd LP_Eval
-
 bash script/lp.sh
-```
 
