@@ -55,11 +55,15 @@ If you wish to use our model with your own dataset, please organize it in the sa
 
 ## 3. Linear Evaluation on Downstream Tasks
 
-This section demonstrates how to perform training and evaluation using HAM10000 as an example. You'll need to adjust the paths and parameters to match your specific dataset and requirements.
+Training and evaluation using HAM10000 as an example. Replace csv path and root path with your own dataset.
 
-### Running the Evaluation Script
+### Key Parameters
 
-Use the following command to run the linear evaluation:
+- `nb_classes`: Set this to the number of classes in your evaluation dataset.
+- `batch_size`: Adjust based on the memory size of your GPU.
+- `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
+
+### Evaluation Command
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
@@ -68,6 +72,6 @@ CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
   --nb_classes 7 \
   --percent_data 1.0 \
   --csv_filename 'PanDerm_results.csv' \
-  --output_dir "/path/to/output/directory/PanDerm_res/" \
-  --csv_path "/path/to/your/dataset/HAM_clean.csv" \
-  --root_path "/path/to/your/dataset/ISIC2018/"
+  --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/"PanDerm_res/" \
+  --csv_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
+  --root_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018/"
