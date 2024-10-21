@@ -44,6 +44,6 @@ pip install -r requirements.txt
 
 ## Starter Code for Your Own Dermoscopic Images
 
-See [**evaluate.ipynb**](Skin_Seg/evaluate.ipynb) to learn:
+See [**evaluate.ipynb**](segmentation/evaluate.ipynb) to learn:
 - Loading our pre-trained model
 - Using it for skin lesion segmentation
