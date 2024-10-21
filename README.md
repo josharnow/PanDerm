@@ -84,7 +84,7 @@ For additional evaluation datasets, please refer to the bash scripts for detaile
 To run the evaluations:
 
 ```bash
-cd LP_Eval
+cd linear_probe
 bash script/lp.sh
 ```
 ### Starter Code for Beginners: Loading and Using Our Model
