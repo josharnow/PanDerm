@@ -66,7 +66,7 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 ### Evaluation Command
 
 ```bash
-cd LP_Eval
+cd linear_probe
 CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
   --batch_size 1000 \
   --model 'PanDerm' \
