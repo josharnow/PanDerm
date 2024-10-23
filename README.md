@@ -33,7 +33,7 @@ root_path = '/path/to/your/PanDerm/Model_Weights/'
 ```
 ## 2. Data Organization for Classification
 
-We've pre-processed the public datasets used in this study to prevent data leakage between splits. To reproduce the results reported in our paper, please use these processed datasets.
+We've pre-processed the public datasets used in this study. To reproduce the results reported in our paper and prevent data leakage between splits, please use these processed datasets.
 
 If you wish to use our model with your own dataset, please organize it in the same format as these pre-processed datasets.
 
