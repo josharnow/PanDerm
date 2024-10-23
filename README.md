@@ -105,3 +105,16 @@ This notebook shows you how to:
 ## 4. Skin Lesion Segmentation
 
 Please refer to details [here](Segmentation.md).
+
+## Citation
+```bibtex
+@misc{yan2024generalpurposemultimodalfoundationmodel,
+      title={A General-Purpose Multimodal Foundation Model for Dermatology}, 
+      author={Siyuan Yan and Zhen Yu and Clare Primiero and Cristina Vico-Alonso and Zhonghua Wang and Litao Yang and Philipp Tschandl and Ming Hu and Gin Tan and Vincent Tang and Aik Beng Ng and David Powell and Paul Bonnington and Simon See and Monika Janda and Victoria Mar and Harald Kittler and H. Peter Soyer and Zongyuan Ge},
+      year={2024},
+      eprint={2410.15038},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2410.15038}, 
+}
+```
