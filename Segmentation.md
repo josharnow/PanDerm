@@ -7,6 +7,7 @@ This implementation uses PanDerm for skin lesion segmentation.
 Main dependencies: Pytorch, Pytorch Lightning, MMSegmentation
 
 ```bash
+cd segmentation
 pip install -r requirements.txt
 ```
 
