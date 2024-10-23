@@ -1,6 +1,7 @@
 # PanDerm
 A General-Purpose Multimodal Foundation Model for Dermatology
-
+[[`Preprint`](https://link.springer.com/chapter/10.1007/978-3-031-43990-2_24)]
+[[`BibTex`](#citation)]
 
 ## Installation
 First, clone the repo and cd into the directory:
