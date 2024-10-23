@@ -24,7 +24,7 @@ Download the pre-trained model weights from [this Google Drive link](https://dri
 ### Configuring the Model Path
 After downloading, you need to update the model weights path in the code:
 
-1. Open the file `PanDerm/LP_Eval/models/builder.py`
+1. Open the file `PanDerm/linear_probe/models/builder.py`
 2. Locate line 42
 3. Replace the existing path with the directory where you saved the model weights:
 
