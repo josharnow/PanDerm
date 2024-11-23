@@ -3,7 +3,7 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 [[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
 [[`Cite`](#citation)]
 ## Introduction
-*We introduce PanDerm, a powerful multimodal dermatology foundation model that can seamlessly interpret multiple imaging modalities and master diverse dermatological tasks from cancer screening, diagnosis to lesion segmentation*
+We introduce PanDerm, a powerful multimodal dermatology foundation model that can seamlessly interpret multiple imaging modalities and master diverse dermatological tasks from cancer screening, diagnosis to lesion segmentation
 ![alt text](overview.png)
 
 ## Installation
