@@ -6,6 +6,10 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 We introduce PanDerm, a powerful multimodal dermatology foundation model that can seamlessly interpret multiple imaging modalities and master diverse dermatological tasks from cancer screening, diagnosis to long-term prognosis.
 ![alt text](overview.png)
 
+### News
+
+- The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
+
 ## Installation
 First, clone the repo and cd into the directory:
 ```shell
