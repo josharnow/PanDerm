@@ -8,7 +8,7 @@ We introduce PanDerm, a powerful multimodal dermatology foundation model that ca
 
 ### News
 
-- The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
+- 2025/03: The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
 
 ## Installation
 First, clone the repo and cd into the directory:
