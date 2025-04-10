@@ -8,9 +8,9 @@ We introduce PanDerm, a powerful multimodal dermatology foundation model that ca
 
 ### TODO
 
-- PanDerm-base: The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
-- Finetune script: Finetuning script of PanDerm.
-- PanDerm-v2: PanDerm pretrained with more training data.
+- **PanDerm-base**: The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
+- **Finetune script**: Finetuning script of PanDerm.
+- **PanDerm-v2**: PanDerm pretrained with more training data.
 
 ## Installation
 First, clone the repo and cd into the directory:
