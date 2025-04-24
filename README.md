@@ -9,7 +9,7 @@ We introduce PanDerm, a powerful multimodal dermatology foundation model that ca
 ### TODO
 
 - **PanDerm-base**: The ViT-base version of PanDerm weights will be released, providing a general-purpose vision encoder for dermatology applications.
-- **Finetune script**: Finetuning script of PanDerm.
+- **Finetune script**: Finetuning script for image classification.
 - **PanDerm-v2**: PanDerm pretrained with more training data.
 
 ## Installation
@@ -108,7 +108,7 @@ This notebook shows you how to:
 - Use it for feature extraction
 - Perform basic classification
 
-## 4. Skin Lesion Segmentation
+## 4. Finetuning for Skin Lesion Segmentation
 
 Please refer to details [here](Segmentation.md).
 
