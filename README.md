@@ -51,7 +51,7 @@ Download the pre-trained model weights from [this Google Drive link](https://dri
 ### Configuring the Model Path
 After downloading, you need to update the model weights path in the code:
 
-1. Open the file `PanDerm/linear_probe/models/builder.py`
+1. Open the file `PanDerm/classification/models/builder.py`
 2. Locate line 42
 3. Replace the existing path with the directory where you saved the model weights:
 
@@ -118,7 +118,7 @@ bash script/lp.sh
 
 Check out our easy-to-follow Jupyter Notebook:
 
-[**HAM_clean_evaluation.ipynb**](linear_probe/notebooks/HAM_clean_evaluation.ipynb)
+[**HAM_clean_evaluation.ipynb**](classification/notebooks/HAM_clean_evaluation.ipynb)
 
 This notebook shows you how to:
 - Load our pre-trained model
