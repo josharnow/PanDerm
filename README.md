@@ -76,7 +76,7 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 
 ### Key Parameters
 
-- `model`: Choosing the model. "PanDerm-Large" or "PanDerm-Base"
+- `model`: Model size - "PanDerm-Large" (original paper model) or "PanDerm-Base" (smaller version)
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
