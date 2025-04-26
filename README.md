@@ -80,7 +80,7 @@ If you wish to use our model with your own dataset, please organize it in the sa
 
 **Note:** The processed datasets may differ slightly from those provided on the official websites. To ensure reproducibility of our paper's results, please use the processed data links provided above.
 
-## 3. Linear Evaluation on Downstream Tasks
+## 3. Linear Evaluation on Image Classification Tasks
 
 Training and evaluation using HAM10000 as an example. Replace csv path and root path with your own dataset.
 
@@ -125,7 +125,9 @@ This notebook shows you how to:
 - Use it for feature extraction
 - Perform basic classification
 
-## 4. Skin Lesion Segmentation
+## 4. Fine-tuning on Image Classification Tasks
+
+## 5. Skin Lesion Segmentation
 
 Please refer to details [here](Segmentation.md).
 
