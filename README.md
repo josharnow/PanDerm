@@ -136,17 +136,9 @@ This notebook shows you how to:
 
 This implementation uses PanDerm for Skin Classification Finetune.
 
-
-
-
-
-
 ## Fine-tuning with PanDerm Weight
-1. **Download Pretrained Weights**
-   - [PanDerm Large weights](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
 
-2. **Set Pretrained Path**
-TODO:
+### Set Pretrained Path
    - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/scripts). You can find more scripts in this folder.
 
 3. **Start Training**
