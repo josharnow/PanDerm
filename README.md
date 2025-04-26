@@ -1,5 +1,6 @@
 # PanDerm
 A General-Purpose Multimodal Foundation Model for Dermatology
+Warning: this repo is under construction.
 [[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
 [[`Cite`](#citation)]
 ## Introduction
