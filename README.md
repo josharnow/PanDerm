@@ -48,11 +48,31 @@ pip install -r requirements.txt
 ### Obtaining the Model Weights
 Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
-## 2. Data Organization for Classification
+## 2. Data Preparation
 
-We've pre-processed the public datasets used in this study. To reproduce the results reported in our paper and prevent data leakage between splits, please use these processed datasets.
+### Using Your Own Dataset
+If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
 
-If you wish to use our model with your own dataset, please organize it in the same format as these pre-processed datasets.
+**Required Columns**
+
+- `image`: Path to the image file (e.g., ISIC_0034524.jpg)
+- `label`: Numerical class label (e.g., 0, 1, 2)
+- `split`: Dataset partition indicator (train, val, or test)
+
+For Example:
+```csv
+image,label,split
+ISIC_0034524.jpg,1,train
+ISIC_0034525.jpg,1,train
+ISIC_0034526.jpg,4,val
+ISIC_0034527.jpg,1,val
+ISIC_0034528.jpg,1,test
+ISIC_0034529.jpg,0,test
+```
+
+### Using Pre-processed Public Datasets
+
+We've already pre-processed several public datasets to reproduce the results in our study and prevent data leakage between splits. These datasets are ready to use with our model and require no additional formatting.
 
 ### Public Dataset Links and Splits
 
@@ -68,7 +88,7 @@ If you wish to use our model with your own dataset, please organize it in the sa
 | PAD-UFES | [Download](https://drive.google.com/file/d/1NLv0EH3QENuRxW-_-BSf4KMP9cPjBk9o/view?usp=sharing) | [Official Website](https://www.kaggle.com/datasets/mahdavi1202/skin-cancer) |
 | PATCH16 | [Download](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing) | [Official Website](https://heidata.uni-heidelberg.de/dataset.xhtml?persistentId=doi:10.11588/data/7QCR8S) |
 
-**Note:** The processed datasets may differ slightly from those provided on the official websites. To ensure reproducibility of our paper's results, please use the processed data links provided above.
+**Note:** The processed datasets provided here may differ slightly from those on the official websites. To ensure reproducibility of our paper's results, please use the processed data links above.
 
 ## 3. Linear Evaluation on Image Classification Tasks
 
@@ -123,40 +143,9 @@ This notebook shows you how to:
 
 This implementation uses PanDerm for Skin Classification Finetune.
 
-## Install Environment
 
-```bash
-cd finetune
-pip install -r requirements.txt
-```
 
-## Data Preparation
 
-The dataset used for the fine-tuning stage should be organized in a CSV file with the following structure:
-
-**Required Columns**
-
-- `image`: Path to the image file (e.g., ISIC_0034524.jpg)
-
-- `label`: Numerical class label (e.g., 0, 1, 2)
-- `split`: Dataset partition indicator (train, val, or test)
-
-For Example:
-```csv
-image,label,split
-ISIC_0034524.jpg,1,train
-ISIC_0034525.jpg,1,train
-ISIC_0034526.jpg,4,val
-ISIC_0034527.jpg,1,val
-ISIC_0034528.jpg,1,test
-ISIC_0034529.jpg,0,test
-```
-
-**Dataset Preparation Notes**
-
-* Ensure all image paths in the CSV are correctly referenced relative to your dataset directory. 
-* Labels should be numerical and correspond to your class mapping (`class_mapping = {'BCC': 1, 'MEL': 0, ...}`)
-* Each sample must be assigned to one of the splits: `train`, `val`, or `test`
 
 
 ## Fine-tuning with PanDerm Weight
