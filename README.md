@@ -1,9 +1,11 @@
-# PanDerm
-A General-Purpose Multimodal Foundation Model for Dermatology
+# PanDerm 
+
+## A Multimodal Vision Foundation Model for Clinical Dermatology
 [[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
 [[`Cite`](#citation)]
 
 Warning: this repo is under construction.
+
 **Abstract:** Diagnosing and treating skin diseases require advanced visual skills across domains and the ability to
 synthesize information from multiple imaging modalities. While current deep learning models excel at
 specific tasks like skin cancer diagnosis from dermoscopic images, they struggle to meet the complex,
