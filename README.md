@@ -145,12 +145,11 @@ This notebook shows you how to:
 
 This implementation uses PanDerm for Skin Classification Finetune.
 
-## Fine-tuning with PanDerm Weight
 
 ### Set Pretrained Path
    - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/script). You can find more scripts in this folder.
 
-3. **Start Training**
+### Start Training
 
 You could fine-tune our model on your dataset. Here is a command line example:
 ```bash
@@ -190,13 +189,13 @@ bash script/HAM_finetune_train.sh # you can replace this with your_script.sh
 ```
 Note: Remember to adjust the path config to your desired storage location.
 
-4. **Evaluation**
+### Evaluation
 ```bash
 cd finetune
 bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
 ```
 
-5. **Test-Time Augmentation (TTA)**
+### Test-Time Augmentation (TTA)
 
 We've implemented a Test-Time Augmentation pipeline to enhance the classification performance of our model. TTA works by applying multiple augmentations to each test image, running predictions on each augmented version, and then aggregating the results for a more robust prediction. You can modify the setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py) for better performance on your dataset.
 
