@@ -5,8 +5,28 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 
 Warning: this repo is under construction.
 ## Introduction
-We introduce PanDerm, a powerful multimodal dermatology foundation model that can seamlessly interpret multiple imaging modalities and master diverse dermatological tasks from cancer screening, diagnosis to long-term prognosis.
+Diagnosing and treating skin diseases require advanced visual skills across domains and the ability to
+synthesize information from multiple imaging modalities. While current deep learning models excel at
+specific tasks like skin cancer diagnosis from dermoscopic images, they struggle to meet the complex,
+multimodal requirements of clinical practice. Here, we introduce PanDerm, a multimodal dermatology
+foundation model pretrained through self-supervised learning on over 2 million real-world skin disease
+images from 11 clinical institutions across 4 imaging modalities. We evaluated PanDerm on 28 diverse
+benchmarks, including skin cancer screening, risk stratification, differential diagnosis of common and
+rare skin conditions, lesion segmentation, longitudinal monitoring, and metastasis prediction and prognosis. PanDerm achieved state-of-the-art performance across all evaluated tasks, often outperforming
+existing models when using only 10% of labeled data. We conducted three reader studies to assess PanDerm’s potential clinical utility. PanDerm outperformed clinicians by 10.2% in early-stage melanoma
+detection through longitudinal analysis, improved clinicians’ skin cancer diagnostic accuracy by 11%
+on dermoscopy images, and enhanced non-dermatologist healthcare providers’ differential diagnosis
+by 16.5% across 128 skin conditions on clinical photographs. These results demonstrate PanDerm’s
+potential to improve patient care across diverse clinical scenarios and serve as a model for developing
+multimodal foundation models in other medical specialties, potentially accelerating the integration of AI
+support in healthcare.
 ![alt text](overview.png)
+
+## About PanDerm
+
+_**What is PanDerm?**_: PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography applications, and image segmentation.
+
+
 
 ### TODO
 
