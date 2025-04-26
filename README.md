@@ -4,7 +4,7 @@
 [[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
 [[`Cite`](#citation)]
 
-Warning: this repo is under construction.
+**Warning:** This repo is under construction!!!
 
 **Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction, often requiring less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic skin cancer diagnosis accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions. 
 
@@ -16,16 +16,9 @@ Warning: this repo is under construction.
 
 ## About PanDerm
 
-_**What is PanDerm?**_ PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography applications, and image segmentation.
+_**What is PanDerm?**_ PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography-based applications, and image segmentation.
 
-_**Why use PanDerm?**_ Compared to clinically popular CNN models like ResNet, PanDerm achieves better fine-tuning performance, especially with limited labeled data. Its linear probing performance approaches full-parameter fine-tuning results, offering researchers a computationally efficient alternative with lower implementation barriers. Both approaches make PanDerm ideal for replacing traditional CNNs in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks. PanDerm also demonstrates superior performance across diverse modalities and tasks compared to existing foundation models. Unlike web-scale pretrained models (e.g., DINOv2, SwavDerm, and DermFoundation), it minimizes data leakage risk while providing more reliable benchmark performance.
-
-_**When use PanDerm?**_
-- For fine-tuning on dermatological tasks, especially with limited labeled data
-- To leverage its dermatology-specific features for linear probing and similar image retrieval
-- To develop Total Body Photography-based AI applications
-- As a powerful backbone for developing dermatology algorithms with significant performance improvements over existing backbones (e.g., ViT, DINOv2)
-- As a specialized vision encoder for dermatological vision-language models and multimodal LLM development
+_**Why use PanDerm?**_ PanDerm significantly outperforms clinically popular CNN models like ResNet, especially with limited labeled data. Its strong linear probing results offer a computationally efficient alternative with lower implementation barriers. PanDerm also demonstrates superior performance compared to existing foundation models while minimizing data leakage risk—a common concern with web-scale pretrained models like DINOv2, SwavDerm, and Derm Foundation. These combined advantages make PanDerm the ideal choice for replacing both traditional CNNs and other foundation models in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks.
 
 _**Note**_: PanDerm is a general-purpose dermatology foundation model and requires fine-tuning or linear probing before application to specific tasks.
 
@@ -48,21 +41,40 @@ pip install -r requirements.txt
 ### Obtaining the Model Weights
 Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
-### Configuring the Model Path
-After downloading, you need to update the model weights path in the code:
+## 2. Data Preparation
 
-1. Open the file `PanDerm/classification/models/builder.py`
-2. Locate line 42
-3. Replace the existing path with the directory where you saved the model weights:
+### Using Your Own Dataset
+If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
 
-```python
-root_path = '/path/to/your/PanDerm/Model_Weights/'
+**Required Columns**
+- `image`: Path to the image file (e.g., ISIC_0034524.jpg)
+- `split`: Dataset partition indicator (train, val, or test)
+- For multi-class classification:
+  - `label`: Numerical class label (e.g., 0, 1, 2, 3, 4)
+- For binary classification:
+  - `binary_label`: Binary class label (e.g., 0, 1)
+
+For Multi-class Example:
+```csv
+image,label,split
+ISIC_0034524.jpg,1,train
+ISIC_0034525.jpg,1,train
+ISIC_0034526.jpg,4,val
+ISIC_0034527.jpg,3,test
 ```
-## 2. Data Organization for Classification
 
-We've pre-processed the public datasets used in this study. To reproduce the results reported in our paper and prevent data leakage between splits, please use these processed datasets.
+For Binary Classification Example:
+```csv
+image,binary_label,split
+ISIC_0034524.jpg,1,train
+ISIC_0034525.jpg,1,train
+ISIC_0034526.jpg,0,val
+ISIC_0034527.jpg,0,test
+```
 
-If you wish to use our model with your own dataset, please organize it in the same format as these pre-processed datasets.
+### Using Pre-processed Public Datasets
+
+We've already pre-processed several public datasets to reproduce the results in our study and prevent data leakage between splits. These datasets are ready to use with our model and require no additional formatting.
 
 ### Public Dataset Links and Splits
 
@@ -78,7 +90,7 @@ If you wish to use our model with your own dataset, please organize it in the sa
 | PAD-UFES | [Download](https://drive.google.com/file/d/1NLv0EH3QENuRxW-_-BSf4KMP9cPjBk9o/view?usp=sharing) | [Official Website](https://www.kaggle.com/datasets/mahdavi1202/skin-cancer) |
 | PATCH16 | [Download](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing) | [Official Website](https://heidata.uni-heidelberg.de/dataset.xhtml?persistentId=doi:10.11588/data/7QCR8S) |
 
-**Note:** The processed datasets may differ slightly from those provided on the official websites. To ensure reproducibility of our paper's results, please use the processed data links provided above.
+**Note:** The processed datasets provided here may differ slightly from those on the official websites. To ensure reproducibility of our paper's results, please use the processed data links above.
 
 ## 3. Linear Evaluation on Image Classification Tasks
 
@@ -86,24 +98,27 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 
 ### Key Parameters
 
+- `model`: Model size - "PanDerm-Large" (original paper model) or "PanDerm-Base" (smaller version)
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
-
+- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm-Large" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm-Base".
 ### Evaluation Command
 
 ```bash
 cd classification
-CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
+CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --batch_size 1000 \
-  --model 'PanDerm' \
+  --model "PanDerm-Large" \
   --nb_classes 7 \
   --percent_data 1.0 \
-  --csv_filename 'PanDerm_results.csv' \
-  --output_dir "/path/to/your/PanDerm/LP_Eval/output_dir2/ID_Res/PanDerm_res/" \
+  --csv_filename "PanDerm-Large_result.csv" \
+  --output_dir "/path/to/your/PanDerm/output_dir/PanDerm_res/" \
   --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
   --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
+  --pretrained_checkpoint "/path/to/your/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 ```
+
 ### More Usage Cases
 
 For additional evaluation datasets, please refer to the bash scripts for detailed usage. We provide running code to evaluate on 9 public datasets. You can choose the model from the available options.
@@ -112,8 +127,9 @@ To run the evaluations:
 
 ```bash
 cd classification
-bash script/lp.sh
+bash script/lp_reproduce.sh
 ```
+
 ### Starter Code for Beginners: Loading and Using Our Model
 
 Check out our easy-to-follow Jupyter Notebook:
@@ -126,6 +142,64 @@ This notebook shows you how to:
 - Perform basic classification
 
 ## 4. Fine-tuning on Image Classification Tasks
+
+This implementation uses PanDerm for Skin Classification Finetune.
+
+## Fine-tuning with PanDerm Weight
+
+### Set Pretrained Path
+   - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/script). You can find more scripts in this folder.
+
+3. **Start Training**
+
+You could fine-tune our model on your dataset. Here is a command line example:
+```bash
+MODEL_PATH=PATH_TO_YOUR_DOWNLOADED_PANDERM_PRETRAINED_WEIGHT
+
+BATCH_SIZE=128
+LR=5e-4
+
+CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
+    --model cae_large_patch16_224 \
+    --finetune $MODEL_PATH \
+    --nb_classes 7 \
+    --batch_size $BATCH_SIZE \
+    --lr $LR \
+    --update_freq 1 \
+    --warmup_epochs 10 \
+    --epochs 50 --layer_decay 0.65 --drop_path 0.2 \
+    --weight_decay 0.05 --mixup 0.8 --cutmix 1.0 \
+    --weights \
+    --sin_pos_emb \
+    --percent_data 1.0 \
+    --no_auto_resume \
+    --exp_name $my_name \
+    --imagenet_default_mean_and_std \
+    --wandb_name Panderm-finetune \
+    --output_dir OUTPUT_DIRECTORY \ # Your checkpoint and output result will be saved in this directory
+    --csv_path /home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_training.csv \ # You could replace this with your finetune dataset csv
+    --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \ # Optional: Dataset image root, you could set this with empty value.
+    --seed 122 \
+    --TTA # This is optional: You could comment this line by turning off Test Time Augmentation(TTA)
+```
+
+Here is an example to fine-tune our model on HAM10000:
+```bash
+cd classification
+bash script/HAM_finetune_train.sh # you can replace this with your_script.sh
+```
+Note: Remember to adjust the path config to your desired storage location.
+
+4. **Evaluation**
+```bash
+cd finetune
+bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
+```
+
+5. **Test-Time Augmentation (TTA)**
+
+We've implemented a Test-Time Augmentation pipeline to enhance the classification performance of our model. TTA works by applying multiple augmentations to each test image, running predictions on each augmented version, and then aggregating the results for a more robust prediction. You can modify the setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py) for better performance on your dataset.
+
 
 ## 5. Skin Lesion Segmentation
 
