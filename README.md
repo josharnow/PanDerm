@@ -4,8 +4,7 @@ A General-Purpose Multimodal Foundation Model for Dermatology
 [[`Cite`](#citation)]
 
 Warning: this repo is under construction.
-## Introduction
-Diagnosing and treating skin diseases require advanced visual skills across domains and the ability to
+**Abstract:** Diagnosing and treating skin diseases require advanced visual skills across domains and the ability to
 synthesize information from multiple imaging modalities. While current deep learning models excel at
 specific tasks like skin cancer diagnosis from dermoscopic images, they struggle to meet the complex,
 multimodal requirements of clinical practice. Here, we introduce PanDerm, a multimodal dermatology
