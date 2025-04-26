@@ -33,7 +33,7 @@ _**Note**_: PanDerm is a general-purpose dermatology foundation model and requir
 First, clone the repo and cd into the directory:
 ```shell
 git clone https://github.com/SiyuanYan1/PanDerm
-cd PanDerm
+cd PanDerm/classification
 ```
 Then create a conda env and install the dependencies:
 ```shell
