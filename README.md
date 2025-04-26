@@ -48,16 +48,6 @@ pip install -r requirements.txt
 ### Obtaining the Model Weights
 Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
-### Configuring the Model Path
-After downloading, you need to update the model weights path in the code:
-
-1. Open the file `PanDerm/classification/models/builder.py`
-2. Locate line 42
-3. Replace the existing path with the directory where you saved the model weights:
-
-```python
-root_path = '/path/to/your/PanDerm/Model_Weights/'
-```
 ## 2. Data Organization for Classification
 
 We've pre-processed the public datasets used in this study. To reproduce the results reported in our paper and prevent data leakage between splits, please use these processed datasets.
@@ -89,20 +79,22 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
-
+- `pretrained_checkpoint`: Path to the pretrain checkpoint
 ### Evaluation Command
 
 ```bash
 cd classification
-CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
+CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --batch_size 1000 \
-  --model 'PanDerm' \
+  --model "PanDerm-Large" \
   --nb_classes 7 \
   --percent_data 1.0 \
-  --csv_filename 'PanDerm_results.csv' \
-  --output_dir "/path/to/your/PanDerm/LP_Eval/output_dir2/ID_Res/PanDerm_res/" \
-  --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
-  --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
+  --csv_filename "PanDerm-Large_result.csv" \
+  --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/PanDerm-Large_res/" \
+  --csv_path "/home/syyan/XJ/PanDerm-open_source/data/linear_probing/HAM_clean.csv" \
+  --root_path "/home/share/Uni_Eval/ISIC2018_reader/images/" \
+  --pretrained_checkpoint "/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
+```
 ```
 ### More Usage Cases
 
