@@ -1,8 +1,9 @@
 # PanDerm
 A General-Purpose Multimodal Foundation Model for Dermatology
-Warning: this repo is under construction.
 [[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
 [[`Cite`](#citation)]
+
+Warning: this repo is under construction.
 ## Introduction
 We introduce PanDerm, a powerful multimodal dermatology foundation model that can seamlessly interpret multiple imaging modalities and master diverse dermatological tasks from cancer screening, diagnosis to long-term prognosis.
 ![alt text](overview.png)
