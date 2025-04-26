@@ -106,6 +106,7 @@ To run the evaluations:
 cd classification
 bash script/lp.sh
 ```
+
 ### Starter Code for Beginners: Loading and Using Our Model
 
 Check out our easy-to-follow Jupyter Notebook:
