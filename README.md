@@ -6,21 +6,7 @@
 
 Warning: this repo is under construction.
 
-**Abstract:** Diagnosing and treating skin diseases require advanced visual skills across domains and the ability to
-synthesize information from multiple imaging modalities. While current deep learning models excel at
-specific tasks like skin cancer diagnosis from dermoscopic images, they struggle to meet the complex,
-multimodal requirements of clinical practice. Here, we introduce PanDerm, a multimodal dermatology
-foundation model pretrained through self-supervised learning on over 2 million real-world skin disease
-images from 11 clinical institutions across 4 imaging modalities. We evaluated PanDerm on 28 diverse
-benchmarks, including skin cancer screening, risk stratification, differential diagnosis of common and
-rare skin conditions, lesion segmentation, longitudinal monitoring, and metastasis prediction and prognosis. PanDerm achieved state-of-the-art performance across all evaluated tasks, often outperforming
-existing models when using only 10% of labeled data. We conducted three reader studies to assess PanDerm’s potential clinical utility. PanDerm outperformed clinicians by 10.2% in early-stage melanoma
-detection through longitudinal analysis, improved clinicians’ skin cancer diagnostic accuracy by 11%
-on dermoscopy images, and enhanced non-dermatologist healthcare providers’ differential diagnosis
-by 16.5% across 128 skin conditions on clinical photographs. These results demonstrate PanDerm’s
-potential to improve patient care across diverse clinical scenarios and serve as a model for developing
-multimodal foundation models in other medical specialties, potentially accelerating the integration of AI
-support in healthcare.
+**Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction—often requiring significantly less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions. 
 
 ![alt text](overview.png)
 
