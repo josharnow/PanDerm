@@ -118,7 +118,7 @@ To run the evaluations:
 
 ```bash
 cd classification
-bash script/lp.sh
+bash script/lp_reproduce.sh
 ```
 
 ### Starter Code for Beginners: Loading and Using Our Model
