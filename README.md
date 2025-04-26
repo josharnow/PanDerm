@@ -20,6 +20,7 @@ by 16.5% across 128 skin conditions on clinical photographs. These results demon
 potential to improve patient care across diverse clinical scenarios and serve as a model for developing
 multimodal foundation models in other medical specialties, potentially accelerating the integration of AI
 support in healthcare.
+
 ![alt text](overview.png)
 
 ## About PanDerm
