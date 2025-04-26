@@ -139,7 +139,7 @@ This implementation uses PanDerm for Skin Classification Finetune.
 ## Fine-tuning with PanDerm Weight
 
 ### Set Pretrained Path
-   - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/scripts). You can find more scripts in this folder.
+   - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/script). You can find more scripts in this folder.
 
 3. **Start Training**
 
