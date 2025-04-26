@@ -11,7 +11,7 @@ Warning: this repo is under construction.
 ![alt text](overview.png)
 
 ## Updates
-- 26/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available.
+- 26/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
 - 26/04/2025: Released the finetuning script for image classification.
 
 ## About PanDerm
