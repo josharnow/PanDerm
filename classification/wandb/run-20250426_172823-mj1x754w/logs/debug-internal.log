@@ -1,0 +1,15 @@
+{"time":"2025-04-26T17:28:23.711355075+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/syyan/XJ/PanDerm/classification/wandb/run-20250426_172823-mj1x754w/logs/debug-core.log"}
+{"time":"2025-04-26T17:28:24.115816688+10:00","level":"INFO","msg":"created new stream","id":"mj1x754w"}
+{"time":"2025-04-26T17:28:24.115892337+10:00","level":"INFO","msg":"stream: started","id":"mj1x754w"}
+{"time":"2025-04-26T17:28:24.115920517+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:24.115949157+10:00","level":"INFO","msg":"sender: started","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:24.11606368+10:00","level":"INFO","msg":"handler: started","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:24.430665182+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-26T17:28:47.546621822+10:00","level":"INFO","msg":"stream: closing","id":"mj1x754w"}
+{"time":"2025-04-26T17:28:47.546678631+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-26T17:28:47.546795889+10:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-26T17:28:48.485835782+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-26T17:28:48.784355587+10:00","level":"INFO","msg":"handler: closed","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:48.784439124+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:48.784477198+10:00","level":"INFO","msg":"sender: closed","stream_id":"mj1x754w"}
+{"time":"2025-04-26T17:28:48.784663725+10:00","level":"INFO","msg":"stream: closed","id":"mj1x754w"}

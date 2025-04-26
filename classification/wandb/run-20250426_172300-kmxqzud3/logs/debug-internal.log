@@ -1,0 +1,15 @@
+{"time":"2025-04-26T17:23:00.870799241+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/syyan/XJ/PanDerm/classification/wandb/run-20250426_172300-kmxqzud3/logs/debug-core.log"}
+{"time":"2025-04-26T17:23:01.246548024+10:00","level":"INFO","msg":"created new stream","id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:01.246607452+10:00","level":"INFO","msg":"stream: started","id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:01.246638728+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:01.246705711+10:00","level":"INFO","msg":"sender: started","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:01.246759838+10:00","level":"INFO","msg":"handler: started","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:01.682939944+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-26T17:23:10.159509157+10:00","level":"INFO","msg":"stream: closing","id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:10.159580994+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-26T17:23:10.159648925+10:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-26T17:23:11.616710628+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-26T17:23:12.034315946+10:00","level":"INFO","msg":"handler: closed","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:12.034412556+10:00","level":"INFO","msg":"sender: closed","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:12.034410225+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kmxqzud3"}
+{"time":"2025-04-26T17:23:12.034573518+10:00","level":"INFO","msg":"stream: closed","id":"kmxqzud3"}
