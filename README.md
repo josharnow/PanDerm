@@ -76,6 +76,7 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 
 ### Key Parameters
 
+- `model`: Choosing the model. "PanDerm-Large" or "PanDerm-Base"
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
@@ -90,10 +91,10 @@ CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --nb_classes 7 \
   --percent_data 1.0 \
   --csv_filename "PanDerm-Large_result.csv" \
-  --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/PanDerm-Large_res/" \
-  --csv_path "/home/syyan/XJ/PanDerm-open_source/data/linear_probing/HAM_clean.csv" \
-  --root_path "/home/share/Uni_Eval/ISIC2018_reader/images/" \
-  --pretrained_checkpoint "/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
+  --output_dir "/path/to/your/PanDerm/output_dir/PanDerm_res/" \
+  --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
+  --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
+  --pretrained_checkpoint "/path/to/your/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 ```
 
 ### More Usage Cases
