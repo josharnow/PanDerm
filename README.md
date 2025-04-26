@@ -30,12 +30,13 @@ _**What is PanDerm?**_: PanDerm is a vision-centric multimodal foundation model 
 _**Why use PanDerm?**_: Compared to clinically popular CNN models like ResNet, PanDerm achieves better fine-tuning performance, especially with limited labeled data. Its linear probing performance approaches full-parameter fine-tuning results, offering researchers a computationally efficient alternative with lower implementation barriers. Both approaches make PanDerm ideal for replacing traditional CNNs in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks. PanDerm also demonstrates superior performance across diverse modalities and tasks compared to existing foundation models. Unlike web-scale pretrained models (e.g., DINOv2, SwavDerm, and DermFoundation), it minimizes data leakage risk while providing more reliable benchmark performance.
 
 _**When use PanDerm?**_:
-- For fine-tuning on dermatological task,s especially with limited labeled data
+- For fine-tuning on dermatological tasks, especially with limited labeled data
 - To leverage its dermatology-specific features for linear probing and similar image retrieval
 - To develop Total Body Photography-based AI applications
 - As a powerful backbone for developing dermatology algorithms with significant performance improvements over existing backbones (e.g., ViT, DINOv2)
 - As a specialized vision encoder for dermatological vision-language models and multimodal LLM development
 
+_**Note**_: PanDerm is a task-agnostic general purpose dermatology foundation model and still requires finetuning or linear probing before application to specific tasks.
 
 
 
