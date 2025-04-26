@@ -1,9 +1,15 @@
 import timm
 from .timm_wrapper import TimmCNNEncoder
 import torch
+from torch import nn
 from torchvision import transforms
 from models.modeling_finetune import *
 import open_clip
+
+from models.modeling_finetune import VisionTransformer
+from utils.utils import cae_kwargs
+from functools import partial
+
 def get_norm_constants(which_img_norm: str = 'imagenet'):
     print('normalization method: ',which_img_norm)
     constants_zoo = {
@@ -38,19 +44,18 @@ def get_eval_transforms(
     return eval_transform
 
 
-def get_encoder(model_name,which_img_norm='imagenet'):
-    roo_path='/home/share/FM_Code/PanDerm/Model_Weights/'
+def get_encoder(args, model_name,which_img_norm='imagenet'):
     # which_img_norm='imagenet'
     print('loading model checkpoint')
 
     if model_name == 'imgnet_large21k':
-        model = timm.create_model("vit_large_patch16_224.orig_in21k",
+        model = timm.create_model(args.pretrained_checkpoint,
                                   num_classes=0,
                                   dynamic_img_size=True,
                                   pretrained=True)
     elif model_name == 'SwAVDerm':
         model = TimmCNNEncoder(kwargs = {'features_only': True, 'out_indices': (4,), 'pretrained': True, 'num_classes': 0})
-        checkpoint = torch.load(roo_path+'swavderm_pretrained.pth', map_location='cpu')
+        checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
         state_dict = checkpoint['state_dict']
         state_dict = {k.replace('module', 'model'): v for k, v in state_dict.items()}
         model.load_state_dict(state_dict, strict=False)
@@ -59,13 +64,19 @@ def get_encoder(model_name,which_img_norm='imagenet'):
                                   num_classes=0,
                                   dynamic_img_size=True,
                                   pretrained=True)
-    elif model_name == 'PanDerm':
+    elif model_name == 'PanDerm-Large':
         model = panderm_large_patch16_224()
-        checkpoint = torch.load(roo_path + 'panderm_ll_data6_checkpoint-499.pth', map_location='cpu')
+        checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
         state_dict = checkpoint['model']
         state_dict = {k.replace("encoder.", ""): v for k, v in state_dict.items()}
         model.load_state_dict(state_dict, strict=False)
+    elif model_name == 'PanDerm-Base':
+        model = VisionTransformer(
+            patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True, init_values=0.1,
+            norm_layer=partial(nn.LayerNorm, eps=1e-6), **cae_kwargs)
 
+        model.load_state_dict(torch.load(args.pretrained_checkpoint, map_location='cpu'), strict=False) 
+        model.head = torch.nn.Identity()
     else:
         raise NotImplementedError('model {} not implemented'.format(model_name))
     

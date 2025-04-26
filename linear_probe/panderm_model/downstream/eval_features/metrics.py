@@ -378,7 +378,7 @@ def get_eval_metrics(
     plt.figure(figsize=(10, 8))
     plot_confusion_matrix(conf_mat=cm, figsize=(10, 8), show_absolute=True, show_normed=True, colorbar=True)
     plt.title(f'Confusion Matrix - {dataset_name}')
-    plt.savefig(os.path.join(out_dir, f'confusion_matrix_{dataset_name}.jpg'), dpi=600, bbox_inches='tight')
+    plt.savefig(os.path.join(out_dir, f'confusion_matrix_{dataset_name}.png'), dpi=600, bbox_inches='tight')
     plt.close()
 
     return eval_metrics

@@ -164,3 +164,28 @@ def initialize_weights(module):
 			nn.init.constant_(m.weight, 1)
 			nn.init.constant_(m.bias, 0)
 
+from functools import partial
+cae_kwargs = {
+    'args': {
+            'img_size': 224,                # From --model
+            'patch_size': 16,               # From --model
+            'in_chans': 3,                  # Standard for RGB images
+            'embed_dim': 768,               # From --model (base model)
+            'depth': 12,                    # Typical depth for base models
+            'num_heads': 12,                # embed_dim / 64
+            'mlp_ratio': 4.0,               # Common default
+            'qkv_bias': True,               # As specified
+            'norm_layer': partial(nn.LayerNorm, eps=1e-6),
+            'init_values': 0.1,             # From --layer_scale_init_value
+            'init_std': 0.02,               # Default value
+            'drop_path_rate': 0.1,          # From --drop_path
+            'decoder_embed_dim': 768,       # Same as embed_dim
+            'decoder_num_classes': 8192,    # From --model
+            'regressor_depth': 4,           # From --regressor_depth
+            'decoder_depth': 4,             # From --decoder_depth
+            'decoder_num_heads': 12,        # Same as num_heads
+            'decoder_layer_scale_init_value': 0.1,  # From --decoder_layer_scale_init_value
+            'fix_init_weight': False,       # As specified
+            'model_type': 'caev2',          # Assuming 'caev2' as per your context
+    }                     # Additional arguments if needed
+}

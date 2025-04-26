@@ -7,7 +7,7 @@ torch.multiprocessing.set_sharing_strategy("file_system")
 # import torchsnooper
 # @torchsnooper.snoop()
 @torch.no_grad()
-def extract_features_from_dataloader(model, dataloader):
+def extract_features_from_dataloader(args, model, dataloader):
     """Uses model to extract features+labels from images iterated over the dataloader.
     Args:
         model (torch.nn): torch.nn CNN/VIT architecture with pretrained weights that extracts d-dim features.
@@ -38,7 +38,8 @@ def extract_features_from_dataloader(model, dataloader):
             # embeddings=embeddings.cpu()[:remaining, :].cpu()
             #open_clip
             # embeddings = model.encode_image(batch).cpu()[:remaining, :].cpu()
-            embeddings = model(batch).detach().cpu()[:remaining, :].cpu()
+            if args.model == 'PanDerm-Large' or args.model == 'PanDerm-Base':
+                embeddings = model(batch).detach().cpu()[:remaining, :].cpu()
             labels = target.numpy()[:remaining]
             assert not torch.isnan(embeddings).any()
         all_embeddings.append(embeddings)

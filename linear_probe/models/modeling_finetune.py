@@ -385,7 +385,7 @@ class VisionTransformer(nn.Module):
                  num_heads=12, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop_rate=0., attn_drop_rate=0.,
                  drop_path_rate=0.1, norm_layer=nn.LayerNorm, init_values=0.1, use_rel_pos_bias=False, 
                  use_shared_rel_pos_bias=False, use_mean_pooling=False, init_scale=0.001, lin_probe=True, 
-                 linear_type='standard'):
+                 linear_type='standard', args=None):
         super().__init__()
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models

@@ -25,10 +25,12 @@ def get_args_parser():
     parser.add_argument('--num_workers', default=16, type=int)
     parser.add_argument('--output_dir', default='./output_dir',
                         help='path where to save, empty for no saving')
+    parser.add_argument('--pretrained_checkpoint', default=None, type=str,
+                        help='path to the pretrained model checkpoint to load')
     return parser
 
 def main(args):
-    model, eval_transform = get_encoder(args.model)
+    model, eval_transform = get_encoder(args, args.model)
     _ = model.eval()
     model = model.to(device)
     if args.nb_classes == 2:
@@ -53,7 +55,6 @@ def main(args):
                                transforms=eval_transform,
                                binary=binary)
     print('train size:', len(dataset_train), ',val size:', len(dataset_val), ',test size:', len(dataset_test))
-
 
     import time
     from panderm_model.downstream.extract_features import extract_features_from_dataloader
@@ -82,9 +83,9 @@ def main(args):
     )
     start = time.time()
     # extract features from the train and test datasets (returns dictionary of embeddings and labels)
-    train_features = extract_features_from_dataloader(model, train_dataloader)
-    val_features = extract_features_from_dataloader(model, val_dataloader)
-    test_features = extract_features_from_dataloader(model, test_dataloader)
+    train_features = extract_features_from_dataloader(args, model, train_dataloader)
+    val_features = extract_features_from_dataloader(args, model, val_dataloader)
+    test_features = extract_features_from_dataloader(args, model, test_dataloader)
 
     # convert these to torch
     train_feats = torch.Tensor(train_features['embeddings'])
