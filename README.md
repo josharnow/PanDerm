@@ -47,20 +47,29 @@ Download the pre-trained model weights from [this Google Drive link](https://dri
 If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
 
 **Required Columns**
-
 - `image`: Path to the image file (e.g., ISIC_0034524.jpg)
-- `label`: Numerical class label (e.g., 0, 1, 2)
 - `split`: Dataset partition indicator (train, val, or test)
+- For multi-class classification:
+  - `label`: Numerical class label (e.g., 0, 1, 2, 3, 4)
+- For binary classification:
+  - `binary_label`: Binary class label (e.g., 0, 1)
 
-For Example:
+For Multi-class Example:
 ```csv
 image,label,split
 ISIC_0034524.jpg,1,train
 ISIC_0034525.jpg,1,train
 ISIC_0034526.jpg,4,val
-ISIC_0034527.jpg,1,val
-ISIC_0034528.jpg,1,test
-ISIC_0034529.jpg,0,test
+ISIC_0034527.jpg,3,test
+```
+
+For Binary Classification Example:
+```csv
+image,binary_label,split
+ISIC_0034524.jpg,1,train
+ISIC_0034525.jpg,1,train
+ISIC_0034526.jpg,0,val
+ISIC_0034527.jpg,0,test
 ```
 
 ### Using Pre-processed Public Datasets
