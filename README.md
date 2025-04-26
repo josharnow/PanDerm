@@ -18,14 +18,7 @@
 
 _**What is PanDerm?**_ PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography-based applications, and image segmentation.
 
-_**Why use PanDerm?**_ PanDerm significantly outperforms clinically popular CNN models like ResNet, especially with limited labeled data. Its strong linear probing results offer a computationally efficient alternative with lower implementation barriers. These advantages make PanDerm ideal for replacing traditional CNNs in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks. Additionally, compared to existing foundation models, PanDerm demonstrates superior performance across diverse modalities and tasks while minimizing data leakage risk—a common concern with web-scale pretrained models like DINOv2, SwavDerm, and Derm Foundation.
-
-_**When use PanDerm?**_
-- For fine-tuning on dermatological tasks, especially with limited labeled data
-- To leverage its dermatology-specific features for linear probing and similar image retrieval
-- To develop Total Body Photography-based AI applications
-- As a powerful backbone for developing dermatology algorithms with significant performance improvements over existing backbones (e.g., ViT, DINOv2)
-- As a specialized vision encoder for dermatological vision-language models and multimodal LLM development
+_**Why use PanDerm?**_ PanDerm significantly outperforms clinically popular CNN models like ResNet, especially with limited labeled data. Its strong linear probing results offer a computationally efficient alternative with lower implementation barriers. PanDerm also demonstrates superior performance compared to existing foundation models while minimizing data leakage risk—a common concern with web-scale pretrained models like DINOv2, SwavDerm, and Derm Foundation. These combined advantages make PanDerm the ideal choice for replacing both traditional CNNs and other foundation models in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks.
 
 _**Note**_: PanDerm is a general-purpose dermatology foundation model and requires fine-tuning or linear probing before application to specific tasks.
 
