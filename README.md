@@ -95,7 +95,7 @@ CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --root_path "/home/share/Uni_Eval/ISIC2018_reader/images/" \
   --pretrained_checkpoint "/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 ```
-```
+
 ### More Usage Cases
 
 For additional evaluation datasets, please refer to the bash scripts for detailed usage. We provide running code to evaluate on 9 public datasets. You can choose the model from the available options.
