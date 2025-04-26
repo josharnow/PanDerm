@@ -93,7 +93,7 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 ### Evaluation Command
 
 ```bash
-cd linear_probe
+cd classification
 CUDA_VISIBLE_DEVICES=0 python linear_eval.py \
   --batch_size 1000 \
   --model 'PanDerm' \
@@ -111,7 +111,7 @@ For additional evaluation datasets, please refer to the bash scripts for detaile
 To run the evaluations:
 
 ```bash
-cd linear_probe
+cd classification
 bash script/lp.sh
 ```
 ### Starter Code for Beginners: Loading and Using Our Model
