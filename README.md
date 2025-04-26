@@ -36,7 +36,7 @@ _**When use PanDerm?**_:
 - As a powerful backbone for developing dermatology algorithms with significant performance improvements over existing backbones (e.g., ViT, DINOv2)
 - As a specialized vision encoder for dermatological vision-language models and multimodal LLM development
 
-_**Note**_: PanDerm is a task-agnostic general purpose dermatology foundation model and still requires finetuning or linear probing before application to specific tasks.
+_**Note**_: PanDerm is a general-purpose dermatology foundation model and requires fine-tuning or linear probing before application to specific tasks.
 
 
 
