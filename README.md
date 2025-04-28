@@ -54,7 +54,10 @@ Download the pre-trained model weights from [this Google Drive link](https://dri
 
 ## 2. Data Preparation
 
-### Using Your Own Dataset
+<details>
+  <summary>
+  <b>Using Your Own Dataset</b>
+  </summary>
 If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
 
 **Required Columns**
@@ -82,6 +85,7 @@ ISIC_0034525.jpg,1,train
 ISIC_0034526.jpg,0,val
 ISIC_0034527.jpg,0,test
 ```
+</details>
 
 ### Using Pre-processed Public Datasets
 
