@@ -149,9 +149,26 @@ This implementation uses PanDerm for Skin Classification Finetune.
 ### Set Pretrained Path
    - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/script). You can find more scripts in this folder.
 
+
+### Key Parameters
+
+- `model`: Model size - "PanDerm_Large_FT" (original paper model) or "PanDerm_Base_FT" (smaller version)
+- `nb_classes`: Set this to the number of classes in your evaluation dataset.
+- `batch_size`: Adjust based on the memory size of your GPU.
+- `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
+- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_LP" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_LP".
+
+### Hint
+
+
+
 ### Start Training
 
-You could fine-tune our model on your dataset. Here is a command line example:
+You could fine-tune our model on your dataset. Here is a command-line example:
+
+
+
+
 ```bash
 MODEL_PATH=PATH_TO_YOUR_DOWNLOADED_PANDERM_PRETRAINED_WEIGHT
 
@@ -160,7 +177,7 @@ LR=5e-4
 
 CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
     --model PanDerm_Large_FT \
-    --finetune $MODEL_PATH \
+    --pretrained_checkpoint $MODEL_PATH \
     --nb_classes 7 \
     --batch_size $BATCH_SIZE \
     --lr $LR \
@@ -191,7 +208,7 @@ Note: Remember to adjust the path config to your desired storage location.
 
 ### Evaluation
 ```bash
-cd finetune
+cd classification
 bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
 ```
 
