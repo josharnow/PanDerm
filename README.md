@@ -202,10 +202,10 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --exp_name $my_name \
     --imagenet_default_mean_and_std \
     --wandb_name Panderm-finetune \
-    --output_dir /path/to/your/PanDerm/Evaluation_datasets/ \ # Your checkpoint and output result will be saved in this directory
-    --csv_path /home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_training.csv \ # You could replace this with your finetune dataset csv
-    --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \
-    --seed 122 \
+    --output_dir /path/to/your/PanDerm/Evaluation_datasets/Res/ \ # Your checkpoint and output result will be saved in this directory
+    --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
+    --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
+    --seed 0 \
     --TTA # This is optional: You could comment this line by turning off Test Time Augmentation(TTA)
 ```
 
