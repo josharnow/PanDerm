@@ -540,7 +540,7 @@ def panderm_large_patch16_224(pretrained=False, **kwargs):
     return model
 
 @register_model
-def panderm_large_patch16_224_finetune(pretrained, num_classes, drop_rate, drop_path_rate, attn_drop_rate, drop_block_rate, use_mean_pooling, init_scale, use_rel_pos_bias, init_values, lin_probe, **kwargs):
+def PanDerm_Large_FT(pretrained, num_classes, drop_rate, drop_path_rate, attn_drop_rate, drop_block_rate, use_mean_pooling, init_scale, use_rel_pos_bias, init_values, lin_probe, **kwargs):
     model = VisionTransformer(
         patch_size=16, embed_dim=1024, depth=24, num_heads=16, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6),
@@ -555,7 +555,26 @@ def panderm_large_patch16_224_finetune(pretrained, num_classes, drop_rate, drop_
         lin_probe=lin_probe,
         **kwargs)
     model.default_cfg = _cfg()
-    return model
+    return
+
+@register_model
+def PanDerm_Base_FT(pretrained, num_classes, drop_rate, drop_path_rate, attn_drop_rate, drop_block_rate, use_mean_pooling, init_scale, use_rel_pos_bias, init_values, lin_probe, **kwargs):
+    model = VisionTransformer(
+        patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
+        norm_layer=partial(nn.LayerNorm, eps=1e-6),
+        num_classes=num_classes,
+        drop_rate=drop_rate,
+        drop_path_rate=drop_path_rate,
+        attn_drop_rate=attn_drop_rate,
+        use_mean_pooling=use_mean_pooling,
+        init_scale=init_scale,
+        use_rel_pos_bias=use_rel_pos_bias,
+        init_values=init_values,
+        lin_probe=lin_probe,
+        **kwargs)
+    model.default_cfg = _cfg()
+    return
+
 
 @register_model
 def panderm_base_patch16_224(pretrained=False, **kwargs):

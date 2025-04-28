@@ -1,10 +1,10 @@
 
-#models=('PanDerm-Large' 'PanDerm-Base' 'SwAVDerm'  'dinov2' 'imgnet_large21k')
-models=('PanDerm-Large')
-#checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-large.pth' \
-#             '/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-base.pth' \
+#models=('PanDerm_Large' 'PanDerm_ Base' 'SwAVDerm'  'dinov2' 'imgnet_large21k')
+models=('PanDerm_Large')
+#checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-ll_data6_checkpoint-499.pth' \
+#             '/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-bb_data6_checkpoint-499.pth' \
 #             '/home/share/FM_Code/PanDerm/Model_Weights/swavderm_pretrained.pth' )
-checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-large.pth')
+checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-ll_data6_checkpoint-499.pth')
 
 
 if [ ${#models[@]} -ne ${#checkpoints[@]} ]; then

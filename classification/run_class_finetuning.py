@@ -139,7 +139,7 @@ def get_args():
                         help='How to apply mixup/cutmix params. Per "batch", "pair", or "elem"')
 
     # * Finetuning params
-    parser.add_argument('--finetune', default='',
+    parser.add_argument('--pretrained_checkpoint', default='',
                         help='finetune from checkpoint')
     parser.add_argument('--model_key', default='model|module|state_dict', type=str)
     parser.add_argument('--model_prefix', default='', type=str)
@@ -385,40 +385,60 @@ def main(args, ds_init):
             mixup_alpha=args.mixup, cutmix_alpha=args.cutmix, cutmix_minmax=args.cutmix_minmax,
             prob=args.mixup_prob, switch_prob=args.mixup_switch_prob, mode=args.mixup_mode,
             label_smoothing=args.smoothing, num_classes=args.nb_classes)
+    # if args.model=="PanDerm-Large":
+    #     model = panderm_large_patch16_224_finetune(
+    #         pretrained=False,
+    #         num_classes=args.nb_classes,
+    #         drop_rate=args.drop,
+    #         drop_path_rate=args.drop_path,
+    #         attn_drop_rate=args.attn_drop_rate,
+    #         drop_block_rate=None,
+    #         use_mean_pooling=args.use_mean_pooling,
+    #         init_scale=args.init_scale,
+    #         use_rel_pos_bias=args.rel_pos_bias,
+    #         init_values=args.layer_scale_init_value,
+    #         lin_probe=args.enable_linear_eval)
+    #     print(model)
+    #     patch_size = model.patch_embed.patch_size
+    #     print("Patch size = %s" % str(patch_size))
+    #     args.window_size = (args.input_size // patch_size[0], args.input_size // patch_size[1])
+    #     args.patch_size = patch_size
 
-        model = panderm_large_patch16_224_finetune(
-            pretrained=False,
-            num_classes=args.nb_classes,
-            drop_rate=args.drop,
-            drop_path_rate=args.drop_path,
-            attn_drop_rate=args.attn_drop_rate,
-            drop_block_rate=None,
-            use_mean_pooling=args.use_mean_pooling,
-            init_scale=args.init_scale,
-            use_rel_pos_bias=args.rel_pos_bias,
-            init_values=args.layer_scale_init_value,
-            lin_probe=args.enable_linear_eval)
-
-        print(model)
-        patch_size = model.patch_embed.patch_size
+    model = create_model(
+        args.model,
+        pretrained=False,
+        num_classes=args.nb_classes,
+        drop_rate=args.drop,
+        drop_path_rate=args.drop_path,
+        attn_drop_rate=args.attn_drop_rate,
+        drop_block_rate=None,
+        use_mean_pooling=args.use_mean_pooling,
+        init_scale=args.init_scale,
+        use_rel_pos_bias=args.rel_pos_bias,
+        init_values=args.layer_scale_init_value,
+        lin_probe=args.enable_linear_eval,
+        args=args,
+    )
+    print(model)
+    patch_size = model.patch_embed.patch_size
     print("Patch size = %s" % str(patch_size))
     args.window_size = (args.input_size // patch_size[0], args.input_size // patch_size[1])
     args.patch_size = patch_size
 
-    if args.finetune:
-        if args.finetune.startswith('https'):
+    if args.pretrained_checkpoint:
+        if args.pretrained_checkpoint.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
-                args.finetune, map_location='cpu', check_hash=True)
+                args.pretrained_checkpoint, map_location='cpu', check_hash=True)
         else:
-            checkpoint = torch.load(args.finetune, map_location='cpu')
+            checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
 
-            if args.finetune.split('/')[-1].startswith('open_clip'):
+            if args.pretrained_checkpoint.split('/')[-1].startswith('open_clip'):
                 state_dict = checkpoint['state_dict']
                 state_dict = {k:v for k,v in state_dict.items() if 'visual' in k}
                 checkpoint = {}
                 checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k,v in state_dict.items()}
 
-        print("Load ckpt from %s" % args.finetune)
+        print("Load ckpt from %s" % args.pretrained_checkpoint)
         checkpoint_model = None
         for model_key in args.model_key.split('|'):
             if model_key in checkpoint:
@@ -629,27 +649,23 @@ def main(args, ds_init):
             args=args, model=model, model_without_ddp=model_without_ddp,
             optimizer=optimizer, loss_scaler=loss_scaler, model_ema=model_ema)
 
-    elif args.TTA:
-        epoch=0
-        model_weight = args.resume
-        model_dict = torch.load(model_weight)
-        model.load_state_dict(model_dict['model'])
-        val_stats, wandb_res = evaluate_tta(data_loader_test, model, device,args.output_dir, epoch, mode='test',
-                                        num_class=args.nb_classes)
-        exit(0)
     elif args.eval:
         epoch=0
-        print(f"Starting evaluation without tta")
-
         model_weight = args.resume
         model_dict = torch.load(model_weight)
         model.load_state_dict(model_dict['model'])
-        val_stats, wandb_res = evaluate(data_loader_test, model, device,args.output_dir, epoch, mode='test',
+        if args.TTA:
+            print(f"Starting evaluation with tta")
+            val_stats, wandb_res = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch, mode='test',
+                                                num_class=args.nb_classes)
+        else:
+            print(f"Starting evaluation without tta")
+            val_stats, wandb_res = evaluate(data_loader_test, model, device,args.output_dir, epoch, mode='test',
                                         num_class=args.nb_classes)
+
         exit(0)
     else:
         print(args.eval)
-
 
     print(f"Start training for {args.epochs} epochs")
     start_time = time.time()
@@ -707,8 +723,16 @@ def main(args, ds_init):
             model_weight = args.output_dir + '/' + 'checkpoint-best.pth'
             model_dict = torch.load(model_weight)
             model.load_state_dict(model_dict['model'])
-            test_stats, wandb_test = evaluate(data_loader_test, model, device, args.output_dir, epoch, mode='test',
-                                              num_class=args.nb_classes)
+            if args.TTA:
+                print(f"Starting evaluation with tta")
+                test_stats, wandb_test = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch,
+                                                    mode='test',
+                                                    num_class=args.nb_classes)
+            else:
+                print(f"Starting evaluation without tta")
+                test_stats, wandb_test = evaluate(data_loader_test, model, device, args.output_dir, epoch, mode='test',
+                                                  num_class=args.nb_classes)
+
             wandb.log(wandb_test)
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))

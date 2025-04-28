@@ -1,21 +1,11 @@
-tmp_my_name=caev2_largelarge_data2_e400_base__skin_400e_finetune
-my_name=${tmp_my_name%.*}
+seed=0
 
-OUTPUT_DIR='./output/'$my_name
-
-DATA_PATH=/path/to/imagenet1k/
-TOKENIZER_PATH=./tokenizer-weights
-seed=122
-
-ADDRESS=ADDR_FOR_THIS_MACHINE
-NNODES=4
-RANK=RANK_FOR_THIS_MACHINE
 
 MODEL_PATH=/home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth
 RESUME_PATH=/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting/checkpoint-best.pth
 
 CUDA_VISIBLE_DEVICES=0 python run_class_finetuning.py \
-    --model cae_large_patch16_224 \
+    --model PanDerm_Large_FT \
     --finetune $MODEL_PATH \
     --nb_classes 7 \
     --batch_size 64 \

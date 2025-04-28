@@ -1,20 +1,13 @@
-tmp_my_name=PanDerm-Large_Finetune_HAM10000_cleaned
-my_name=${tmp_my_name%.*}
-
-seed=122
-
-ADDRESS=ADDR_FOR_THIS_MACHINE
-NNODES=4
-RANK=RANK_FOR_THIS_MACHINE
+seed=0
 
 MODEL_PATH=/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_checkpoint-499.pth
 
 BATCH_SIZE=128
 LR=5e-4
 
-CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
-    --model cae_large_patch16_224 \
-    --finetune $MODEL_PATH \
+CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
+    --model PanDerm_Large_FT \
+    --pretrained_checkpoint $MODEL_PATH \
     --nb_classes 7 \
     --batch_size $BATCH_SIZE \
     --lr $LR \
@@ -32,4 +25,5 @@ CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
     --output_dir "/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting" \
     --csv_path /home/syyan/XJ/PanDerm-open_source/data/linear_probing/HAM_clean.csv \
     --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \
-    --seed ${seed}
+    --seed ${seed} \
+    --TTA
