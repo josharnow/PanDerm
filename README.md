@@ -113,12 +113,12 @@ cd classification
 CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --batch_size 1000 \
   --model "PanDerm_Large_LP" \
-  --nb_classes 7 \
+  --nb_classes 6 \
   --percent_data 1.0 \
   --csv_filename "PanDerm_Large_LP_result.csv" \
   --output_dir "/path/to/your/PanDerm/output_dir/PanDerm_res/" \
-  --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
-  --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
+  --csv_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/2000.csv" \
+  --root_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/images/ " \
   --pretrained_checkpoint "/path/to/your/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 ```
 
@@ -152,6 +152,7 @@ This notebook shows you how to:
 - `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_FT" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_FT".
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 -  `weights`: Setting to use the weighted random sampler for the imbalanced class dataset.
+-  `monitor`: Choosing your checkpoint based on "acc" or "recall".
 - `csv_path`: Organize your dataset as described in the "Data Preparation" section.
 - `root_path`: The path of your folder for saved images. 
 -  `TTA`: Enable Test-Time Augmentation. You can modify the augmentation setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py).
@@ -170,52 +171,47 @@ This setting is very stable and typically doesn't require adjustment.
 
 ### Start Training
 
-You could fine-tune our model on your dataset. Here is a command-line example for fine-tuning PanDerm_Large on the HAM10000 clean dataset used in our paper:
+You could fine-tune our model on your dataset. Here is a command-line example for fine-tuning PanDerm_Large on the PAD-UFES dataset:
 
 
 ```bash
 MODEL_NAME="PanDerm_Large_FT"
 MODEL_PATH="/path/to/your/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
-NB_CLASSES=7
-BATCH_SIZE=128
-LR=5e-4
 
 CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --model $MODEL_NAME \
     --pretrained_checkpoint $MODEL_PATH \
-    --nb_classes $NB_CLASSES \
-    --batch_size $BATCH_SIZE \
-    --lr $LR \
+    --nb_classes 6 \
+    --batch_size 128 \
+    --lr 5e-4 \
     --update_freq 1 \
     --warmup_epochs 10 \
     --epochs 50 --layer_decay 0.65 --drop_path 0.2 \
     --weight_decay 0.05 --mixup 0.8 --cutmix 1.0 \
     --weights \
     --sin_pos_emb \
-    --percent_data 1.0 \
     --no_auto_resume \
-    --exp_name $my_name \
+    --exp_name exp_name "pad finetune and eval" \
     --imagenet_default_mean_and_std \
-    --wandb_name Panderm-finetune \
-    --output_dir /path/to/your/PanDerm/Evaluation_datasets/Res/ \ # Your checkpoint and output result will be saved in this directory
-    --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
-    --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
-    --seed 0 \
-    --TTA
+    --wandb_name "Reproduce_PAD_FT_${seed}" \
+    --output_dir /path/to/your/PanDerm/Evaluation_datasets/PAD_Res/ \ # Your best epoch fine-tuned checkpoint and model output result on test set will be saved in this directory
+    --csv_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/2000.csv" \
+    --root_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/images/ " \
+    --seed 0 
 ```
 
 The script for fine-tuning and evaluating PanDerm:
 
 ```bash
 cd classification
-bash script/HAM_finetune_train.sh # you can replace this with your_script.sh
+bash script/finetune_train.sh 
 ```
 Note: Remember to adjust the `pretrained_checkpoint` argument to your storage location of pretrained model weights.
 
 ### Evaluation
 ```bash
 cd classification
-bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
+bash script/finetune_test.sh
 ```
 Note: Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
 
