@@ -200,6 +200,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
     --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
     --seed 0 \
+    --TTA
 ```
 
 The script for fine-tuning and evaluating PanDerm:
@@ -208,13 +209,14 @@ The script for fine-tuning and evaluating PanDerm:
 cd classification
 bash script/HAM_finetune_train.sh # you can replace this with your_script.sh
 ```
-Note: Remember to adjust the path config to your desired storage location.
+Note: Remember to adjust the `pretrained_checkpoint` argument to your storage location of pretrained model weights.
 
 ### Evaluation
 ```bash
 cd classification
 bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
 ```
+Note: Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
 
 ## 5. Skin Lesion Segmentation
 
