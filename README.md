@@ -88,8 +88,10 @@ ISIC_0034527.jpg,0,test
 </details>
 
 <details>
+    <summary>
 <b> Using Pre-processed Public Datasets </b>
-  <summary>
+    </summary>
+
 We've already pre-processed several public datasets to reproduce the results in our study and prevent data leakage between splits. These datasets are ready to use with our model and require no additional formatting.
 
 ### Public Dataset Links and Splits
@@ -107,7 +109,6 @@ We've already pre-processed several public datasets to reproduce the results in 
 | PATCH16 | [Download](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing) | [Official Website](https://heidata.uni-heidelberg.de/dataset.xhtml?persistentId=doi:10.11588/data/7QCR8S) |
 
 **Note:** The processed datasets provided here may differ slightly from those on the official websites. To ensure reproducibility of our paper's results, please use the processed data links above.
-  </summary>
 </details>
 
 ## 3. Linear Evaluation on Image Classification Tasks
