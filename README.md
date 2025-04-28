@@ -262,12 +262,10 @@ Note: Remember to adjust the `resume` argument to your storage location of finet
 
 </div>
 
-<details>
-<summary><b>Click to expand segmentation guide</b></summary>
+
 
 Please refer to details [here](Segmentation.md).
 
-</details>
 
 <div style="background-color: #fffaf0; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
@@ -275,8 +273,6 @@ Please refer to details [here](Segmentation.md).
 
 </div>
 
-<details>
-<summary><b>Click to view citation</b></summary>
 
 ```bibtex
 @misc{yan2024generalpurposemultimodalfoundationmodel,
@@ -290,4 +286,3 @@ Please refer to details [here](Segmentation.md).
 }
 ```
 
-</details>
