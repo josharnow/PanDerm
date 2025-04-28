@@ -50,9 +50,7 @@ pip install -r requirements.txt
 ## 1. Download PanDerm Pre-trained Weights
 
 ### Obtaining the Model Weights
-Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
-## Model weights
 | Model Name    | Release Date | Model Architecture | Download Link            |
 |---------------------|--------------|---------------------|-------------------------------------------------------------|
 | PanDerm      |   10/2025        | ViT-L/16               | [Link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing) |
