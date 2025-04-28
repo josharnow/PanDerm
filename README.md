@@ -145,13 +145,6 @@ This notebook shows you how to:
 
 ## 4. Fine-tuning on Image Classification Tasks
 
-This implementation uses PanDerm for Skin Classification Finetune.
-
-
-### Set Pretrained Path
-   - Modify `MODEL_PATH` parameter in the finetune script, the path to the script folder is [classification/scripts](classification/script). You can find more scripts in this folder.
-
-
 ### Key Parameters
 
 - `model`: Model size - "PanDerm_Large_FT" (original paper model) or "PanDerm_Base_FT" (smaller version)
@@ -184,7 +177,6 @@ NB_CLASSES=7
 BATCH_SIZE=128
 LR=5e-4
 
-
 CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --model $MODEL_NAME \
     --pretrained_checkpoint $MODEL_PATH \
@@ -209,7 +201,8 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --TTA # This is optional: You could comment this line by turning off Test Time Augmentation(TTA)
 ```
 
-Here is an example to fine-tune our model on HAM10000:
+The script for fine-tuning and evaluating PanDerm:
+
 ```bash
 cd classification
 bash script/HAM_finetune_train.sh # you can replace this with your_script.sh
@@ -221,11 +214,6 @@ Note: Remember to adjust the path config to your desired storage location.
 cd classification
 bash script/HAM_finetune_test.sh # you can replace this with your_script.sh
 ```
-
-### Test-Time Augmentation (TTA)
-
-We've implemented a Test-Time Augmentation pipeline to enhance the classification performance of our model. TTA works by applying multiple augmentations to each test image, running predictions on each augmented version, and then aggregating the results for a more robust prediction. You can modify the setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py) for better performance on your dataset.
-
 
 ## 5. Skin Lesion Segmentation
 
