@@ -37,10 +37,7 @@ _**Note**_: PanDerm is a general-purpose dermatology foundation model and requir
 
 ## Installation
 
-</div>
 
-<details>
-<summary><b>Click to expand installation instructions</b></summary>
 
 First, clone the repo and cd into the directory:
 
@@ -58,8 +55,6 @@ pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https
 cd classification
 pip install -r requirements.txt
 ```
-
-</details>
 
 <div style="background-color: #fff5e6; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
