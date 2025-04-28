@@ -98,21 +98,21 @@ Training and evaluation using HAM10000 as an example. Replace csv path and root 
 
 ### Key Parameters
 
-- `model`: Model size - "PanDerm-Large" (original paper model) or "PanDerm-Base" (smaller version)
+- `model`: Model size - "PanDerm_Large_LP" (original paper model) or "PanDerm_Base_LP" (smaller version)
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
-- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm-Large" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm-Base".
+- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_LP" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_LP".
 ### Evaluation Command
 
 ```bash
 cd classification
 CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
   --batch_size 1000 \
-  --model "PanDerm-Large" \
+  --model "PanDerm_Large_LP" \
   --nb_classes 7 \
   --percent_data 1.0 \
-  --csv_filename "PanDerm-Large_result.csv" \
+  --csv_filename "PanDerm_Large_LP_result.csv" \
   --output_dir "/path/to/your/PanDerm/output_dir/PanDerm_res/" \
   --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
   --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
@@ -159,7 +159,7 @@ BATCH_SIZE=128
 LR=5e-4
 
 CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
-    --model cae_large_patch16_224 \
+    --model PanDerm_Large_FT \
     --finetune $MODEL_PATH \
     --nb_classes 7 \
     --batch_size $BATCH_SIZE \
