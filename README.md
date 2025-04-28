@@ -133,17 +133,6 @@ cd classification
 bash script/lp_reproduce.sh
 ```
 
-### Starter Code for Beginners: Loading and Using Our Model
-
-Check out our easy-to-follow Jupyter Notebook:
-
-[**HAM_clean_evaluation.ipynb**](classification/notebooks/HAM_clean_evaluation.ipynb)
-
-This notebook shows you how to:
-- Load our pre-trained model
-- Use it for feature extraction
-- Perform basic classification
-
 ## 4. Fine-tuning on Image Classification Tasks
 
 ### Key Parameters
