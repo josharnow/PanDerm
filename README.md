@@ -17,7 +17,6 @@
 
 <div style="background-color: #e6fff2; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
-## Updates
 
 </div>
 
