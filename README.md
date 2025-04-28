@@ -158,11 +158,19 @@ This implementation uses PanDerm for Skin Classification Finetune.
 - `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_FT" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_FT".
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 -  `weights`: Setting to use the weighted random sampler for the imbalanced class dataset.
--  
+- `csv_path`: Organize your dataset as described in the "Data Preparation" section.
+- `root_path`: The path of your folder for saved images. 
+-  `TTA`: Enable Test-Time Augmentation. You can modify the augmentation setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py).
 
-### Hint
+### Recommended Configuration for fine-tuning
 
-
+Our experiments show the following hyperparameters deliver optimal performance across various evaluation datasets:
+- Batch size: 128
+- Learning rate: 5e-4
+- Training epochs: 50
+- Enable TTA and the weighted random sampler
+  
+This setting is very stable and typically doesn't require adjustment.
 
 ### Start Training
 
