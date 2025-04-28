@@ -21,7 +21,7 @@ MODEL_PATH=/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_c
 #    --no_auto_resume \
 #    --exp_name "pad finetune and eval" \
 #    --imagenet_default_mean_and_std \
-#    --wandb_name "Reproduce_PAD_FT${BATCH_SIZE}_${LR}_${seed}" \
+#    --wandb_name "Reproduce_PAD_FT_${seed}" \
 #    --output_dir "/home/share/FM_Code/PanDerm/PAD_Res/" \
 #    --csv_path /home/share/Uni_Eval/pad-ufes/2000.csv \
 #    --root_path /home/share/Uni_Eval/pad-ufes/images/ \
@@ -44,7 +44,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --no_auto_resume \
     --exp_name "ham finetune and eval" \
     --imagenet_default_mean_and_std \
-    --wandb_name "Reproduce_HAM_FT${BATCH_SIZE}_${LR}_${seed}" \
+    --wandb_name "Reproduce_HAM_FT_${seed}" \
     --output_dir "/home/share/FM_Code/PanDerm/HAM_Res/" \
     --csv_path /home/syyan/XJ/PanDerm-open_source/data/linear_probing/HAM-official-7-lp.csv \
     --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \
