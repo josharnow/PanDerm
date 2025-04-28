@@ -6,19 +6,11 @@
 
 **Warning:** This repo is under construction!!!
 
-<details>
-  <summary style="background-color: #f1f1f1; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-    Last Updated 3/20/2025
-  </summary>
-  <div style="padding: 15px; border: 1px solid #ddd; border-radius: 0 0 5px 5px;">
-    Your content here
-  </div>
-</details>
 
 ## Research Applications using UNI & CONCH
 <details>
   <summary>
-    <b>Last Updated 3/20/2025</b>
+    <b>### Last Updated 3/20/2025</b>
   </summary>
   demoddddd
 </details>details>
