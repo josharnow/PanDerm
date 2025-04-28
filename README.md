@@ -1,24 +1,25 @@
-# PanDerm 
+# PanDerm
+
+<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
 ## A Multimodal Vision Foundation Model for Clinical Dermatology
-[[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
-[[`Cite`](#citation)]
 
-**Warning:** This repo is under construction!!!
+</div>
 
+[![Arxiv Paper](https://img.shields.io/badge/Arxiv-Paper-red)](https://arxiv.org/pdf/2410.15038)
+[![Cite](https://img.shields.io/badge/Cite-BibTeX-blue)](#citation)
 
-## Research Applications using UNI & CONCH
-<details>
-  <summary>
-    <b>### Last Updated 3/20/2025</b>
-  </summary>
-  demoddddd
-</details>details>
+> **Warning:** This repo is under construction!!!
 
-
-**Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction, often requiring less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic skin cancer diagnosis accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions. 
+**Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction, often requiring less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic skin cancer diagnosis accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions.
 
 ![alt text](overview.png)
+
+<div style="background-color: #e6fff2; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+
+## Updates
+
+</div>
 
 ## Updates
 - 26/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
