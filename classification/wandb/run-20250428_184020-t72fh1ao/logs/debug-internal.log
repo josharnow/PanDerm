@@ -1,0 +1,10 @@
+{"time":"2025-04-28T18:40:20.165180477+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_184020-t72fh1ao/logs/debug-core.log"}
+{"time":"2025-04-28T18:40:20.565518679+10:00","level":"INFO","msg":"created new stream","id":"t72fh1ao"}
+{"time":"2025-04-28T18:40:20.565601547+10:00","level":"INFO","msg":"stream: started","id":"t72fh1ao"}
+{"time":"2025-04-28T18:40:20.565631634+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"t72fh1ao"}
+{"time":"2025-04-28T18:40:20.565736983+10:00","level":"INFO","msg":"sender: started","stream_id":"t72fh1ao"}
+{"time":"2025-04-28T18:40:20.565655388+10:00","level":"INFO","msg":"handler: started","stream_id":"t72fh1ao"}
+{"time":"2025-04-28T18:40:21.016842931+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-28T18:41:12.134810702+10:00","level":"INFO","msg":"stream: closing","id":"t72fh1ao"}
+{"time":"2025-04-28T18:41:12.134864823+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-28T18:41:12.135045611+10:00","level":"INFO","msg":"Stopped system monitor"}

@@ -1,0 +1,109 @@
+{
+  "os": "Linux-5.15.0-138-generic-x86_64-with-glibc2.31",
+  "python": "CPython 3.10.17",
+  "startedAt": "2025-04-28T06:54:28.679981Z",
+  "args": [
+    "--model",
+    "PanDerm_Base_FT",
+    "--pretrained_checkpoint",
+    "/home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth",
+    "--nb_classes",
+    "7",
+    "--batch_size",
+    "64",
+    "--lr",
+    "5e-4",
+    "--update_freq",
+    "1",
+    "--warmup_epochs",
+    "10",
+    "--epochs",
+    "50",
+    "--layer_decay",
+    "0.65",
+    "--drop_path",
+    "0.2",
+    "--weight_decay",
+    "0.05",
+    "--mixup",
+    "0.8",
+    "--cutmix",
+    "1.0",
+    "--sin_pos_emb",
+    "--no_auto_resume",
+    "--exp_name",
+    "ham test",
+    "--imagenet_default_mean_and_std",
+    "--wandb_name",
+    "weight_sampler_max_recall_mask5e-40",
+    "--output_dir",
+    "/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting",
+    "--csv_path",
+    "/home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_test.csv",
+    "--test_csv_path",
+    "/home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_test.csv",
+    "--root_path",
+    "/home/share/Uni_Eval/ISIC2018_reader/images/",
+    "--seed",
+    "0",
+    "--resume",
+    "/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting1_base/checkpoint-best.pth",
+    "--eval",
+    "--TTA"
+  ],
+  "program": "/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py",
+  "codePath": "classification/run_class_finetuning.py",
+  "git": {
+    "remote": "https://github.com/SiyuanYan1/PanDerm.git",
+    "commit": "9e2f73c0472f7df4ad6db67fa00d50a472b9eec0"
+  },
+  "email": "xlii0374@student.monash.edu",
+  "root": "/home/share/FM_Code/PanDerm/classification",
+  "host": "mmai-WS0",
+  "executable": "/home/syyan/anaconda3/envs/PanDerm/bin/python",
+  "codePathLocal": "run_class_finetuning.py",
+  "cpu_count": 20,
+  "cpu_count_logical": 40,
+  "gpu": "NVIDIA RTX 6000 Ada Generation",
+  "gpu_count": 4,
+  "disk": {
+    "/": {
+      "total": "3936288260096",
+      "used": "3679700959232"
+    }
+  },
+  "memory": {
+    "total": "168586166272"
+  },
+  "cpu": {
+    "count": 20,
+    "countLogical": 40
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    }
+  ],
+  "cudaVersion": "12.2"
+}

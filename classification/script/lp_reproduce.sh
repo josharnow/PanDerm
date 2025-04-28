@@ -18,6 +18,7 @@ for i in "${!models[@]}"; do
   csv_file="${model}_Result.csv"
   
   for seed in 0; do
+
     CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
       --batch_size 1000 \
       --model "$model" \
@@ -73,7 +74,7 @@ for i in "${!models[@]}"; do
 #      --root_path '/home/share/Uni_Eval/HIBA/images/' \
 #      --pretrained_checkpoint "$checkpoint"
 #
-#    CUDA_VISIBLE_DEVICES=2 python3 linear_eval.py \
+#    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \
 #      --batch_size 1000 \
 #      --model "$model" \
 #      --nb_classes 6 \

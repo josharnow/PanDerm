@@ -1,0 +1,7 @@
+{"time":"2025-04-28T18:24:09.215179489+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_182409-ns38esgo/logs/debug-core.log"}
+{"time":"2025-04-28T18:24:09.590976623+10:00","level":"INFO","msg":"created new stream","id":"ns38esgo"}
+{"time":"2025-04-28T18:24:09.59109061+10:00","level":"INFO","msg":"stream: started","id":"ns38esgo"}
+{"time":"2025-04-28T18:24:09.591129484+10:00","level":"INFO","msg":"sender: started","stream_id":"ns38esgo"}
+{"time":"2025-04-28T18:24:09.591124432+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"ns38esgo"}
+{"time":"2025-04-28T18:24:09.591248035+10:00","level":"INFO","msg":"handler: started","stream_id":"ns38esgo"}
+{"time":"2025-04-28T18:24:09.962042439+10:00","level":"INFO","msg":"Starting system monitor"}

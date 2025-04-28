@@ -1,0 +1,15 @@
+{"time":"2025-04-28T16:54:28.682713532+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_165428-f91ec9vt/logs/debug-core.log"}
+{"time":"2025-04-28T16:54:29.088974813+10:00","level":"INFO","msg":"created new stream","id":"f91ec9vt"}
+{"time":"2025-04-28T16:54:29.089054073+10:00","level":"INFO","msg":"stream: started","id":"f91ec9vt"}
+{"time":"2025-04-28T16:54:29.089080951+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:54:29.089200619+10:00","level":"INFO","msg":"sender: started","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:54:29.089090037+10:00","level":"INFO","msg":"handler: started","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:54:29.450436491+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-28T16:55:06.626753558+10:00","level":"INFO","msg":"stream: closing","id":"f91ec9vt"}
+{"time":"2025-04-28T16:55:06.62682897+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-28T16:55:06.626922968+10:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-28T16:55:07.503373195+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-28T16:55:07.824781726+10:00","level":"INFO","msg":"handler: closed","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:55:07.824865158+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:55:07.824895201+10:00","level":"INFO","msg":"sender: closed","stream_id":"f91ec9vt"}
+{"time":"2025-04-28T16:55:07.825005905+10:00","level":"INFO","msg":"stream: closed","id":"f91ec9vt"}

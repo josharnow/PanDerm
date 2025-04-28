@@ -1,0 +1,15 @@
+{"time":"2025-04-28T16:19:54.763732509+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_161954-10fqz39i/logs/debug-core.log"}
+{"time":"2025-04-28T16:19:55.131427116+10:00","level":"INFO","msg":"created new stream","id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.131502096+10:00","level":"INFO","msg":"stream: started","id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.131530465+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.131546505+10:00","level":"INFO","msg":"sender: started","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.131611116+10:00","level":"INFO","msg":"handler: started","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.248774506+10:00","level":"INFO","msg":"stream: closing","id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.506971009+10:00","level":"ERROR","msg":"sender: upsertConfig: RunRecord is nil"}
+{"time":"2025-04-28T16:19:55.809394433+10:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-04-28T16:19:55.809561596+10:00","level":"ERROR","msg":"runfiles: CreateRunFiles returned error: returned error 404: {\"data\":{\"createRunFiles\":null},\"errors\":[{\"message\":\"project /FM_FT_screening not found during createRunFiles\",\"path\":[\"createRunFiles\"]}]}"}
+{"time":"2025-04-28T16:19:55.810393247+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-28T16:19:55.810463145+10:00","level":"INFO","msg":"handler: closed","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.810518606+10:00","level":"INFO","msg":"sender: closed","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.810519256+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"10fqz39i"}
+{"time":"2025-04-28T16:19:55.810668859+10:00","level":"INFO","msg":"stream: closed","id":"10fqz39i"}

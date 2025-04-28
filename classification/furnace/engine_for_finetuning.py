@@ -333,8 +333,8 @@ def evaluate(data_loader, model, device, out_dir, epoch, mode, num_class):
     acc = accuracy_score(true_label_decode_array, prediction_decode_array)
     top3_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=3, labels=np.arange(num_class))
     top5_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=5, labels=np.arange(num_class))
-    # auc_roc = roc_auc_score(true_label_onehot_array, prediction_array, multi_class='ovr', average='macro')
-    auc_roc = 666
+    auc_roc = roc_auc_score(true_label_onehot_array, prediction_array, multi_class='ovr', average='macro')
+
 
     f1 = f1_score(true_label_decode_array, prediction_decode_array, average='weighted')
     recall = recall_score(true_label_decode_array, prediction_decode_array, average='macro')
@@ -353,7 +353,7 @@ def evaluate(data_loader, model, device, out_dir, epoch, mode, num_class):
     'top5 accuracy': top5_acc,
     'sensitivity': macro_sensitivity,
     'specificity': macro_specificity,
-    # 'auc_roc': roc_auc_score(true_label_onehot_array, prediction_array, multi_class='ovr', average='macro'),
+    'auc_roc': roc_auc_score(true_label_onehot_array, prediction_array, multi_class='ovr', average='macro'),
     'weighted_f1': f1_score(true_label_decode_array, prediction_decode_array, average='weighted'),
     'recall_macro': recall_score(true_label_decode_array, prediction_decode_array, average='macro'),
     'recall_weighted': recall_score(true_label_decode_array, prediction_decode_array, average='weighted'),
@@ -468,9 +468,8 @@ class TTAHandler:
 def evaluate_tta(data_loader, model, device, out_dir, epoch, mode, num_class, num_TTA=5):
     model.eval()
     criterion = torch.nn.CrossEntropyLoss()
-    metric_logger = utils.MetricLogger(delimiter="  ")
+    metric_logger = MetricLogger(delimiter="  ")
     tta_handler = TTAHandler(num_augmentations=num_TTA)
-
     results = []
     all_preds = []
     all_targets = []

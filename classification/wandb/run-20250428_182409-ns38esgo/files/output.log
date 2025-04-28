@@ -1,0 +1,45 @@
+Not using distributed mode
+Namespace(mode='train', batch_size=64, epochs=50, update_freq=1, save_ckpt_freq=5, model='PanDerm_Large_FT', rel_pos_bias=True, sin_pos_emb=True, layer_scale_init_value=0.1, ood_eval=False, input_size=224, drop=0.0, attn_drop_rate=0.0, drop_path=0.2, weights=False, disable_eval_during_finetuning=False, model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, percent_data=1.0, TTA=True, monitor='acc', opt='adamw', opt_eps=1e-08, opt_betas=None, clip_grad=None, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0005, layer_decay=0.65, warmup_lr=1e-06, min_lr=1e-06, warmup_epochs=10, warmup_steps=-1, color_jitter=0.4, aa='rand-m9-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', pretrained_checkpoint='/home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth', model_key='model|module|state_dict', model_prefix='', init_scale=0.001, use_mean_pooling=True, disable_weight_decay_on_rel_pos_bias=False, data_path='/datasets01/imagenet_full_size/061417/', eval_data_path=None, test_csv_path=None, image_key='image', nb_classes=6, imagenet_default_mean_and_std=True, data_set='IMNET', csv_path='/home/share/Uni_Eval/pad-ufes/2000.csv', root_path='/home/share/Uni_Eval/pad-ufes/images/', output_dir='/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/PAD_Res/', log_dir=None, device='cuda', seed=0, resume='/home/share/FM_Code/PanDerm/Output_dir/checkpoint-best.pth', auto_resume=False, wandb_name='eval0', save_ckpt=True, start_epoch=0, eval=True, dist_eval=False, num_workers=10, pin_mem=True, world_size=1, local_rank=-1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, enable_linear_eval=False, enable_multi_print=False, exp_name='pad test', distributed=False)
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7f60a00f0fa0>
+train size: 1493 ,val size: 344 ,test size: 461
+Mixup is activated!
+/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py", line 751, in <module>
+    main(opts, ds_init)
+  File "/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py", line 389, in main
+    model = panderm_large_patch16_224_finetune(
+  File "/home/share/FM_Code/PanDerm/classification/models/modeling_finetune.py", line 544, in panderm_large_patch16_224_finetune
+    model = VisionTransformer(
+  File "/home/share/FM_Code/PanDerm/classification/models/modeling_finetune.py", line 441, in __init__
+    self.apply(self._init_weights)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 895, in apply
+    module.apply(fn)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 895, in apply
+    module.apply(fn)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 895, in apply
+    module.apply(fn)
+  [Previous line repeated 1 more time]
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 896, in apply
+    fn(self)
+  File "/home/share/FM_Code/PanDerm/classification/models/modeling_finetune.py", line 475, in _init_weights
+    trunc_normal_(m.weight, std=.02)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/timm/layers/weight_init.py", line 67, in trunc_normal_
+    return _trunc_normal_(tensor, mean, std, a, b)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/timm/layers/weight_init.py", line 32, in _trunc_normal_
+    tensor.erfinv_()
+KeyboardInterrupt
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7f60a0aa0700>
+Traceback (most recent call last):
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+KeyboardInterrupt:

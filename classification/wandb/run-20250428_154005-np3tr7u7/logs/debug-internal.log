@@ -1,0 +1,7 @@
+{"time":"2025-04-28T15:40:05.984432519+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_154005-np3tr7u7/logs/debug-core.log"}
+{"time":"2025-04-28T15:40:06.372391787+10:00","level":"INFO","msg":"created new stream","id":"np3tr7u7"}
+{"time":"2025-04-28T15:40:06.372478597+10:00","level":"INFO","msg":"stream: started","id":"np3tr7u7"}
+{"time":"2025-04-28T15:40:06.372511859+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"np3tr7u7"}
+{"time":"2025-04-28T15:40:06.372552348+10:00","level":"INFO","msg":"handler: started","stream_id":"np3tr7u7"}
+{"time":"2025-04-28T15:40:06.37260028+10:00","level":"INFO","msg":"sender: started","stream_id":"np3tr7u7"}
+{"time":"2025-04-28T15:40:06.75861635+10:00","level":"INFO","msg":"Starting system monitor"}

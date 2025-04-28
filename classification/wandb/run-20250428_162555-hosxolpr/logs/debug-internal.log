@@ -1,0 +1,16 @@
+{"time":"2025-04-28T16:25:55.988404334+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_162555-hosxolpr/logs/debug-core.log"}
+{"time":"2025-04-28T16:25:56.422805752+10:00","level":"INFO","msg":"created new stream","id":"hosxolpr"}
+{"time":"2025-04-28T16:25:56.422925782+10:00","level":"INFO","msg":"stream: started","id":"hosxolpr"}
+{"time":"2025-04-28T16:25:56.422999038+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:25:56.423009057+10:00","level":"INFO","msg":"sender: started","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:25:56.423096277+10:00","level":"INFO","msg":"handler: started","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:25:56.818468244+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-28T16:46:29.997223013+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-28T16:46:29.997338704+10:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-28T16:46:31.000984648+10:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.371814202,"progress":"203.2KB/203.2KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.371791938,"progress":"538B/538B"},{"desc":"uploading config.yaml","runtime_seconds":0.100493173,"progress":"3.5KB/3.5KB"}],"total_operations":3}}
+{"time":"2025-04-28T16:46:31.691196486+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-28T16:46:32.083988439+10:00","level":"INFO","msg":"stream: closing","id":"hosxolpr"}
+{"time":"2025-04-28T16:46:32.084024316+10:00","level":"INFO","msg":"handler: closed","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:46:32.084044102+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:46:32.084124572+10:00","level":"INFO","msg":"sender: closed","stream_id":"hosxolpr"}
+{"time":"2025-04-28T16:46:32.084195238+10:00","level":"INFO","msg":"stream: closed","id":"hosxolpr"}

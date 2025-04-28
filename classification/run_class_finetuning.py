@@ -68,7 +68,7 @@ def get_args():
     # TTA
     parser.add_argument('--TTA', action='store_true', default=False)
     # train monitor
-    parser.add_argument('--monitor', default='recall', type=str, help='monitor used in training')
+    parser.add_argument('--monitor', default='acc', type=str, help='monitor used in training')
 
     # Optimizer parameters
     parser.add_argument('--opt', default='adamw', type=str, metavar='OPTIMIZER',
@@ -295,7 +295,7 @@ def main(args, ds_init):
     dataset_val = Uni_Dataset(df=df,
                               root=args.root_path,
                               val=True,
-                              transforms=data_transforms['test'],
+                              transforms=data_transforms['val'],
                               binary=binary,
                               image_key=args.image_key)
 
@@ -655,12 +655,13 @@ def main(args, ds_init):
         model.load_state_dict(model_dict['model'])
         if args.TTA:
             print(f"Starting evaluation with tta")
-            val_stats, wandb_res = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch, mode='test',
+            test_res, _ = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch, mode='test',
                                                 num_class=args.nb_classes)
         else:
             print(f"Starting evaluation without tta")
-            val_stats, wandb_res = evaluate(data_loader_test, model, device,args.output_dir, epoch, mode='test',
+            test_res, wandb_res = evaluate(data_loader_test, model, device,args.output_dir, epoch, mode='test',
                                         num_class=args.nb_classes)
+            print('TTTTTTTTT',test_res)
 
         exit(0)
     else:
@@ -723,16 +724,15 @@ def main(args, ds_init):
             model_dict = torch.load(model_weight)
             model.load_state_dict(model_dict['model'])
             if args.TTA:
-                print(f"Starting evaluation with tta")
-                test_stats, wandb_test = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch,
+                print(f"Starting test with tta")
+                test_stats, _ = evaluate_tta(data_loader_test, model, device, args.output_dir, epoch,
                                                     mode='test',
                                                     num_class=args.nb_classes)
             else:
-                print(f"Starting evaluation without tta")
+                print(f"Starting test without tta")
                 test_stats, wandb_test = evaluate(data_loader_test, model, device, args.output_dir, epoch, mode='test',
                                                   num_class=args.nb_classes)
-
-            wandb.log(wandb_test)
+                wandb.log(wandb_test)
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))

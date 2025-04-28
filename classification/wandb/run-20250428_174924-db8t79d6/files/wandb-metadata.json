@@ -1,0 +1,106 @@
+{
+  "os": "Linux-5.15.0-138-generic-x86_64-with-glibc2.31",
+  "python": "CPython 3.10.17",
+  "startedAt": "2025-04-28T07:49:24.718546Z",
+  "args": [
+    "--model",
+    "PanDerm_Large_FT",
+    "--pretrained_checkpoint",
+    "/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_ll_data6_checkpoint-499.pth",
+    "--nb_classes",
+    "7",
+    "--batch_size",
+    "128",
+    "--lr",
+    "5e-4",
+    "--update_freq",
+    "1",
+    "--warmup_epochs",
+    "10",
+    "--epochs",
+    "50",
+    "--layer_decay",
+    "0.65",
+    "--drop_path",
+    "0.2",
+    "--weight_decay",
+    "0.05",
+    "--mixup",
+    "0.8",
+    "--cutmix",
+    "1.0",
+    "--weights",
+    "--monitor",
+    "acc",
+    "--sin_pos_emb",
+    "--no_auto_resume",
+    "--exp_name",
+    "ham finetune and eval",
+    "--imagenet_default_mean_and_std",
+    "--wandb_name",
+    "Reproduce_PAD_FT128_5e-4_122",
+    "--output_dir",
+    "/home/share/FM_Code/PanDerm/Output_dir/",
+    "--csv_path",
+    "/home/share/Uni_Eval/pad-ufes/2000.csv",
+    "--root_path",
+    "/home/share/Uni_Eval/pad-ufes/images/",
+    "--seed",
+    "122"
+  ],
+  "program": "/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py",
+  "codePath": "classification/run_class_finetuning.py",
+  "git": {
+    "remote": "https://github.com/SiyuanYan1/PanDerm.git",
+    "commit": "9e2f73c0472f7df4ad6db67fa00d50a472b9eec0"
+  },
+  "email": "xlii0374@student.monash.edu",
+  "root": "/home/share/FM_Code/PanDerm/classification",
+  "host": "mmai-WS0",
+  "executable": "/home/syyan/anaconda3/envs/PanDerm/bin/python3",
+  "codePathLocal": "run_class_finetuning.py",
+  "cpu_count": 20,
+  "cpu_count_logical": 40,
+  "gpu": "NVIDIA RTX 6000 Ada Generation",
+  "gpu_count": 4,
+  "disk": {
+    "/": {
+      "total": "3936288260096",
+      "used": "3679704768512"
+    }
+  },
+  "memory": {
+    "total": "168586166272"
+  },
+  "cpu": {
+    "count": 20,
+    "countLogical": 40
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    },
+    {
+      "name": "NVIDIA RTX 6000 Ada Generation",
+      "memoryTotal": "51527024640",
+      "cudaCores": 18176,
+      "architecture": "Ada"
+    }
+  ],
+  "cudaVersion": "12.2"
+}

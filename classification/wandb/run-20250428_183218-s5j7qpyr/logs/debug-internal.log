@@ -1,0 +1,16 @@
+{"time":"2025-04-28T18:32:18.594530338+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_183218-s5j7qpyr/logs/debug-core.log"}
+{"time":"2025-04-28T18:32:18.983379491+10:00","level":"INFO","msg":"created new stream","id":"s5j7qpyr"}
+{"time":"2025-04-28T18:32:18.983438717+10:00","level":"INFO","msg":"stream: started","id":"s5j7qpyr"}
+{"time":"2025-04-28T18:32:18.983452774+10:00","level":"INFO","msg":"handler: started","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:32:18.983467628+10:00","level":"INFO","msg":"sender: started","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:32:18.983505676+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:32:19.359967489+10:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-28T18:33:41.028048251+10:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-28T18:33:41.02818771+10:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-28T18:33:42.032006242+10:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.387915741,"progress":"77.8KB/77.8KB"},{"desc":"uploading config.yaml","runtime_seconds":0.087169082,"progress":"3.5KB/3.5KB"}],"total_operations":2}}
+{"time":"2025-04-28T18:33:42.354801913+10:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-28T18:33:42.668636564+10:00","level":"INFO","msg":"stream: closing","id":"s5j7qpyr"}
+{"time":"2025-04-28T18:33:42.668675473+10:00","level":"INFO","msg":"handler: closed","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:33:42.668695754+10:00","level":"INFO","msg":"writer: Close: closed","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:33:42.668715166+10:00","level":"INFO","msg":"sender: closed","stream_id":"s5j7qpyr"}
+{"time":"2025-04-28T18:33:42.668812138+10:00","level":"INFO","msg":"stream: closed","id":"s5j7qpyr"}

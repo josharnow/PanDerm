@@ -1,0 +1,1028 @@
+Not using distributed mode
+Namespace(mode='train', batch_size=64, epochs=50, update_freq=1, save_ckpt_freq=5, model='PanDerm_Base_FT', rel_pos_bias=True, sin_pos_emb=True, layer_scale_init_value=0.1, ood_eval=False, input_size=224, drop=0.0, attn_drop_rate=0.0, drop_path=0.2, weights=False, disable_eval_during_finetuning=False, model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, percent_data=1.0, TTA=False, monitor='recall', opt='adamw', opt_eps=1e-08, opt_betas=None, clip_grad=None, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0005, layer_decay=0.65, warmup_lr=1e-06, min_lr=1e-06, warmup_epochs=10, warmup_steps=-1, color_jitter=0.4, aa='rand-m9-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', pretrained_checkpoint='/home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth', model_key='model|module|state_dict', model_prefix='', init_scale=0.001, use_mean_pooling=True, disable_weight_decay_on_rel_pos_bias=False, data_path='/datasets01/imagenet_full_size/061417/', eval_data_path=None, test_csv_path='/home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_test.csv', image_key='image', nb_classes=7, imagenet_default_mean_and_std=True, data_set='IMNET', csv_path='/home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_test.csv', root_path='/home/share/Uni_Eval/ISIC2018_reader/images/', output_dir='/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting', log_dir=None, device='cuda', seed=0, resume='/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting1_base/checkpoint-best.pth', auto_resume=False, wandb_name='weight_sampler_max_recall_mask5e-40', save_ckpt=True, start_epoch=0, eval=True, dist_eval=False, num_workers=10, pin_mem=True, world_size=1, local_rank=-1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, enable_linear_eval=False, enable_multi_print=False, exp_name='ham test', distributed=False)
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7f289a3c0f70>
+train size: 0 ,val size: 0 ,test size: 1512
+Mixup is activated!
+/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.0181818176060915)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.036363635212183)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.05454545468091965)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.072727270424366)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.09090908616781235)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.10909091681241989)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.12727272510528564)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1454545557498932)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.16363637149333954)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1818181872367859)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.20000000298023224)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (norm): Identity()
+  (fc_norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): Linear(in_features=768, out_features=7, bias=True)
+)
+Patch size = (16, 16)
+/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py:432: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
+Load ckpt from /home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth
+Load state_dict by model_key = model
+all keys: ['encoder.cls_token', 'encoder.pos_embed', 'encoder.patch_embed.proj.weight', 'encoder.patch_embed.proj.bias', 'encoder.blocks.0.gamma_1', 'encoder.blocks.0.gamma_2', 'encoder.blocks.0.norm1.weight', 'encoder.blocks.0.norm1.bias', 'encoder.blocks.0.attn.q_bias', 'encoder.blocks.0.attn.v_bias', 'encoder.blocks.0.attn.qkv.weight', 'encoder.blocks.0.attn.proj.weight', 'encoder.blocks.0.attn.proj.bias', 'encoder.blocks.0.norm2.weight', 'encoder.blocks.0.norm2.bias', 'encoder.blocks.0.mlp.fc1.weight', 'encoder.blocks.0.mlp.fc1.bias', 'encoder.blocks.0.mlp.fc2.weight', 'encoder.blocks.0.mlp.fc2.bias', 'encoder.blocks.1.gamma_1', 'encoder.blocks.1.gamma_2', 'encoder.blocks.1.norm1.weight', 'encoder.blocks.1.norm1.bias', 'encoder.blocks.1.attn.q_bias', 'encoder.blocks.1.attn.v_bias', 'encoder.blocks.1.attn.qkv.weight', 'encoder.blocks.1.attn.proj.weight', 'encoder.blocks.1.attn.proj.bias', 'encoder.blocks.1.norm2.weight', 'encoder.blocks.1.norm2.bias', 'encoder.blocks.1.mlp.fc1.weight', 'encoder.blocks.1.mlp.fc1.bias', 'encoder.blocks.1.mlp.fc2.weight', 'encoder.blocks.1.mlp.fc2.bias', 'encoder.blocks.2.gamma_1', 'encoder.blocks.2.gamma_2', 'encoder.blocks.2.norm1.weight', 'encoder.blocks.2.norm1.bias', 'encoder.blocks.2.attn.q_bias', 'encoder.blocks.2.attn.v_bias', 'encoder.blocks.2.attn.qkv.weight', 'encoder.blocks.2.attn.proj.weight', 'encoder.blocks.2.attn.proj.bias', 'encoder.blocks.2.norm2.weight', 'encoder.blocks.2.norm2.bias', 'encoder.blocks.2.mlp.fc1.weight', 'encoder.blocks.2.mlp.fc1.bias', 'encoder.blocks.2.mlp.fc2.weight', 'encoder.blocks.2.mlp.fc2.bias', 'encoder.blocks.3.gamma_1', 'encoder.blocks.3.gamma_2', 'encoder.blocks.3.norm1.weight', 'encoder.blocks.3.norm1.bias', 'encoder.blocks.3.attn.q_bias', 'encoder.blocks.3.attn.v_bias', 'encoder.blocks.3.attn.qkv.weight', 'encoder.blocks.3.attn.proj.weight', 'encoder.blocks.3.attn.proj.bias', 'encoder.blocks.3.norm2.weight', 'encoder.blocks.3.norm2.bias', 'encoder.blocks.3.mlp.fc1.weight', 'encoder.blocks.3.mlp.fc1.bias', 'encoder.blocks.3.mlp.fc2.weight', 'encoder.blocks.3.mlp.fc2.bias', 'encoder.blocks.4.gamma_1', 'encoder.blocks.4.gamma_2', 'encoder.blocks.4.norm1.weight', 'encoder.blocks.4.norm1.bias', 'encoder.blocks.4.attn.q_bias', 'encoder.blocks.4.attn.v_bias', 'encoder.blocks.4.attn.qkv.weight', 'encoder.blocks.4.attn.proj.weight', 'encoder.blocks.4.attn.proj.bias', 'encoder.blocks.4.norm2.weight', 'encoder.blocks.4.norm2.bias', 'encoder.blocks.4.mlp.fc1.weight', 'encoder.blocks.4.mlp.fc1.bias', 'encoder.blocks.4.mlp.fc2.weight', 'encoder.blocks.4.mlp.fc2.bias', 'encoder.blocks.5.gamma_1', 'encoder.blocks.5.gamma_2', 'encoder.blocks.5.norm1.weight', 'encoder.blocks.5.norm1.bias', 'encoder.blocks.5.attn.q_bias', 'encoder.blocks.5.attn.v_bias', 'encoder.blocks.5.attn.qkv.weight', 'encoder.blocks.5.attn.proj.weight', 'encoder.blocks.5.attn.proj.bias', 'encoder.blocks.5.norm2.weight', 'encoder.blocks.5.norm2.bias', 'encoder.blocks.5.mlp.fc1.weight', 'encoder.blocks.5.mlp.fc1.bias', 'encoder.blocks.5.mlp.fc2.weight', 'encoder.blocks.5.mlp.fc2.bias', 'encoder.blocks.6.gamma_1', 'encoder.blocks.6.gamma_2', 'encoder.blocks.6.norm1.weight', 'encoder.blocks.6.norm1.bias', 'encoder.blocks.6.attn.q_bias', 'encoder.blocks.6.attn.v_bias', 'encoder.blocks.6.attn.qkv.weight', 'encoder.blocks.6.attn.proj.weight', 'encoder.blocks.6.attn.proj.bias', 'encoder.blocks.6.norm2.weight', 'encoder.blocks.6.norm2.bias', 'encoder.blocks.6.mlp.fc1.weight', 'encoder.blocks.6.mlp.fc1.bias', 'encoder.blocks.6.mlp.fc2.weight', 'encoder.blocks.6.mlp.fc2.bias', 'encoder.blocks.7.gamma_1', 'encoder.blocks.7.gamma_2', 'encoder.blocks.7.norm1.weight', 'encoder.blocks.7.norm1.bias', 'encoder.blocks.7.attn.q_bias', 'encoder.blocks.7.attn.v_bias', 'encoder.blocks.7.attn.qkv.weight', 'encoder.blocks.7.attn.proj.weight', 'encoder.blocks.7.attn.proj.bias', 'encoder.blocks.7.norm2.weight', 'encoder.blocks.7.norm2.bias', 'encoder.blocks.7.mlp.fc1.weight', 'encoder.blocks.7.mlp.fc1.bias', 'encoder.blocks.7.mlp.fc2.weight', 'encoder.blocks.7.mlp.fc2.bias', 'encoder.blocks.8.gamma_1', 'encoder.bl
+##############new keys: 454 odict_keys(['rd_pos_embed', 'mask_token', 'regresser.regressor_blocks.0.gamma_1_cross', 'regresser.regressor_blocks.0.gamma_2_cross', 'regresser.regressor_blocks.0.norm1_q.weight', 'regresser.regressor_blocks.0.norm1_q.bias', 'regresser.regressor_blocks.0.norm1_k.weight', 'regresser.regressor_blocks.0.norm1_k.bias', 'regresser.regressor_blocks.0.norm1_v.weight', 'regresser.regressor_blocks.0.norm1_v.bias', 'regresser.regressor_blocks.0.norm2_cross.weight', 'regresser.regressor_blocks.0.norm2_cross.bias', 'regresser.regressor_blocks.0.cross_attn.q_bias', 'regresser.regressor_blocks.0.cross_attn.v_bias', 'regresser.regressor_blocks.0.cross_attn.q.weight', 'regresser.regressor_blocks.0.cross_attn.k.weight', 'regresser.regressor_blocks.0.cross_attn.v.weight', 'regresser.regressor_blocks.0.cross_attn.proj.weight', 'regresser.regressor_blocks.0.cross_attn.proj.bias', 'regresser.regressor_blocks.0.mlp_cross.fc1.weight', 'regresser.regressor_blocks.0.mlp_cross.fc1.bias', 'regresser.regressor_blocks.0.mlp_cross.fc2.weight', 'regresser.regressor_blocks.0.mlp_cross.fc2.bias', 'regresser.regressor_blocks.1.gamma_1_cross', 'regresser.regressor_blocks.1.gamma_2_cross', 'regresser.regressor_blocks.1.norm1_q.weight', 'regresser.regressor_blocks.1.norm1_q.bias', 'regresser.regressor_blocks.1.norm1_k.weight', 'regresser.regressor_blocks.1.norm1_k.bias', 'regresser.regressor_blocks.1.norm1_v.weight', 'regresser.regressor_blocks.1.norm1_v.bias', 'regresser.regressor_blocks.1.norm2_cross.weight', 'regresser.regressor_blocks.1.norm2_cross.bias', 'regresser.regressor_blocks.1.cross_attn.q_bias', 'regresser.regressor_blocks.1.cross_attn.v_bias', 'regresser.regressor_blocks.1.cross_attn.q.weight', 'regresser.regressor_blocks.1.cross_attn.k.weight', 'regresser.regressor_blocks.1.cross_attn.v.weight', 'regresser.regressor_blocks.1.cross_attn.proj.weight', 'regresser.regressor_blocks.1.cross_attn.proj.bias', 'regresser.regressor_blocks.1.mlp_cross.fc1.weight', 'regresser.regressor_blocks.1.mlp_cross.fc1.bias', 'regresser.regressor_blocks.1.mlp_cross.fc2.weight', 'regresser.regressor_blocks.1.mlp_cross.fc2.bias', 'regresser.regressor_blocks.2.gamma_1_cross', 'regresser.regressor_blocks.2.gamma_2_cross', 'regresser.regressor_blocks.2.norm1_q.weight', 'regresser.regressor_blocks.2.norm1_q.bias', 'regresser.regressor_blocks.2.norm1_k.weight', 'regresser.regressor_blocks.2.norm1_k.bias', 'regresser.regressor_blocks.2.norm1_v.weight', 'regresser.regressor_blocks.2.norm1_v.bias', 'regresser.regressor_blocks.2.norm2_cross.weight', 'regresser.regressor_blocks.2.norm2_cross.bias', 'regresser.regressor_blocks.2.cross_attn.q_bias', 'regresser.regressor_blocks.2.cross_attn.v_bias', 'regresser.regressor_blocks.2.cross_attn.q.weight', 'regresser.regressor_blocks.2.cross_attn.k.weight', 'regresser.regressor_blocks.2.cross_attn.v.weight', 'regresser.regressor_blocks.2.cross_attn.proj.weight', 'regresser.regressor_blocks.2.cross_attn.proj.bias', 'regresser.regressor_blocks.2.mlp_cross.fc1.weight', 'regresser.regressor_blocks.2.mlp_cross.fc1.bias', 'regresser.regressor_blocks.2.mlp_cross.fc2.weight', 'regresser.regressor_blocks.2.mlp_cross.fc2.bias', 'regresser.regressor_blocks.3.gamma_1_cross', 'regresser.regressor_blocks.3.gamma_2_cross', 'regresser.regressor_blocks.3.norm1_q.weight', 'regresser.regressor_blocks.3.norm1_q.bias', 'regresser.regressor_blocks.3.norm1_k.weight', 'regresser.regressor_blocks.3.norm1_k.bias', 'regresser.regressor_blocks.3.norm1_v.weight', 'regresser.regressor_blocks.3.norm1_v.bias', 'regresser.regressor_blocks.3.norm2_cross.weight', 'regresser.regressor_blocks.3.norm2_cross.bias', 'regresser.regressor_blocks.3.cross_attn.q_bias', 'regresser.regressor_blocks.3.cross_attn.v_bias', 'regresser.regressor_blocks.3.cross_attn.q.weight', 'regresser.regressor_blocks.3.cross_attn.k.weight', 'regresser.regressor_blocks.3.cross_attn.v.weight', 'regresser.regressor_blocks.3.cross_attn.proj.weight', 'regresser.regressor_blocks.3.cross_attn.proj.bias', 'regresser.regressor_blocks.3.mlp_cross.fc1.weight', 'regresser.regressor_
+Weights of VisionTransformer not initialized from pretrained model: ['blocks.0.attn.relative_position_bias_table', 'blocks.1.attn.relative_position_bias_table', 'blocks.2.attn.relative_position_bias_table', 'blocks.3.attn.relative_position_bias_table', 'blocks.4.attn.relative_position_bias_table', 'blocks.5.attn.relative_position_bias_table', 'blocks.6.attn.relative_position_bias_table', 'blocks.7.attn.relative_position_bias_table', 'blocks.8.attn.relative_position_bias_table', 'blocks.9.attn.relative_position_bias_table', 'blocks.10.attn.relative_position_bias_table', 'blocks.11.attn.relative_position_bias_table', 'head.weight', 'head.bias']
+Weights from pretrained model not used in VisionTransformer: ['rd_pos_embed', 'mask_token', 'regresser.regressor_blocks.0.gamma_1_cross', 'regresser.regressor_blocks.0.gamma_2_cross', 'regresser.regressor_blocks.0.norm1_q.weight', 'regresser.regressor_blocks.0.norm1_q.bias', 'regresser.regressor_blocks.0.norm1_k.weight', 'regresser.regressor_blocks.0.norm1_k.bias', 'regresser.regressor_blocks.0.norm1_v.weight', 'regresser.regressor_blocks.0.norm1_v.bias', 'regresser.regressor_blocks.0.norm2_cross.weight', 'regresser.regressor_blocks.0.norm2_cross.bias', 'regresser.regressor_blocks.0.cross_attn.q_bias', 'regresser.regressor_blocks.0.cross_attn.v_bias', 'regresser.regressor_blocks.0.cross_attn.q.weight', 'regresser.regressor_blocks.0.cross_attn.k.weight', 'regresser.regressor_blocks.0.cross_attn.v.weight', 'regresser.regressor_blocks.0.cross_attn.proj.weight', 'regresser.regressor_blocks.0.cross_attn.proj.bias', 'regresser.regressor_blocks.0.mlp_cross.fc1.weight', 'regresser.regressor_blocks.0.mlp_cross.fc1.bias', 'regresser.regressor_blocks.0.mlp_cross.fc2.weight', 'regresser.regressor_blocks.0.mlp_cross.fc2.bias', 'regresser.regressor_blocks.1.gamma_1_cross', 'regresser.regressor_blocks.1.gamma_2_cross', 'regresser.regressor_blocks.1.norm1_q.weight', 'regresser.regressor_blocks.1.norm1_q.bias', 'regresser.regressor_blocks.1.norm1_k.weight', 'regresser.regressor_blocks.1.norm1_k.bias', 'regresser.regressor_blocks.1.norm1_v.weight', 'regresser.regressor_blocks.1.norm1_v.bias', 'regresser.regressor_blocks.1.norm2_cross.weight', 'regresser.regressor_blocks.1.norm2_cross.bias', 'regresser.regressor_blocks.1.cross_attn.q_bias', 'regresser.regressor_blocks.1.cross_attn.v_bias', 'regresser.regressor_blocks.1.cross_attn.q.weight', 'regresser.regressor_blocks.1.cross_attn.k.weight', 'regresser.regressor_blocks.1.cross_attn.v.weight', 'regresser.regressor_blocks.1.cross_attn.proj.weight', 'regresser.regressor_blocks.1.cross_attn.proj.bias', 'regresser.regressor_blocks.1.mlp_cross.fc1.weight', 'regresser.regressor_blocks.1.mlp_cross.fc1.bias', 'regresser.regressor_blocks.1.mlp_cross.fc2.weight', 'regresser.regressor_blocks.1.mlp_cross.fc2.bias', 'regresser.regressor_blocks.2.gamma_1_cross', 'regresser.regressor_blocks.2.gamma_2_cross', 'regresser.regressor_blocks.2.norm1_q.weight', 'regresser.regressor_blocks.2.norm1_q.bias', 'regresser.regressor_blocks.2.norm1_k.weight', 'regresser.regressor_blocks.2.norm1_k.bias', 'regresser.regressor_blocks.2.norm1_v.weight', 'regresser.regressor_blocks.2.norm1_v.bias', 'regresser.regressor_blocks.2.norm2_cross.weight', 'regresser.regressor_blocks.2.norm2_cross.bias', 'regresser.regressor_blocks.2.cross_attn.q_bias', 'regresser.regressor_blocks.2.cross_attn.v_bias', 'regresser.regressor_blocks.2.cross_attn.q.weight', 'regresser.regressor_blocks.2.cross_attn.k.weight', 'regresser.regressor_blocks.2.cross_attn.v.weight', 'regresser.regressor_blocks.2.cross_attn.proj.weight', 'regresser.regressor_blocks.2.cross_attn.proj.bias', 'regresser.regressor_blocks.2.mlp_cross.fc1.weight', 'regresser.regressor_blocks.2.mlp_cross.fc1.bias', 'regresser.regressor_blocks.2.mlp_cross.fc2.weight', 'regresser.regressor_blocks.2.mlp_cross.fc2.bias', 'regresser.regressor_blocks.3.gamma_1_cross', 'regresser.regressor_blocks.3.gamma_2_cross', 'regresser.regressor_blocks.3.norm1_q.weight', 'regresser.regressor_blocks.3.norm1_q.bias', 'regresser.regressor_blocks.3.norm1_k.weight', 'regresser.regressor_blocks.3.norm1_k.bias', 'regresser.regressor_blocks.3.norm1_v.weight', 'regresser.regressor_blocks.3.norm1_v.bias', 'regresser.regressor_blocks.3.norm2_cross.weight', 'regresser.regressor_blocks.3.norm2_cross.bias', 'regresser.regressor_blocks.3.cross_attn.q_bias', 'regresser.regressor_blocks.3.cross_attn.v_bias', 'regresser.regressor_blocks.3.cross_attn.q.weight', 'regresser.regressor_blocks.3.cross_attn.k.weight', 'regresser.regressor_blocks.3.cross_attn.v.weight', 'regresser.regressor_blocks.3.cross_attn.proj.weight', 'regresser.regressor_blocks.3.cross_attn.proj.bias', 'regresser.regressor_blocks.3.mlp_cross.fc1.weight',
+Ignored weights of VisionTransformer not initialized from pretrained model: ['blocks.0.attn.relative_position_index', 'blocks.1.attn.relative_position_index', 'blocks.2.attn.relative_position_index', 'blocks.3.attn.relative_position_index', 'blocks.4.attn.relative_position_index', 'blocks.5.attn.relative_position_index', 'blocks.6.attn.relative_position_index', 'blocks.7.attn.relative_position_index', 'blocks.8.attn.relative_position_index', 'blocks.9.attn.relative_position_index', 'blocks.10.attn.relative_position_index', 'blocks.11.attn.relative_position_index']
+size mismatch for cls_token: copying a param with shape torch.Size([1, 1, 1024]) from checkpoint, the shape in current model is torch.Size([1, 1, 768]).
+size mismatch for pos_embed: copying a param with shape torch.Size([1, 197, 1024]) from checkpoint, the shape in current model is torch.Size([1, 197, 768]).
+size mismatch for patch_embed.proj.weight: copying a param with shape torch.Size([1024, 3, 16, 16]) from checkpoint, the shape in current model is torch.Size([768, 3, 16, 16]).
+size mismatch for patch_embed.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.0.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.0.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.0.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.0.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.0.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.0.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.1.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.1.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.1.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.1.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.1.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.1.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.2.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.2.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.2.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.2.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.2.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.2.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.3.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.3.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.3.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.3.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.3.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.3.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.4.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.4.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.4.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.4.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.4.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.4.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.5.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.5.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.5.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.5.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.5.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.5.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.6.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.6.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.6.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.6.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.6.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.6.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.7.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.7.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.7.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.7.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.7.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.7.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.8.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.8.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.8.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.8.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.8.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.8.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.9.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.9.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.9.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.9.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.9.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.9.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.10.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.10.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.10.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.10.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.10.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.10.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.gamma_1: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.gamma_2: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.norm1.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.norm1.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.attn.q_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.attn.v_bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.attn.qkv.weight: copying a param with shape torch.Size([3072, 1024]) from checkpoint, the shape in current model is torch.Size([2304, 768]).
+size mismatch for blocks.11.attn.proj.weight: copying a param with shape torch.Size([1024, 1024]) from checkpoint, the shape in current model is torch.Size([768, 768]).
+size mismatch for blocks.11.attn.proj.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.norm2.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.norm2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for blocks.11.mlp.fc1.weight: copying a param with shape torch.Size([4096, 1024]) from checkpoint, the shape in current model is torch.Size([3072, 768]).
+size mismatch for blocks.11.mlp.fc1.bias: copying a param with shape torch.Size([4096]) from checkpoint, the shape in current model is torch.Size([3072]).
+size mismatch for blocks.11.mlp.fc2.weight: copying a param with shape torch.Size([1024, 4096]) from checkpoint, the shape in current model is torch.Size([768, 3072]).
+size mismatch for blocks.11.mlp.fc2.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for fc_norm.weight: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+size mismatch for fc_norm.bias: copying a param with shape torch.Size([1024]) from checkpoint, the shape in current model is torch.Size([768]).
+Model = VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.0181818176060915)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.036363635212183)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.05454545468091965)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.072727270424366)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.09090908616781235)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.10909091681241989)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.12727272510528564)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1454545557498932)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.16363637149333954)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1818181872367859)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.20000000298023224)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (norm): Identity()
+  (fc_norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): Linear(in_features=768, out_features=7, bias=True)
+)
+number of params: 85767367
+LR = 0.00050000
+Batch size = 64
+Update frequent = 1
+Number of training examples = 0
+Number of training training per epoch = 0
+Assigned values = [0.003697205891018715, 0.005688009063105715, 0.008750783174008792, 0.013462743344628911, 0.02071191283789063, 0.03186448128906251, 0.049022278906250015, 0.07541889062500001, 0.11602906250000002, 0.17850625000000003, 0.274625, 0.42250000000000004, 0.65, 1.0]
+Skip weight decay list:  {'cls_token', 'pos_embed'}
+Param groups = {
+  "layer_0_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "cls_token",
+      "patch_embed.proj.bias"
+    ],
+    "lr_scale": 0.003697205891018715
+  },
+  "layer_0_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "patch_embed.proj.weight"
+    ],
+    "lr_scale": 0.003697205891018715
+  },
+  "layer_1_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.0.gamma_1",
+      "blocks.0.gamma_2",
+      "blocks.0.norm1.weight",
+      "blocks.0.norm1.bias",
+      "blocks.0.attn.q_bias",
+      "blocks.0.attn.v_bias",
+      "blocks.0.attn.proj.bias",
+      "blocks.0.norm2.weight",
+      "blocks.0.norm2.bias",
+      "blocks.0.mlp.fc1.bias",
+      "blocks.0.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.005688009063105715
+  },
+  "layer_1_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.0.attn.relative_position_bias_table",
+      "blocks.0.attn.qkv.weight",
+      "blocks.0.attn.proj.weight",
+      "blocks.0.mlp.fc1.weight",
+      "blocks.0.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.005688009063105715
+  },
+  "layer_2_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.1.gamma_1",
+      "blocks.1.gamma_2",
+      "blocks.1.norm1.weight",
+      "blocks.1.norm1.bias",
+      "blocks.1.attn.q_bias",
+      "blocks.1.attn.v_bias",
+      "blocks.1.attn.proj.bias",
+      "blocks.1.norm2.weight",
+      "blocks.1.norm2.bias",
+      "blocks.1.mlp.fc1.bias",
+      "blocks.1.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.008750783174008792
+  },
+  "layer_2_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.1.attn.relative_position_bias_table",
+      "blocks.1.attn.qkv.weight",
+      "blocks.1.attn.proj.weight",
+      "blocks.1.mlp.fc1.weight",
+      "blocks.1.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.008750783174008792
+  },
+  "layer_3_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.2.gamma_1",
+      "blocks.2.gamma_2",
+      "blocks.2.norm1.weight",
+      "blocks.2.norm1.bias",
+      "blocks.2.attn.q_bias",
+      "blocks.2.attn.v_bias",
+      "blocks.2.attn.proj.bias",
+      "blocks.2.norm2.weight",
+      "blocks.2.norm2.bias",
+      "blocks.2.mlp.fc1.bias",
+      "blocks.2.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.013462743344628911
+  },
+  "layer_3_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.2.attn.relative_position_bias_table",
+      "blocks.2.attn.qkv.weight",
+      "blocks.2.attn.proj.weight",
+      "blocks.2.mlp.fc1.weight",
+      "blocks.2.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.013462743344628911
+  },
+  "layer_4_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.3.gamma_1",
+      "blocks.3.gamma_2",
+      "blocks.3.norm1.weight",
+      "blocks.3.norm1.bias",
+      "blocks.3.attn.q_bias",
+      "blocks.3.attn.v_bias",
+      "blocks.3.attn.proj.bias",
+      "blocks.3.norm2.weight",
+      "blocks.3.norm2.bias",
+      "blocks.3.mlp.fc1.bias",
+      "blocks.3.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.02071191283789063
+  },
+  "layer_4_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.3.attn.relative_position_bias_table",
+      "blocks.3.attn.qkv.weight",
+      "blocks.3.attn.proj.weight",
+      "blocks.3.mlp.fc1.weight",
+      "blocks.3.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.02071191283789063
+  },
+  "layer_5_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.4.gamma_1",
+      "blocks.4.gamma_2",
+      "blocks.4.norm1.weight",
+      "blocks.4.norm1.bias",
+      "blocks.4.attn.q_bias",
+      "blocks.4.attn.v_bias",
+      "blocks.4.attn.proj.bias",
+      "blocks.4.norm2.weight",
+      "blocks.4.norm2.bias",
+      "blocks.4.mlp.fc1.bias",
+      "blocks.4.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.03186448128906251
+  },
+  "layer_5_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.4.attn.relative_position_bias_table",
+      "blocks.4.attn.qkv.weight",
+      "blocks.4.attn.proj.weight",
+      "blocks.4.mlp.fc1.weight",
+      "blocks.4.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.03186448128906251
+  },
+  "layer_6_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.5.gamma_1",
+      "blocks.5.gamma_2",
+      "blocks.5.norm1.weight",
+      "blocks.5.norm1.bias",
+      "blocks.5.attn.q_bias",
+      "blocks.5.attn.v_bias",
+      "blocks.5.attn.proj.bias",
+      "blocks.5.norm2.weight",
+      "blocks.5.norm2.bias",
+      "blocks.5.mlp.fc1.bias",
+      "blocks.5.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.049022278906250015
+  },
+  "layer_6_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.5.attn.relative_position_bias_table",
+      "blocks.5.attn.qkv.weight",
+      "blocks.5.attn.proj.weight",
+      "blocks.5.mlp.fc1.weight",
+      "blocks.5.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.049022278906250015
+  },
+  "layer_7_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.6.gamma_1",
+      "blocks.6.gamma_2",
+      "blocks.6.norm1.weight",
+      "blocks.6.norm1.bias",
+      "blocks.6.attn.q_bias",
+      "blocks.6.attn.v_bias",
+      "blocks.6.attn.proj.bias",
+      "blocks.6.norm2.weight",
+      "blocks.6.norm2.bias",
+      "blocks.6.mlp.fc1.bias",
+      "blocks.6.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.07541889062500001
+  },
+  "layer_7_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.6.attn.relative_position_bias_table",
+      "blocks.6.attn.qkv.weight",
+      "blocks.6.attn.proj.weight",
+      "blocks.6.mlp.fc1.weight",
+      "blocks.6.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.07541889062500001
+  },
+  "layer_8_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.7.gamma_1",
+      "blocks.7.gamma_2",
+      "blocks.7.norm1.weight",
+      "blocks.7.norm1.bias",
+      "blocks.7.attn.q_bias",
+      "blocks.7.attn.v_bias",
+      "blocks.7.attn.proj.bias",
+      "blocks.7.norm2.weight",
+      "blocks.7.norm2.bias",
+      "blocks.7.mlp.fc1.bias",
+      "blocks.7.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.11602906250000002
+  },
+  "layer_8_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.7.attn.relative_position_bias_table",
+      "blocks.7.attn.qkv.weight",
+      "blocks.7.attn.proj.weight",
+      "blocks.7.mlp.fc1.weight",
+      "blocks.7.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.11602906250000002
+  },
+  "layer_9_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.8.gamma_1",
+      "blocks.8.gamma_2",
+      "blocks.8.norm1.weight",
+      "blocks.8.norm1.bias",
+      "blocks.8.attn.q_bias",
+      "blocks.8.attn.v_bias",
+      "blocks.8.attn.proj.bias",
+      "blocks.8.norm2.weight",
+      "blocks.8.norm2.bias",
+      "blocks.8.mlp.fc1.bias",
+      "blocks.8.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.17850625000000003
+  },
+  "layer_9_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.8.attn.relative_position_bias_table",
+      "blocks.8.attn.qkv.weight",
+      "blocks.8.attn.proj.weight",
+      "blocks.8.mlp.fc1.weight",
+      "blocks.8.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.17850625000000003
+  },
+  "layer_10_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.9.gamma_1",
+      "blocks.9.gamma_2",
+      "blocks.9.norm1.weight",
+      "blocks.9.norm1.bias",
+      "blocks.9.attn.q_bias",
+      "blocks.9.attn.v_bias",
+      "blocks.9.attn.proj.bias",
+      "blocks.9.norm2.weight",
+      "blocks.9.norm2.bias",
+      "blocks.9.mlp.fc1.bias",
+      "blocks.9.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.274625
+  },
+  "layer_10_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.9.attn.relative_position_bias_table",
+      "blocks.9.attn.qkv.weight",
+      "blocks.9.attn.proj.weight",
+      "blocks.9.mlp.fc1.weight",
+      "blocks.9.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.274625
+  },
+  "layer_11_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.10.gamma_1",
+      "blocks.10.gamma_2",
+      "blocks.10.norm1.weight",
+      "blocks.10.norm1.bias",
+      "blocks.10.attn.q_bias",
+      "blocks.10.attn.v_bias",
+      "blocks.10.attn.proj.bias",
+      "blocks.10.norm2.weight",
+      "blocks.10.norm2.bias",
+      "blocks.10.mlp.fc1.bias",
+      "blocks.10.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.42250000000000004
+  },
+  "layer_11_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.10.attn.relative_position_bias_table",
+      "blocks.10.attn.qkv.weight",
+      "blocks.10.attn.proj.weight",
+      "blocks.10.mlp.fc1.weight",
+      "blocks.10.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.42250000000000004
+  },
+  "layer_12_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.11.gamma_1",
+      "blocks.11.gamma_2",
+      "blocks.11.norm1.weight",
+      "blocks.11.norm1.bias",
+      "blocks.11.attn.q_bias",
+      "blocks.11.attn.v_bias",
+      "blocks.11.attn.proj.bias",
+      "blocks.11.norm2.weight",
+      "blocks.11.norm2.bias",
+      "blocks.11.mlp.fc1.bias",
+      "blocks.11.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.65
+  },
+  "layer_12_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.11.attn.relative_position_bias_table",
+      "blocks.11.attn.qkv.weight",
+      "blocks.11.attn.proj.weight",
+      "blocks.11.mlp.fc1.weight",
+      "blocks.11.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.65
+  },
+  "layer_13_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "fc_norm.weight",
+      "fc_norm.bias",
+      "head.bias"
+    ],
+    "lr_scale": 1.0
+  },
+  "layer_13_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "head.weight"
+    ],
+    "lr_scale": 1.0
+  }
+}
+/home/share/FM_Code/PanDerm/classification/furnace/utils.py:424: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self._scaler = torch.cuda.amp.GradScaler()
+------ True
+/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py:655: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model_dict = torch.load(model_weight)
+Starting evaluation without tta
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [ 0/24]  eta: 0:01:03    time: 2.6626  data: 1.5750  max mem: 1905
+Test:  [10/24]  eta: 0:00:03    time: 0.2810  data: 0.1433  max mem: 1905
+Test:  [20/24]  eta: 0:00:00    time: 0.0431  data: 0.0002  max mem: 1905
+Test:  [23/24]  eta: 0:00:00    time: 0.0442  data: 0.0002  max mem: 1905
+Test: Total time: 0:00:03 (0.1601 s / it)
+------------- test -------------
+Sklearn Metrics - BAcc: 0.1567 Acc: 0.0489 Recall_macro: 0.1567 Recall_weighted: 0.0489 AUC-ROC: 0.4877 Weighted F1-score: 0.0482
+{'balanced_accuracy': np.float64(0.15668857468193723), 'accuracy': 0.04894179894179894, 'top3 accuracy': np.float64(0.2037037037037037), 'top5 accuracy': np.float64(0.4537037037037037), 'sensitivity': np.float64(0.15668857468193723), 'specificity': np.float64(0.8407346916350397), 'auc_roc': np.float64(0.487680729175998), 'weighted_f1': 0.048168412881347, 'recall_macro': 0.15668857468193723, 'recall_weighted': 0.04894179894179894}
+Predictions for test saved to /home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting/test.csv
+TTTTTTTTT {'balanced_accuracy': np.float64(0.15668857468193723), 'accuracy': 0.04894179894179894, 'top3 accuracy': np.float64(0.2037037037037037), 'top5 accuracy': np.float64(0.4537037037037037), 'sensitivity': np.float64(0.15668857468193723), 'specificity': np.float64(0.8407346916350397), 'auc_roc': np.float64(0.487680729175998), 'weighted_f1': 0.048168412881347, 'recall_macro': 0.15668857468193723, 'recall_weighted': 0.04894179894179894}

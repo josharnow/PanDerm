@@ -1,0 +1,209 @@
+_wandb:
+    value:
+        cli_version: 0.19.10
+        m: []
+        python_version: 3.10.17
+        t:
+            "1":
+                - 1
+                - 5
+                - 41
+                - 49
+                - 51
+                - 53
+                - 55
+                - 63
+                - 80
+            "2":
+                - 1
+                - 5
+                - 41
+                - 49
+                - 51
+                - 53
+                - 55
+                - 63
+                - 80
+            "3":
+                - 13
+                - 16
+                - 23
+                - 55
+            "4": 3.10.17
+            "5": 0.19.10
+            "8":
+                - 5
+            "12": 0.19.10
+            "13": linux-x86_64
+TTA:
+    value: true
+aa:
+    value: ""
+attn_drop_rate:
+    value: 0
+auto_resume:
+    value: false
+batch_size:
+    value: 64
+clip_grad:
+    value: null
+color_jitter:
+    value: 0.4
+crop_pct:
+    value: null
+csv_path:
+    value: /home/share/Uni_Eval/pad-ufes/2000.csv
+cutmix:
+    value: 1
+cutmix_minmax:
+    value: null
+data_path:
+    value: /datasets01/imagenet_full_size/061417/
+data_set:
+    value: IMNET
+device:
+    value: cuda
+disable_eval_during_finetuning:
+    value: false
+disable_weight_decay_on_rel_pos_bias:
+    value: false
+dist_eval:
+    value: false
+dist_on_itp:
+    value: false
+dist_url:
+    value: env://
+drop:
+    value: 0
+drop_path:
+    value: 0.2
+enable_deepspeed:
+    value: false
+enable_linear_eval:
+    value: false
+enable_multi_print:
+    value: false
+epochs:
+    value: 50
+eval:
+    value: true
+eval_data_path:
+    value: null
+exp_name:
+    value: pad test
+image_key:
+    value: image
+imagenet_default_mean_and_std:
+    value: true
+init_scale:
+    value: 0.001
+input_size:
+    value: 224
+layer_decay:
+    value: 0.65
+layer_scale_init_value:
+    value: 0.1
+local_rank:
+    value: -1
+log_dir:
+    value: null
+lr:
+    value: 0.0005
+min_lr:
+    value: 1e-06
+mixup:
+    value: 0.8
+mixup_mode:
+    value: batch
+mixup_prob:
+    value: 1
+mixup_switch_prob:
+    value: 0.5
+mode:
+    value: train
+model:
+    value: PanDerm_Large_FT
+model_ema:
+    value: false
+model_ema_decay:
+    value: 0.9999
+model_ema_force_cpu:
+    value: false
+model_key:
+    value: model|module|state_dict
+model_prefix:
+    value: ""
+momentum:
+    value: 0.9
+monitor:
+    value: acc
+nb_classes:
+    value: 7
+num_workers:
+    value: 10
+ood_eval:
+    value: false
+opt:
+    value: adamw
+opt_betas:
+    value: null
+opt_eps:
+    value: 1e-08
+output_dir:
+    value: /home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting
+percent_data:
+    value: 1
+pin_mem:
+    value: true
+pretrained_checkpoint:
+    value: /home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth
+recount:
+    value: 1
+rel_pos_bias:
+    value: true
+remode:
+    value: pixel
+reprob:
+    value: 0.25
+resplit:
+    value: false
+resume:
+    value: /home/share/FM_Code/PanDerm/Output_dir/checkpoint-best.pth
+root_path:
+    value: /home/share/Uni_Eval/pad-ufes/images/
+save_ckpt:
+    value: true
+save_ckpt_freq:
+    value: 5
+seed:
+    value: 0
+sin_pos_emb:
+    value: true
+smoothing:
+    value: 0.1
+start_epoch:
+    value: 0
+test_csv_path:
+    value: null
+train_interpolation:
+    value: bicubic
+update_freq:
+    value: 1
+use_mean_pooling:
+    value: true
+wandb_name:
+    value: weight_sampler_max_recall_mask5e-40
+warmup_epochs:
+    value: 10
+warmup_lr:
+    value: 1e-06
+warmup_steps:
+    value: -1
+weight_decay:
+    value: 0.05
+weight_decay_end:
+    value: null
+weights:
+    value: false
+world_size:
+    value: 1
