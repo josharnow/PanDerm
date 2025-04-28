@@ -1,44 +1,50 @@
-# PanDerm 
+# PanDerm
 
 ## A Multimodal Vision Foundation Model for Clinical Dermatology
-[[`Arxiv Paper`](https://arxiv.org/pdf/2410.15038)]
-[[`Cite`](#citation)]
 
-**Warning:** This repo is under construction!!!
+[![Arxiv Paper](https://img.shields.io/badge/Arxiv-Paper-red)](https://arxiv.org/pdf/2410.15038)
+[![Cite](https://img.shields.io/badge/Cite-BibTeX-blue)](#citation)
 
+> **Warning:** This repo is under construction!!!
 
-## Research Applications using UNI & CONCH
-<details>
-  <summary>
-    <b>### Last Updated 3/20/2025</b>
-  </summary>
-  demoddddd
-</details>details>
-
-
-**Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction, often requiring less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic skin cancer diagnosis accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions. 
+**Abstract:** We introduce PanDerm, a multimodal dermatology foundation model addressing the challenge that current deep learning models excel only at specific tasks rather than meeting the complex, multimodal requirements of clinical dermatology practice. Pretrained through self-supervised learning on over 2 million skin disease images across four imaging modalities from multiple institutions, PanDerm demonstrates state-of-the-art performance across diverse tasks, including skin cancer screening, differential diagnosis, lesion segmentation, longitudinal monitoring, and prognosis prediction, often requiring less labeled data than existing approaches. Clinical reader studies show PanDerm outperforms clinicians in early melanoma detection, improves dermatologists' diagnostic skin cancer diagnosis accuracy, and enhances non-specialists' differential diagnosis capabilities across numerous skin conditions.
 
 ![alt text](overview.png)
 
 ## Updates
-- 26/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
-- 26/04/2025: Released the finetuning script for image classification.
+
+- **26/04/2025:** The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
+- **26/04/2025:** Released the finetuning script for image classification.
 
 ## About PanDerm
 
-_**What is PanDerm?**_ PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography-based applications, and image segmentation.
+<details>
+<summary><b>Click to expand details about PanDerm</b></summary>
 
-_**Why use PanDerm?**_ PanDerm significantly outperforms clinically popular CNN models like ResNet, especially with limited labeled data. Its strong linear probing results offer a computationally efficient alternative with lower implementation barriers. PanDerm also demonstrates superior performance compared to existing foundation models while minimizing data leakage risk—a common concern with web-scale pretrained models like DINOv2, SwavDerm, and Derm Foundation. These combined advantages make PanDerm the ideal choice for replacing both traditional CNNs and other foundation models in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks.
+### What is PanDerm?
+PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography-based applications, and image segmentation.
 
-_**Note**_: PanDerm is a general-purpose dermatology foundation model and requires fine-tuning or linear probing before application to specific tasks.
+### Why use PanDerm?
+PanDerm significantly outperforms clinically popular CNN models like ResNet, especially with limited labeled data. Its strong linear probing results offer a computationally efficient alternative with lower implementation barriers. PanDerm also demonstrates superior performance compared to existing foundation models while minimizing data leakage risk—a common concern with web-scale pretrained models like DINOv2, SwavDerm, and Derm Foundation. These combined advantages make PanDerm the ideal choice for replacing both traditional CNNs and other foundation models in clinical applications, including human-AI collaboration, multimodal image analysis, and various diagnostic and progression tasks.
+
+> **Note**: PanDerm is a general-purpose dermatology foundation model and requires fine-tuning or linear probing before application to specific tasks.
+
+</details>
 
 ## Installation
+
+<details>
+<summary><b>Click to expand installation instructions</b></summary>
+
 First, clone the repo and cd into the directory:
+
 ```shell
 git clone https://github.com/SiyuanYan1/PanDerm
 cd PanDerm/classification
 ```
+
 Then create a conda env and install the dependencies:
+
 ```shell
 conda create -n PanDerm python=3.10 -y
 conda activate PanDerm
@@ -47,17 +53,24 @@ cd classification
 pip install -r requirements.txt
 ```
 
+</details>
+
 ## 1. Download PanDerm Pre-trained Weights
+
+<details>
+<summary><b>Click to expand download instructions</b></summary>
 
 ### Obtaining the Model Weights
 Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
+</details>
+
 ## 2. Data Preparation
 
 <details>
-  <summary>
-  <b>Using Your Own Dataset</b>
-  </summary>
+<summary><b>Click to expand data preparation guide</b></summary>
+
+### Using Your Own Dataset
 If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
 
 **Required Columns**
@@ -85,12 +98,8 @@ ISIC_0034525.jpg,1,train
 ISIC_0034526.jpg,0,val
 ISIC_0034527.jpg,0,test
 ```
-</details>
 
-<details>
-    <summary>
-<b> Using Pre-processed Public Datasets </b>
-    </summary>
+### Using Pre-processed Public Datasets
 
 We've already pre-processed several public datasets to reproduce the results in our study and prevent data leakage between splits. These datasets are ready to use with our model and require no additional formatting.
 
@@ -109,9 +118,13 @@ We've already pre-processed several public datasets to reproduce the results in 
 | PATCH16 | [Download](https://drive.google.com/file/d/1wDMIfYrQatkeADoneHgjXQrawVMK-TFL/view?usp=sharing) | [Official Website](https://heidata.uni-heidelberg.de/dataset.xhtml?persistentId=doi:10.11588/data/7QCR8S) |
 
 **Note:** The processed datasets provided here may differ slightly from those on the official websites. To ensure reproducibility of our paper's results, please use the processed data links above.
+
 </details>
 
 ## 3. Linear Evaluation on Image Classification Tasks
+
+<details>
+<summary><b>Click to expand linear evaluation guide</b></summary>
 
 Training and evaluation using HAM10000 as an example. Replace the CSV path and root path with your own dataset.
 
@@ -151,7 +164,12 @@ cd classification
 bash script/lp_reproduce.sh
 ```
 
+</details>
+
 ## 4. Fine-tuning on Image Classification Tasks
+
+<details>
+<summary><b>Click to expand fine-tuning guide</b></summary>
 
 ### Key Parameters
 
@@ -220,13 +238,24 @@ Note: Remember to adjust the `pretrained_checkpoint` argument to your storage lo
 cd classification
 bash script/finetune_test.sh
 ```
-Note: Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
+Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
+
+</details>
 
 ## 5. Skin Lesion Segmentation
 
+<details>
+<summary><b>Click to expand segmentation guide</b></summary>
+
 Please refer to details [here](Segmentation.md).
 
+</details>
+
 ## Citation
+
+<details>
+<summary><b>Click to view citation</b></summary>
+
 ```bibtex
 @misc{yan2024generalpurposemultimodalfoundationmodel,
       title={A General-Purpose Multimodal Foundation Model for Dermatology}, 
@@ -238,3 +267,5 @@ Please refer to details [here](Segmentation.md).
       url={https://arxiv.org/abs/2410.15038}, 
 }
 ```
+
+</details>
