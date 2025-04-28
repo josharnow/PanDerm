@@ -385,45 +385,44 @@ def main(args, ds_init):
             mixup_alpha=args.mixup, cutmix_alpha=args.cutmix, cutmix_minmax=args.cutmix_minmax,
             prob=args.mixup_prob, switch_prob=args.mixup_switch_prob, mode=args.mixup_mode,
             label_smoothing=args.smoothing, num_classes=args.nb_classes)
-    # if args.model=="PanDerm-Large":
-    #     model = panderm_large_patch16_224_finetune(
-    #         pretrained=False,
-    #         num_classes=args.nb_classes,
-    #         drop_rate=args.drop,
-    #         drop_path_rate=args.drop_path,
-    #         attn_drop_rate=args.attn_drop_rate,
-    #         drop_block_rate=None,
-    #         use_mean_pooling=args.use_mean_pooling,
-    #         init_scale=args.init_scale,
-    #         use_rel_pos_bias=args.rel_pos_bias,
-    #         init_values=args.layer_scale_init_value,
-    #         lin_probe=args.enable_linear_eval)
-    #     print(model)
-    #     patch_size = model.patch_embed.patch_size
-    #     print("Patch size = %s" % str(patch_size))
-    #     args.window_size = (args.input_size // patch_size[0], args.input_size // patch_size[1])
-    #     args.patch_size = patch_size
+    if args.model=="PanDerm_Large_FT":
+        model = panderm_large_patch16_224_finetune(
+            pretrained=False,
+            num_classes=args.nb_classes,
+            drop_rate=args.drop,
+            drop_path_rate=args.drop_path,
+            attn_drop_rate=args.attn_drop_rate,
+            drop_block_rate=None,
+            use_mean_pooling=args.use_mean_pooling,
+            init_scale=args.init_scale,
+            use_rel_pos_bias=args.rel_pos_bias,
+            init_values=args.layer_scale_init_value,
+            lin_probe=args.enable_linear_eval)
+        print(model)
+        patch_size = model.patch_embed.patch_size
 
-    model = create_model(
-        args.model,
-        pretrained=False,
-        num_classes=args.nb_classes,
-        drop_rate=args.drop,
-        drop_path_rate=args.drop_path,
-        attn_drop_rate=args.attn_drop_rate,
-        drop_block_rate=None,
-        use_mean_pooling=args.use_mean_pooling,
-        init_scale=args.init_scale,
-        use_rel_pos_bias=args.rel_pos_bias,
-        init_values=args.layer_scale_init_value,
-        lin_probe=args.enable_linear_eval,
-        args=args,
-    )
-    print(model)
-    patch_size = model.patch_embed.patch_size
+
+    elif args.model=='PanDerm_Base_FT':
+        model = panderm_base_patch16_224_finetune(
+            pretrained=False,
+            num_classes=args.nb_classes,
+            drop_rate=args.drop,
+            drop_path_rate=args.drop_path,
+            attn_drop_rate=args.attn_drop_rate,
+            drop_block_rate=None,
+            use_mean_pooling=args.use_mean_pooling,
+            init_scale=args.init_scale,
+            use_rel_pos_bias=args.rel_pos_bias,
+            init_values=args.layer_scale_init_value,
+            lin_probe=args.enable_linear_eval)
+        print(model)
+        patch_size = model.patch_embed.patch_size
+    else:
+        raise ValueError(f"Invalid model name '{args.model}', not supported.")
     print("Patch size = %s" % str(patch_size))
     args.window_size = (args.input_size // patch_size[0], args.input_size // patch_size[1])
     args.patch_size = patch_size
+
 
     if args.pretrained_checkpoint:
         if args.pretrained_checkpoint.startswith('https'):

@@ -19,7 +19,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --sin_pos_emb \
     --percent_data 1.0 \
     --no_auto_resume \
-    --exp_name $my_name \
+    --exp_name "ham finetune and eval using TTA" \
     --imagenet_default_mean_and_std \
     --wandb_name "weight_sampler_max_recall_mask_B${BATCH_SIZE}_${LR}_${seed}" \
     --output_dir "/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting" \

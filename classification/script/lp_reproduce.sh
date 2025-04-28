@@ -1,10 +1,10 @@
 
 #models=('PanDerm_Large' 'PanDerm_ Base' 'SwAVDerm'  'dinov2' 'imgnet_large21k')
-models=('PanDerm_Large')
+models=('PanDerm_Large_LP')
 #checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-ll_data6_checkpoint-499.pth' \
 #             '/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-bb_data6_checkpoint-499.pth' \
 #             '/home/share/FM_Code/PanDerm/Model_Weights/swavderm_pretrained.pth' )
-checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-ll_data6_checkpoint-499.pth')
+checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
 
 
 if [ ${#models[@]} -ne ${#checkpoints[@]} ]; then

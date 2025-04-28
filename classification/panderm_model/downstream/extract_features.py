@@ -29,17 +29,7 @@ def extract_features_from_dataloader(args, model, dataloader):
             batch = torch.vstack([batch, padding])
         batch = batch.to(device)
         with torch.inference_mode():
-            """comment out it if using biomed_clip"""
-            # embeddings, text_features, logit_scale=model(batch)
-            # embeddings=embeddings.cpu()[:remaining, :].cpu()
-            """comment out it if using MONET, virtual_env: MILAN"""
-            # embeddings = model(batch)[1]
-            # # print('EEEEEEEEEEEE',embeddings.size())
-            # embeddings=embeddings.cpu()[:remaining, :].cpu()
-            #open_clip
-            # embeddings = model.encode_image(batch).cpu()[:remaining, :].cpu()
-            if args.model == 'PanDerm-Large' or args.model == 'PanDerm-Base':
-                embeddings = model.forward_features(batch, is_train=False).detach().cpu()[:remaining, :].cpu()
+            embeddings = model.forward_features(batch, is_train=False).detach().cpu()[:remaining, :].cpu()
             labels = target.numpy()[:remaining]
             assert not torch.isnan(embeddings).any()
         all_embeddings.append(embeddings)
