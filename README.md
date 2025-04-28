@@ -53,8 +53,9 @@ pip install -r requirements.txt
 
 | Model Name    | Release Date | Model Architecture | Download Link            |
 |---------------------|--------------|---------------------|-------------------------------------------------------------|
-| PanDerm      |   10/2024       | ViT-L/16               | [Link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing) |
 | PanDerm_Base          |   04/2025       | ViT-B/16                | [Link](https://drive.google.com/file/d/1HJquaP1uW-PcFgCKAgNLNsADXZ7lU34P/view?usp=sharing)  |
+| PanDerm(reported in our paper)     |   10/2024       | ViT-L/16               | [Link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing) |
+
 
 ## 2. Data Preparation
 
