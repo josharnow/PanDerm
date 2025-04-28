@@ -60,15 +60,11 @@ pip install -r requirements.txt
 
 ## 1. Download PanDerm Pre-trained Weights
 
-</div>
 
-<details>
-<summary><b>Click to expand download instructions</b></summary>
 
 ### Obtaining the Model Weights
 Download the pre-trained model weights from [this Google Drive link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing).
 
-</details>
 
 <div style="background-color: #e6fffa; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
@@ -77,7 +73,7 @@ Download the pre-trained model weights from [this Google Drive link](https://dri
 </div>
 
 <details>
-<summary><b>Click to expand data preparation guide</b></summary>
+<summary><b>Click to expand data preparation guide for using your own dataset</b></summary>
 
 ### Using Your Own Dataset
 If you wish to use our model with your own dataset, the dataset used for linear probing or finetuning should be organized in a CSV file with the following structure:
@@ -107,7 +103,11 @@ ISIC_0034525.jpg,1,train
 ISIC_0034526.jpg,0,val
 ISIC_0034527.jpg,0,test
 ```
+</details>
 
+<details>
+<summary><b>Click to expand data preparation guide for using some pre-processed dataset</b></summary>
+  
 ### Using Pre-processed Public Datasets
 
 We've already pre-processed several public datasets to reproduce the results in our study and prevent data leakage between splits. These datasets are ready to use with our model and require no additional formatting.
