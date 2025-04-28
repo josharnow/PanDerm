@@ -156,11 +156,11 @@ Our experiments show the following hyperparameters deliver optimal performance a
 - Enable the weighted random sampler
 - Enable TTA during testing 
   
-This setting is very stable and typically doesn't require adjustment.
+We observed that the hyperparameter setting is robust across datasets and typically doesn't require adjustment.
 
 ### Start Training
 
-You could fine-tune our model on your dataset. Here is a command-line example for fine-tuning PanDerm_Large on the PAD-UFES dataset:
+You could fine-tune PanDerm on your dataset. Here is a command-line example for fine-tuning PanDerm_Large on the PAD-UFES dataset:
 
 
 ```bash
