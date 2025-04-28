@@ -154,6 +154,7 @@ This notebook shows you how to:
 - `csv_path`: Organize your dataset as described in the "Data Preparation" section.
 - `root_path`: The path of your folder for saved images. 
 -  `TTA`: Enable Test-Time Augmentation. You can modify the augmentation setting in the class `TTAHandler` [classification/furnace/engine_for_finetuning.py](classification/furnace/engine_for_finetuning.py).
+-- `eval`: Model inference.
 
 ### Recommended Configuration for fine-tuning
 
@@ -161,7 +162,8 @@ Our experiments show the following hyperparameters deliver optimal performance a
 - Batch size: 128
 - Learning rate: 5e-4
 - Training epochs: 50
-- Enable TTA and the weighted random sampler
+- Enable the weighted random sampler
+- Enable TTA during testing 
   
 This setting is very stable and typically doesn't require adjustment.
 
@@ -198,7 +200,6 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
     --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
     --seed 0 \
-    --TTA 
 ```
 
 The script for fine-tuning and evaluating PanDerm:
