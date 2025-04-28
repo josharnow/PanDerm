@@ -94,14 +94,14 @@ We've already pre-processed several public datasets to reproduce the results in 
 
 ## 3. Linear Evaluation on Image Classification Tasks
 
-Training and evaluation using HAM10000 as an example. Replace csv path and root path with your own dataset.
+Training and evaluation using HAM10000 as an example. Replace the CSV path and root path with your own dataset.
 
 ### Key Parameters
 - `batch_size`: Adjust based on the memory size of your GPU.
 - `model`: Model size - "PanDerm_Large_LP" (original paper model) or "PanDerm_Base_LP" (smaller version)
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
 - `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% of the training data. Modify this if you want to conduct label efficiency generalization experiments.
-- `csv_path`: Organize your dataset as described in "Data Preparation" section.
+- `csv_path`: Organize your dataset as described in the "Data Preparation" section.
 - `root_path`: The path of your folder for saved images. 
 - `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_LP" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_LP".
   
