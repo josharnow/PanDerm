@@ -198,7 +198,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --csv_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
     --root_path "/path/to/your/PanDerm/Evaluation_datasets/HAM10000_clean/ISIC2018/"
     --seed 0 \
-    --TTA # This is optional: You could comment this line by turning off Test Time Augmentation(TTA)
+    --TTA 
 ```
 
 The script for fine-tuning and evaluating PanDerm:
