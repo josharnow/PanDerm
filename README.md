@@ -222,7 +222,7 @@ Note: Remember to adjust the `pretrained_checkpoint` argument to your storage lo
 cd classification
 bash script/finetune_test.sh
 ```
-Note: Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
+Note: Remember to adjust the `resume` argument to your storage location of finetuned model weights.
 
 ## 5. Skin Lesion Segmentation
 
