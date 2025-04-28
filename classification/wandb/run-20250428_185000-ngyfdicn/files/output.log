@@ -1916,3 +1916,25 @@ Max val mean recall: 0.86%
   with torch.cuda.amp.autocast():
 Epoch: [15]  [ 0/62]  eta: 0:04:22  lr: 0.000481  min_lr: 0.000000  loss: 1.0886 (1.0886)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.9345 (1.9345)  time: 4.2277  data: 3.3649  max mem: 39406
 Epoch: [15]  [10/62]  eta: 0:01:01  lr: 0.000480  min_lr: 0.000000  loss: 0.9266 (0.9649)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4819 (2.5360)  time: 1.1795  data: 0.3063  max mem: 39406
+Epoch: [15]  [20/62]  eta: 0:00:43  lr: 0.000479  min_lr: 0.000000  loss: 0.9995 (1.0782)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4460 (2.4772)  time: 0.8774  data: 0.0004  max mem: 39406
+Epoch: [15]  [30/62]  eta: 0:00:31  lr: 0.000477  min_lr: 0.000000  loss: 1.3030 (1.1226)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1668 (2.4116)  time: 0.8828  data: 0.0004  max mem: 39406
+Epoch: [15]  [40/62]  eta: 0:00:21  lr: 0.000476  min_lr: 0.000000  loss: 1.3363 (1.1465)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3282 (2.4415)  time: 0.8873  data: 0.0005  max mem: 39406
+Epoch: [15]  [50/62]  eta: 0:00:11  lr: 0.000475  min_lr: 0.000000  loss: 1.1859 (1.1570)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2438 (2.3979)  time: 0.8915  data: 0.0004  max mem: 39406
+Epoch: [15]  [60/62]  eta: 0:00:01  lr: 0.000473  min_lr: 0.000000  loss: 1.1675 (1.1497)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2159 (2.4050)  time: 0.8948  data: 0.0002  max mem: 39406
+Epoch: [15]  [61/62]  eta: 0:00:00  lr: 0.000473  min_lr: 0.000000  loss: 1.1675 (1.1522)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2314 (2.4057)  time: 0.8951  data: 0.0001  max mem: 39406
+Epoch: [15] Total time: 0:00:58 (0.9445 s / it)
+2025-04-28 19:07:35 Averaged stats: lr: 0.000473  min_lr: 0.000000  loss: 1.1675 (1.1522)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2314 (2.4057)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/3]  eta: 0:00:10    time: 3.5261  data: 3.0908  max mem: 39406
+Test:  [2/3]  eta: 0:00:01    time: 1.4170  data: 1.0303  max mem: 39406
+Test: Total time: 0:00:04 (1.4828 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.8155 Acc: 0.7560 Recall_macro: 0.8155 Recall_weighted: 0.7560 AUC-ROC: 0.9735 Weighted F1-score: 0.7830
+Predictions for val saved to /home/share/FM_Code/PanDerm/HAM_Res/val.csv
+-------------------------- {'Epoch': 15, 'Val Loss': 0.819092869758606, 'Val BAcc': np.float64(0.8154518367204934), 'Val Acc': 0.756, 'Val ROC': np.float64(0.9734961826485252), 'Val W_F1': 0.7830327170182576, 'Val Recall_macro': 0.8154518367204934, 'Val Recall_weighted': 0.756}
+Max val mean recall: 0.86%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [16]  [ 0/62]  eta: 0:04:25  lr: 0.000473  min_lr: 0.000000  loss: 1.3816 (1.3816)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2007 (2.2007)  time: 4.2748  data: 3.4100  max mem: 39406
+Epoch: [16]  [10/62]  eta: 0:01:01  lr: 0.000471  min_lr: 0.000000  loss: 1.2797 (1.2356)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2319 (2.1877)  time: 1.1854  data: 0.3104  max mem: 39406
