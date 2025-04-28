@@ -203,7 +203,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
     --exp_name exp_name "pad finetune and eval" \
     --imagenet_default_mean_and_std \
     --wandb_name "Reproduce_PAD_FT_${seed}" \
-    --output_dir /path/to/your/PanDerm/Evaluation_datasets/PAD_Res/ \ # Your best epoch fine-tuned checkpoint and model output result on test set will be saved in this directory
+    --output_dir /path/to/your/PanDerm/Evaluation_datasets/PAD_Res/ \ # Your best epoch's fine-tuned checkpoint and model output results on the test set will be saved in this directory
     --csv_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/2000.csv" \
     --root_path "/path/to/your/PanDerm/Evaluation_datasets/pad-ufes/images/ " \
     --seed 0 
@@ -228,12 +228,19 @@ Note: Remember to adjust the `resume` argument to your storage location of finet
 
 Please refer to details [here](Segmentation.md).
 
+## License
+The model and associated code are released under the CC-BY-NC-ND 4.0 license and may only be used for non-commercial academic research purposes with proper attribution.
+
+## Acknowlegdement
+
+This code is built on [CAEv2](https://github.com/Atten4Vis/CAE), [UNI](https://github.com/mahmoodlab/UNI), [MAE](https://github.com/facebookresearch/mae). We thank the authors for sharing their code.
+
 ## Citation
 ```bibtex
-@misc{yan2024generalpurposemultimodalfoundationmodel,
-      title={A General-Purpose Multimodal Foundation Model for Dermatology}, 
-      author={Siyuan Yan and Zhen Yu and Clare Primiero and Cristina Vico-Alonso and Zhonghua Wang and Litao Yang and Philipp Tschandl and Ming Hu and Gin Tan and Vincent Tang and Aik Beng Ng and David Powell and Paul Bonnington and Simon See and Monika Janda and Victoria Mar and Harald Kittler and H. Peter Soyer and Zongyuan Ge},
-      year={2024},
+@misc{yan2025multimodalvisionfoundationmodel,
+      title={A Multimodal Vision Foundation Model for Clinical Dermatology}, 
+      author={Siyuan Yan and Zhen Yu and Clare Primiero and Cristina Vico-Alonso and Zhonghua Wang and Litao Yang and Philipp Tschandl and Ming Hu and Lie Ju and Gin Tan and Vincent Tang and Aik Beng Ng and David Powell and Paul Bonnington and Simon See and Elisabetta Magnaterra and Peter Ferguson and Jennifer Nguyen and Pascale Guitera and Jose Banuls and Monika Janda and Victoria Mar and Harald Kittler and H. Peter Soyer and Zongyuan Ge},
+      year={2025},
       eprint={2410.15038},
       archivePrefix={arXiv},
       primaryClass={cs.CV},
