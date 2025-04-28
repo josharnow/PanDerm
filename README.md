@@ -97,12 +97,14 @@ We've already pre-processed several public datasets to reproduce the results in 
 Training and evaluation using HAM10000 as an example. Replace csv path and root path with your own dataset.
 
 ### Key Parameters
-
+- `batch_size`: Adjust based on the memory size of your GPU.
 - `model`: Model size - "PanDerm_Large_LP" (original paper model) or "PanDerm_Base_LP" (smaller version)
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
-- `batch_size`: Adjust based on the memory size of your GPU.
-- `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
+- `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% of the training data. Modify this if you want to conduct label efficiency generalization experiments.
+- `csv_path`: Organize your dataset as described above.
+- `root_path`: The path of your folder for saved images. 
 - `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_LP" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_LP".
+  
 ### Evaluation Command
 
 ```bash
@@ -153,10 +155,10 @@ This implementation uses PanDerm for Skin Classification Finetune.
 ### Key Parameters
 
 - `model`: Model size - "PanDerm_Large_FT" (original paper model) or "PanDerm_Base_FT" (smaller version)
+- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_FT" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_FT".
 - `nb_classes`: Set this to the number of classes in your evaluation dataset.
-- `batch_size`: Adjust based on the memory size of your GPU.
-- `percent_data`: Controls the percentage of training data used. For example, 0.1 means evaluate models using 10% training data. Modify this if you want to conduct label efficiency generalization experiments.
-- `pretrained_checkpoint`: Path to the pretrain checkpoint - "panderm_ll_data6_checkpoint-499.pth" for "PanDerm_Large_LP" and "panderm_bb_data6_checkpoint-499.pth" for "PanDerm_Base_LP".
+-  `weights`: Setting to use the weighted random sampler for the imbalanced class dataset.
+-  
 
 ### Hint
 
@@ -164,21 +166,21 @@ This implementation uses PanDerm for Skin Classification Finetune.
 
 ### Start Training
 
-You could fine-tune our model on your dataset. Here is a command-line example:
-
-
+You could fine-tune our model on your dataset. Here is a command-line example for fine-tuning PanDerm_Large on the HAM10000 clean dataset used in our paper:
 
 
 ```bash
-MODEL_PATH=PATH_TO_YOUR_DOWNLOADED_PANDERM_PRETRAINED_WEIGHT
-
+MODEL_NAME="PanDerm_Large_FT"
+MODEL_PATH="/path/to/your/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
+NB_CLASSES=7
 BATCH_SIZE=128
 LR=5e-4
 
-CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
-    --model PanDerm_Large_FT \
+
+CUDA_VISIBLE_DEVICES=0 python3 run_class_finetuning.py \
+    --model $MODEL_NAME \
     --pretrained_checkpoint $MODEL_PATH \
-    --nb_classes 7 \
+    --nb_classes $NB_CLASSES \
     --batch_size $BATCH_SIZE \
     --lr $LR \
     --update_freq 1 \
@@ -192,9 +194,9 @@ CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
     --exp_name $my_name \
     --imagenet_default_mean_and_std \
     --wandb_name Panderm-finetune \
-    --output_dir OUTPUT_DIRECTORY \ # Your checkpoint and output result will be saved in this directory
+    --output_dir /path/to/your/PanDerm/Evaluation_datasets/ \ # Your checkpoint and output result will be saved in this directory
     --csv_path /home/syyan/XJ/PanDerm-open_source/data/finetune/HAM10000/HAM_cleaned_training.csv \ # You could replace this with your finetune dataset csv
-    --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \ # Optional: Dataset image root, you could set this with empty value.
+    --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \
     --seed 122 \
     --TTA # This is optional: You could comment this line by turning off Test Time Augmentation(TTA)
 ```
