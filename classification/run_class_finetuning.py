@@ -424,19 +424,32 @@ def main(args, ds_init):
     args.patch_size = patch_size
 
 
+    # if args.pretrained_checkpoint:
+    #     if args.pretrained_checkpoint.startswith('https'):
+    #         checkpoint = torch.hub.load_state_dict_from_url(
+    #             args.pretrained_checkpoint, map_location='cpu', check_hash=True)
+    #     else:
+    #         checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
+    #
+    #         if args.pretrained_checkpoint.split('/')[-1].startswith('open_clip'):
+    #             state_dict = checkpoint['state_dict']
+    #             state_dict = {k:v for k,v in state_dict.items() if 'visual' in k}
+    #             checkpoint = {}
+    #             checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k,v in state_dict.items()}
+    #
+    #     print("Load ckpt from %s" % args.pretrained_checkpoint)
     if args.pretrained_checkpoint:
         if args.pretrained_checkpoint.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
                 args.pretrained_checkpoint, map_location='cpu', check_hash=True)
         else:
-            checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
-
+            checkpoint_model = torch.load(args.pretrained_checkpoint, map_location='cpu', weights_only=True)
+            checkpoint = {'model': checkpoint_model}
             if args.pretrained_checkpoint.split('/')[-1].startswith('open_clip'):
                 state_dict = checkpoint['state_dict']
-                state_dict = {k:v for k,v in state_dict.items() if 'visual' in k}
+                state_dict = {k: v for k, v in state_dict.items() if 'visual' in k}
                 checkpoint = {}
-                checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k,v in state_dict.items()}
-
+                checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k, v in state_dict.items()}
         print("Load ckpt from %s" % args.pretrained_checkpoint)
         checkpoint_model = None
         for model_key in args.model_key.split('|'):

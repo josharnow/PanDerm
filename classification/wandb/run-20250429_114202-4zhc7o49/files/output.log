@@ -1,0 +1,1645 @@
+Not using distributed mode
+Namespace(mode='train', batch_size=128, epochs=50, update_freq=1, save_ckpt_freq=5, model='PanDerm_Base_FT', rel_pos_bias=True, sin_pos_emb=True, layer_scale_init_value=0.1, ood_eval=False, input_size=224, drop=0.0, attn_drop_rate=0.0, drop_path=0.2, weights=True, disable_eval_during_finetuning=False, model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, percent_data=1.0, TTA=True, monitor='acc', opt='adamw', opt_eps=1e-08, opt_betas=None, clip_grad=None, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0005, layer_decay=0.65, warmup_lr=1e-06, min_lr=1e-06, warmup_epochs=10, warmup_steps=-1, color_jitter=0.4, aa='rand-m9-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', pretrained_checkpoint='/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth', model_key='model|module|state_dict', model_prefix='', init_scale=0.001, use_mean_pooling=True, disable_weight_decay_on_rel_pos_bias=False, data_path='/datasets01/imagenet_full_size/061417/', eval_data_path=None, test_csv_path=None, image_key='image', nb_classes=6, imagenet_default_mean_and_std=True, data_set='IMNET', csv_path='/home/share/Uni_Eval/pad-ufes/2000.csv', root_path='/home/share/Uni_Eval/pad-ufes/images/', output_dir='/home/share/FM_Code/PanDerm/PAD_Res_base/', log_dir=None, device='cuda', seed=122, resume='', auto_resume=False, wandb_name='Reproduce_PAD_FT_122', save_ckpt=True, start_epoch=0, eval=False, dist_eval=False, num_workers=10, pin_mem=True, world_size=1, local_rank=-1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, enable_linear_eval=False, enable_multi_print=False, exp_name='pad finetune and eval', distributed=False)
+Label distribution:
+Label 0: 174
+Label 1: 543
+Label 2: 464
+Label 3: 154
+Label 4: 123
+Label 5: 35
+Using WeightedRandomSampler
+train size: 1493 ,val size: 344 ,test size: 461
+Mixup is activated!
+/home/syyan/anaconda3/envs/PanDerm/lib/python3.10/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.0181818176060915)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.036363635212183)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.05454545468091965)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.072727270424366)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.09090908616781235)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.10909091681241989)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.12727272510528564)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1454545557498932)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.16363637149333954)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1818181872367859)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.20000000298023224)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (norm): Identity()
+  (fc_norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): Linear(in_features=768, out_features=6, bias=True)
+)
+Patch size = (16, 16)
+Load ckpt from /home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth
+Load state_dict by model_key = model
+all keys: []
+##############new keys: 186 odict_keys(['cls_token', 'pos_embed', 'patch_embed.proj.weight', 'patch_embed.proj.bias', 'blocks.0.gamma_1', 'blocks.0.gamma_2', 'blocks.0.norm1.weight', 'blocks.0.norm1.bias', 'blocks.0.attn.q_bias', 'blocks.0.attn.v_bias', 'blocks.0.attn.qkv.weight', 'blocks.0.attn.proj.weight', 'blocks.0.attn.proj.bias', 'blocks.0.norm2.weight', 'blocks.0.norm2.bias', 'blocks.0.mlp.fc1.weight', 'blocks.0.mlp.fc1.bias', 'blocks.0.mlp.fc2.weight', 'blocks.0.mlp.fc2.bias', 'blocks.1.gamma_1', 'blocks.1.gamma_2', 'blocks.1.norm1.weight', 'blocks.1.norm1.bias', 'blocks.1.attn.q_bias', 'blocks.1.attn.v_bias', 'blocks.1.attn.qkv.weight', 'blocks.1.attn.proj.weight', 'blocks.1.attn.proj.bias', 'blocks.1.norm2.weight', 'blocks.1.norm2.bias', 'blocks.1.mlp.fc1.weight', 'blocks.1.mlp.fc1.bias', 'blocks.1.mlp.fc2.weight', 'blocks.1.mlp.fc2.bias', 'blocks.2.gamma_1', 'blocks.2.gamma_2', 'blocks.2.norm1.weight', 'blocks.2.norm1.bias', 'blocks.2.attn.q_bias', 'blocks.2.attn.v_bias', 'blocks.2.attn.qkv.weight', 'blocks.2.attn.proj.weight', 'blocks.2.attn.proj.bias', 'blocks.2.norm2.weight', 'blocks.2.norm2.bias', 'blocks.2.mlp.fc1.weight', 'blocks.2.mlp.fc1.bias', 'blocks.2.mlp.fc2.weight', 'blocks.2.mlp.fc2.bias', 'blocks.3.gamma_1', 'blocks.3.gamma_2', 'blocks.3.norm1.weight', 'blocks.3.norm1.bias', 'blocks.3.attn.q_bias', 'blocks.3.attn.v_bias', 'blocks.3.attn.qkv.weight', 'blocks.3.attn.proj.weight', 'blocks.3.attn.proj.bias', 'blocks.3.norm2.weight', 'blocks.3.norm2.bias', 'blocks.3.mlp.fc1.weight', 'blocks.3.mlp.fc1.bias', 'blocks.3.mlp.fc2.weight', 'blocks.3.mlp.fc2.bias', 'blocks.4.gamma_1', 'blocks.4.gamma_2', 'blocks.4.norm1.weight', 'blocks.4.norm1.bias', 'blocks.4.attn.q_bias', 'blocks.4.attn.v_bias', 'blocks.4.attn.qkv.weight', 'blocks.4.attn.proj.weight', 'blocks.4.attn.proj.bias', 'blocks.4.norm2.weight', 'blocks.4.norm2.bias', 'blocks.4.mlp.fc1.weight', 'blocks.4.mlp.fc1.bias', 'blocks.4.mlp.fc2.weight', 'blocks.4.mlp.fc2.bias', 'blocks.5.gamma_1', 'blocks.5.gamma_2', 'blocks.5.norm1.weight', 'blocks.5.norm1.bias', 'blocks.5.attn.q_bias', 'blocks.5.attn.v_bias', 'blocks.5.attn.qkv.weight', 'blocks.5.attn.proj.weight', 'blocks.5.attn.proj.bias', 'blocks.5.norm2.weight', 'blocks.5.norm2.bias', 'blocks.5.mlp.fc1.weight', 'blocks.5.mlp.fc1.bias', 'blocks.5.mlp.fc2.weight', 'blocks.5.mlp.fc2.bias', 'blocks.6.gamma_1', 'blocks.6.gamma_2', 'blocks.6.norm1.weight', 'blocks.6.norm1.bias', 'blocks.6.attn.q_bias', 'blocks.6.attn.v_bias', 'blocks.6.attn.qkv.weight', 'blocks.6.attn.proj.weight', 'blocks.6.attn.proj.bias', 'blocks.6.norm2.weight', 'blocks.6.norm2.bias', 'blocks.6.mlp.fc1.weight', 'blocks.6.mlp.fc1.bias', 'blocks.6.mlp.fc2.weight', 'blocks.6.mlp.fc2.bias', 'blocks.7.gamma_1', 'blocks.7.gamma_2', 'blocks.7.norm1.weight', 'blocks.7.norm1.bias', 'blocks.7.attn.q_bias', 'blocks.7.attn.v_bias', 'blocks.7.attn.qkv.weight', 'blocks.7.attn.proj.weight', 'blocks.7.attn.proj.bias', 'blocks.7.norm2.weight', 'blocks.7.norm2.bias', 'blocks.7.mlp.fc1.weight', 'blocks.7.mlp.fc1.bias', 'blocks.7.mlp.fc2.weight', 'blocks.7.mlp.fc2.bias', 'blocks.8.gamma_1', 'blocks.8.gamma_2', 'blocks.8.norm1.weight', 'blocks.8.norm1.bias', 'blocks.8.attn.q_bias', 'blocks.8.attn.v_bias', 'blocks.8.attn.qkv.weight', 'blocks.8.attn.proj.weight', 'blocks.8.attn.proj.bias', 'blocks.8.norm2.weight', 'blocks.8.norm2.bias', 'blocks.8.mlp.fc1.weight', 'blocks.8.mlp.fc1.bias', 'blocks.8.mlp.fc2.weight', 'blocks.8.mlp.fc2.bias', 'blocks.9.gamma_1', 'blocks.9.gamma_2', 'blocks.9.norm1.weight', 'blocks.9.norm1.bias', 'blocks.9.attn.q_bias', 'blocks.9.attn.v_bias', 'blocks.9.attn.qkv.weight', 'blocks.9.attn.proj.weight', 'blocks.9.attn.proj.bias', 'blocks.9.norm2.weight', 'blocks.9.norm2.bias', 'blocks.9.mlp.fc1.weight', 'blocks.9.mlp.fc1.bias', 'blocks.9.mlp.fc2.weight', 'blocks.9.mlp.fc2.bias', 'blocks.10.gamma_1', 'blocks.10.gamma_2', 'blocks.10.norm1.weight', 'blocks.10.norm1.bias', 'blocks.10.attn.q_bias', 'blocks.10.attn.v_bias', 'blocks.10.attn.qkv.weight', 'blocks.10.attn.proj.weight', 'blocks.10.attn.proj.bias', 'blocks.10.norm2.weight', 'bl
+Weights of VisionTransformer not initialized from pretrained model: ['blocks.0.attn.relative_position_bias_table', 'blocks.1.attn.relative_position_bias_table', 'blocks.2.attn.relative_position_bias_table', 'blocks.3.attn.relative_position_bias_table', 'blocks.4.attn.relative_position_bias_table', 'blocks.5.attn.relative_position_bias_table', 'blocks.6.attn.relative_position_bias_table', 'blocks.7.attn.relative_position_bias_table', 'blocks.8.attn.relative_position_bias_table', 'blocks.9.attn.relative_position_bias_table', 'blocks.10.attn.relative_position_bias_table', 'blocks.11.attn.relative_position_bias_table', 'head.weight', 'head.bias']
+Ignored weights of VisionTransformer not initialized from pretrained model: ['blocks.0.attn.relative_position_index', 'blocks.1.attn.relative_position_index', 'blocks.2.attn.relative_position_index', 'blocks.3.attn.relative_position_index', 'blocks.4.attn.relative_position_index', 'blocks.5.attn.relative_position_index', 'blocks.6.attn.relative_position_index', 'blocks.7.attn.relative_position_index', 'blocks.8.attn.relative_position_index', 'blocks.9.attn.relative_position_index', 'blocks.10.attn.relative_position_index', 'blocks.11.attn.relative_position_index']
+Model = VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.0181818176060915)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.036363635212183)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.05454545468091965)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.072727270424366)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.09090908616781235)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.10909091681241989)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.12727272510528564)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1454545557498932)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.16363637149333954)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.1818181872367859)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=False)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath(p=0.20000000298023224)
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (norm): Identity()
+  (fc_norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): Linear(in_features=768, out_features=6, bias=True)
+)
+number of params: 85766598
+LR = 0.00050000
+Batch size = 128
+Update frequent = 1
+Number of training examples = 1493
+Number of training training per epoch = 11
+Assigned values = [0.003697205891018715, 0.005688009063105715, 0.008750783174008792, 0.013462743344628911, 0.02071191283789063, 0.03186448128906251, 0.049022278906250015, 0.07541889062500001, 0.11602906250000002, 0.17850625000000003, 0.274625, 0.42250000000000004, 0.65, 1.0]
+Skip weight decay list:  {'cls_token', 'pos_embed'}
+Param groups = {
+  "layer_0_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "cls_token",
+      "patch_embed.proj.bias"
+    ],
+    "lr_scale": 0.003697205891018715
+  },
+  "layer_0_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "patch_embed.proj.weight"
+    ],
+    "lr_scale": 0.003697205891018715
+  },
+  "layer_1_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.0.gamma_1",
+      "blocks.0.gamma_2",
+      "blocks.0.norm1.weight",
+      "blocks.0.norm1.bias",
+      "blocks.0.attn.q_bias",
+      "blocks.0.attn.v_bias",
+      "blocks.0.attn.proj.bias",
+      "blocks.0.norm2.weight",
+      "blocks.0.norm2.bias",
+      "blocks.0.mlp.fc1.bias",
+      "blocks.0.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.005688009063105715
+  },
+  "layer_1_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.0.attn.relative_position_bias_table",
+      "blocks.0.attn.qkv.weight",
+      "blocks.0.attn.proj.weight",
+      "blocks.0.mlp.fc1.weight",
+      "blocks.0.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.005688009063105715
+  },
+  "layer_2_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.1.gamma_1",
+      "blocks.1.gamma_2",
+      "blocks.1.norm1.weight",
+      "blocks.1.norm1.bias",
+      "blocks.1.attn.q_bias",
+      "blocks.1.attn.v_bias",
+      "blocks.1.attn.proj.bias",
+      "blocks.1.norm2.weight",
+      "blocks.1.norm2.bias",
+      "blocks.1.mlp.fc1.bias",
+      "blocks.1.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.008750783174008792
+  },
+  "layer_2_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.1.attn.relative_position_bias_table",
+      "blocks.1.attn.qkv.weight",
+      "blocks.1.attn.proj.weight",
+      "blocks.1.mlp.fc1.weight",
+      "blocks.1.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.008750783174008792
+  },
+  "layer_3_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.2.gamma_1",
+      "blocks.2.gamma_2",
+      "blocks.2.norm1.weight",
+      "blocks.2.norm1.bias",
+      "blocks.2.attn.q_bias",
+      "blocks.2.attn.v_bias",
+      "blocks.2.attn.proj.bias",
+      "blocks.2.norm2.weight",
+      "blocks.2.norm2.bias",
+      "blocks.2.mlp.fc1.bias",
+      "blocks.2.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.013462743344628911
+  },
+  "layer_3_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.2.attn.relative_position_bias_table",
+      "blocks.2.attn.qkv.weight",
+      "blocks.2.attn.proj.weight",
+      "blocks.2.mlp.fc1.weight",
+      "blocks.2.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.013462743344628911
+  },
+  "layer_4_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.3.gamma_1",
+      "blocks.3.gamma_2",
+      "blocks.3.norm1.weight",
+      "blocks.3.norm1.bias",
+      "blocks.3.attn.q_bias",
+      "blocks.3.attn.v_bias",
+      "blocks.3.attn.proj.bias",
+      "blocks.3.norm2.weight",
+      "blocks.3.norm2.bias",
+      "blocks.3.mlp.fc1.bias",
+      "blocks.3.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.02071191283789063
+  },
+  "layer_4_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.3.attn.relative_position_bias_table",
+      "blocks.3.attn.qkv.weight",
+      "blocks.3.attn.proj.weight",
+      "blocks.3.mlp.fc1.weight",
+      "blocks.3.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.02071191283789063
+  },
+  "layer_5_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.4.gamma_1",
+      "blocks.4.gamma_2",
+      "blocks.4.norm1.weight",
+      "blocks.4.norm1.bias",
+      "blocks.4.attn.q_bias",
+      "blocks.4.attn.v_bias",
+      "blocks.4.attn.proj.bias",
+      "blocks.4.norm2.weight",
+      "blocks.4.norm2.bias",
+      "blocks.4.mlp.fc1.bias",
+      "blocks.4.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.03186448128906251
+  },
+  "layer_5_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.4.attn.relative_position_bias_table",
+      "blocks.4.attn.qkv.weight",
+      "blocks.4.attn.proj.weight",
+      "blocks.4.mlp.fc1.weight",
+      "blocks.4.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.03186448128906251
+  },
+  "layer_6_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.5.gamma_1",
+      "blocks.5.gamma_2",
+      "blocks.5.norm1.weight",
+      "blocks.5.norm1.bias",
+      "blocks.5.attn.q_bias",
+      "blocks.5.attn.v_bias",
+      "blocks.5.attn.proj.bias",
+      "blocks.5.norm2.weight",
+      "blocks.5.norm2.bias",
+      "blocks.5.mlp.fc1.bias",
+      "blocks.5.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.049022278906250015
+  },
+  "layer_6_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.5.attn.relative_position_bias_table",
+      "blocks.5.attn.qkv.weight",
+      "blocks.5.attn.proj.weight",
+      "blocks.5.mlp.fc1.weight",
+      "blocks.5.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.049022278906250015
+  },
+  "layer_7_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.6.gamma_1",
+      "blocks.6.gamma_2",
+      "blocks.6.norm1.weight",
+      "blocks.6.norm1.bias",
+      "blocks.6.attn.q_bias",
+      "blocks.6.attn.v_bias",
+      "blocks.6.attn.proj.bias",
+      "blocks.6.norm2.weight",
+      "blocks.6.norm2.bias",
+      "blocks.6.mlp.fc1.bias",
+      "blocks.6.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.07541889062500001
+  },
+  "layer_7_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.6.attn.relative_position_bias_table",
+      "blocks.6.attn.qkv.weight",
+      "blocks.6.attn.proj.weight",
+      "blocks.6.mlp.fc1.weight",
+      "blocks.6.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.07541889062500001
+  },
+  "layer_8_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.7.gamma_1",
+      "blocks.7.gamma_2",
+      "blocks.7.norm1.weight",
+      "blocks.7.norm1.bias",
+      "blocks.7.attn.q_bias",
+      "blocks.7.attn.v_bias",
+      "blocks.7.attn.proj.bias",
+      "blocks.7.norm2.weight",
+      "blocks.7.norm2.bias",
+      "blocks.7.mlp.fc1.bias",
+      "blocks.7.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.11602906250000002
+  },
+  "layer_8_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.7.attn.relative_position_bias_table",
+      "blocks.7.attn.qkv.weight",
+      "blocks.7.attn.proj.weight",
+      "blocks.7.mlp.fc1.weight",
+      "blocks.7.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.11602906250000002
+  },
+  "layer_9_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.8.gamma_1",
+      "blocks.8.gamma_2",
+      "blocks.8.norm1.weight",
+      "blocks.8.norm1.bias",
+      "blocks.8.attn.q_bias",
+      "blocks.8.attn.v_bias",
+      "blocks.8.attn.proj.bias",
+      "blocks.8.norm2.weight",
+      "blocks.8.norm2.bias",
+      "blocks.8.mlp.fc1.bias",
+      "blocks.8.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.17850625000000003
+  },
+  "layer_9_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.8.attn.relative_position_bias_table",
+      "blocks.8.attn.qkv.weight",
+      "blocks.8.attn.proj.weight",
+      "blocks.8.mlp.fc1.weight",
+      "blocks.8.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.17850625000000003
+  },
+  "layer_10_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.9.gamma_1",
+      "blocks.9.gamma_2",
+      "blocks.9.norm1.weight",
+      "blocks.9.norm1.bias",
+      "blocks.9.attn.q_bias",
+      "blocks.9.attn.v_bias",
+      "blocks.9.attn.proj.bias",
+      "blocks.9.norm2.weight",
+      "blocks.9.norm2.bias",
+      "blocks.9.mlp.fc1.bias",
+      "blocks.9.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.274625
+  },
+  "layer_10_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.9.attn.relative_position_bias_table",
+      "blocks.9.attn.qkv.weight",
+      "blocks.9.attn.proj.weight",
+      "blocks.9.mlp.fc1.weight",
+      "blocks.9.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.274625
+  },
+  "layer_11_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.10.gamma_1",
+      "blocks.10.gamma_2",
+      "blocks.10.norm1.weight",
+      "blocks.10.norm1.bias",
+      "blocks.10.attn.q_bias",
+      "blocks.10.attn.v_bias",
+      "blocks.10.attn.proj.bias",
+      "blocks.10.norm2.weight",
+      "blocks.10.norm2.bias",
+      "blocks.10.mlp.fc1.bias",
+      "blocks.10.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.42250000000000004
+  },
+  "layer_11_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.10.attn.relative_position_bias_table",
+      "blocks.10.attn.qkv.weight",
+      "blocks.10.attn.proj.weight",
+      "blocks.10.mlp.fc1.weight",
+      "blocks.10.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.42250000000000004
+  },
+  "layer_12_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.11.gamma_1",
+      "blocks.11.gamma_2",
+      "blocks.11.norm1.weight",
+      "blocks.11.norm1.bias",
+      "blocks.11.attn.q_bias",
+      "blocks.11.attn.v_bias",
+      "blocks.11.attn.proj.bias",
+      "blocks.11.norm2.weight",
+      "blocks.11.norm2.bias",
+      "blocks.11.mlp.fc1.bias",
+      "blocks.11.mlp.fc2.bias"
+    ],
+    "lr_scale": 0.65
+  },
+  "layer_12_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.11.attn.relative_position_bias_table",
+      "blocks.11.attn.qkv.weight",
+      "blocks.11.attn.proj.weight",
+      "blocks.11.mlp.fc1.weight",
+      "blocks.11.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.65
+  },
+  "layer_13_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "fc_norm.weight",
+      "fc_norm.bias",
+      "head.bias"
+    ],
+    "lr_scale": 1.0
+  },
+  "layer_13_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "head.weight"
+    ],
+    "lr_scale": 1.0
+  }
+}
+/home/share/FM_Code/PanDerm/classification/furnace/utils.py:424: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self._scaler = torch.cuda.amp.GradScaler()
+Use step level LR scheduler!
+Set warmup steps = 110
+Set warmup steps = 0
+Max WD = 0.0500000, Min WD = 0.0500000
+criterion = SoftTargetCrossEntropy()
+Start training for 50 epochs
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [0]  [ 0/11]  eta: 0:00:45  lr: 0.000000  min_lr: 0.000000  loss: 1.7918 (1.7918)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 0.6407 (0.6407)  time: 4.1770  data: 2.4999  max mem: 14007
+Epoch: [0]  [10/11]  eta: 0:00:00  lr: 0.000046  min_lr: 0.000000  loss: 1.7916 (1.7914)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 0.8162 (0.8139)  time: 0.6216  data: 0.2273  max mem: 14662
+Epoch: [0] Total time: 0:00:06 (0.6268 s / it)
+2025-04-29 11:42:12 Averaged stats: lr: 0.000046  min_lr: 0.000000  loss: 1.7916 (1.7914)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 0.8162 (0.8139)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.9252  data: 2.5315  max mem: 14662
+Test:  [1/2]  eta: 0:00:01    time: 1.5613  data: 1.2658  max mem: 14662
+Test: Total time: 0:00:03 (1.5941 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.2635 Acc: 0.4128 Recall_macro: 0.2635 Recall_weighted: 0.4128 AUC-ROC: 0.8163 Weighted F1-score: 0.3060
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 0, 'Val Loss': 1.7881373167037964, 'Val BAcc': np.float64(0.2634582970066841), 'Val Acc': 0.4127906976744186, 'Val ROC': np.float64(0.8162657320887238), 'Val W_F1': 0.30603486879422037, 'Val Recall_macro': 0.2634582970066841, 'Val Recall_weighted': 0.4127906976744186}
+Max val mean accuracy: 0.41%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [1]  [ 0/11]  eta: 0:00:33  lr: 0.000050  min_lr: 0.000000  loss: 1.7902 (1.7902)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.3220 (1.3220)  time: 3.0580  data: 2.7770  max mem: 14662
+Epoch: [1]  [10/11]  eta: 0:00:00  lr: 0.000096  min_lr: 0.000000  loss: 1.7850 (1.7825)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.2008 (1.2419)  time: 0.5228  data: 0.2526  max mem: 14663
+Epoch: [1] Total time: 0:00:05 (0.5301 s / it)
+2025-04-29 11:42:23 Averaged stats: lr: 0.000096  min_lr: 0.000000  loss: 1.7850 (1.7825)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.2008 (1.2419)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.8016  data: 2.6653  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.4538  data: 1.3327  max mem: 14663
+Test: Total time: 0:00:02 (1.4900 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.4171 Acc: 0.4477 Recall_macro: 0.4171 Recall_weighted: 0.4477 AUC-ROC: 0.8468 Weighted F1-score: 0.4418
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 1, 'Val Loss': 1.757041573524475, 'Val BAcc': np.float64(0.417096885742047), 'Val Acc': 0.4476744186046512, 'Val ROC': np.float64(0.8467844890207866), 'Val W_F1': 0.44180250987145037, 'Val Recall_macro': 0.417096885742047, 'Val Recall_weighted': 0.4476744186046512}
+Max val mean accuracy: 0.45%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [2]  [ 0/11]  eta: 0:00:32  lr: 0.000101  min_lr: 0.000000  loss: 1.7643 (1.7643)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.3927 (1.3927)  time: 2.9635  data: 2.6925  max mem: 14663
+Epoch: [2]  [10/11]  eta: 0:00:00  lr: 0.000147  min_lr: 0.000001  loss: 1.7390 (1.7341)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.6182 (1.6384)  time: 0.5141  data: 0.2449  max mem: 14663
+Epoch: [2] Total time: 0:00:05 (0.5205 s / it)
+2025-04-29 11:42:33 Averaged stats: lr: 0.000147  min_lr: 0.000001  loss: 1.7390 (1.7341)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.6182 (1.6384)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5430  data: 2.4061  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3251  data: 1.2031  max mem: 14663
+Test: Total time: 0:00:02 (1.3589 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.4525 Acc: 0.3663 Recall_macro: 0.4525 Recall_weighted: 0.3663 AUC-ROC: 0.8579 Weighted F1-score: 0.3604
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 2, 'Val Loss': 1.5827765464782715, 'Val BAcc': np.float64(0.4524687402106757), 'Val Acc': 0.36627906976744184, 'Val ROC': np.float64(0.8579196361175757), 'Val W_F1': 0.3603992340149725, 'Val Recall_macro': 0.4524687402106757, 'Val Recall_weighted': 0.36627906976744184}
+Max val mean accuracy: 0.45%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [3]  [ 0/11]  eta: 0:00:32  lr: 0.000151  min_lr: 0.000001  loss: 1.6842 (1.6842)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.4474 (1.4474)  time: 2.9397  data: 2.6700  max mem: 14663
+Epoch: [3]  [10/11]  eta: 0:00:00  lr: 0.000197  min_lr: 0.000001  loss: 1.5604 (1.5688)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.7872 (1.8635)  time: 0.5125  data: 0.2428  max mem: 14663
+Epoch: [3] Total time: 0:00:05 (0.5190 s / it)
+2025-04-29 11:42:42 Averaged stats: lr: 0.000197  min_lr: 0.000001  loss: 1.5604 (1.5688)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.7872 (1.8635)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5132  data: 2.3763  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3100  data: 1.1882  max mem: 14663
+Test: Total time: 0:00:02 (1.3440 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.4745 Acc: 0.3808 Recall_macro: 0.4745 Recall_weighted: 0.3808 AUC-ROC: 0.8860 Weighted F1-score: 0.3757
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 3, 'Val Loss': 1.3096474409103394, 'Val BAcc': np.float64(0.47449810094971384), 'Val Acc': 0.3808139534883721, 'Val ROC': np.float64(0.8860403612147301), 'Val W_F1': 0.37572839426661697, 'Val Recall_macro': 0.47449810094971384, 'Val Recall_weighted': 0.3808139534883721}
+Max val mean accuracy: 0.45%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [4]  [ 0/11]  eta: 0:00:33  lr: 0.000202  min_lr: 0.000001  loss: 1.4349 (1.4349)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8080 (1.8080)  time: 3.0543  data: 2.7823  max mem: 14663
+Epoch: [4]  [10/11]  eta: 0:00:00  lr: 0.000248  min_lr: 0.000001  loss: 1.4383 (1.4566)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8287 (1.9350)  time: 0.5231  data: 0.2530  max mem: 14663
+Epoch: [4] Total time: 0:00:05 (0.5294 s / it)
+2025-04-29 11:42:50 Averaged stats: lr: 0.000248  min_lr: 0.000001  loss: 1.4383 (1.4566)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8287 (1.9350)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5196  data: 2.3821  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3131  data: 1.1911  max mem: 14663
+Test: Total time: 0:00:02 (1.3459 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.5425 Acc: 0.3663 Recall_macro: 0.5425 Recall_weighted: 0.3663 AUC-ROC: 0.8976 Weighted F1-score: 0.3489
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 4, 'Val Loss': 1.1863499879837036, 'Val BAcc': np.float64(0.5424740064740065), 'Val Acc': 0.36627906976744184, 'Val ROC': np.float64(0.8975931474889314), 'Val W_F1': 0.34891973068343346, 'Val Recall_macro': 0.5424740064740065, 'Val Recall_weighted': 0.36627906976744184}
+Max val mean accuracy: 0.45%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [5]  [ 0/11]  eta: 0:00:31  lr: 0.000252  min_lr: 0.000001  loss: 1.2904 (1.2904)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2324 (2.2324)  time: 2.8808  data: 2.6095  max mem: 14663
+Epoch: [5]  [10/11]  eta: 0:00:00  lr: 0.000298  min_lr: 0.000001  loss: 1.3898 (1.4350)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7925 (2.6735)  time: 0.5079  data: 0.2373  max mem: 14663
+Epoch: [5] Total time: 0:00:05 (0.5154 s / it)
+2025-04-29 11:42:59 Averaged stats: lr: 0.000298  min_lr: 0.000001  loss: 1.3898 (1.4350)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7925 (2.6735)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.6616  data: 2.5238  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3840  data: 1.2620  max mem: 14663
+Test: Total time: 0:00:02 (1.4156 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6349 Acc: 0.5407 Recall_macro: 0.6349 Recall_weighted: 0.5407 AUC-ROC: 0.8773 Weighted F1-score: 0.5652
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 5, 'Val Loss': 1.1950105428695679, 'Val BAcc': np.float64(0.6349002878035136), 'Val Acc': 0.5406976744186046, 'Val ROC': np.float64(0.8773028152592287), 'Val W_F1': 0.5652087272947306, 'Val Recall_macro': 0.6349002878035136, 'Val Recall_weighted': 0.5406976744186046}
+Max val mean accuracy: 0.54%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [6]  [ 0/11]  eta: 0:00:33  lr: 0.000303  min_lr: 0.000001  loss: 1.4159 (1.4159)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 3.4227 (3.4227)  time: 3.0286  data: 2.7553  max mem: 14663
+Epoch: [6]  [10/11]  eta: 0:00:00  lr: 0.000349  min_lr: 0.000001  loss: 1.3456 (1.3599)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7742 (3.0063)  time: 0.5241  data: 0.2506  max mem: 14663
+Epoch: [6] Total time: 0:00:05 (0.5319 s / it)
+2025-04-29 11:43:09 Averaged stats: lr: 0.000349  min_lr: 0.000001  loss: 1.3456 (1.3599)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7742 (3.0063)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5954  data: 2.4587  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3513  data: 1.2294  max mem: 14663
+Test: Total time: 0:00:02 (1.3791 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6937 Acc: 0.6134 Recall_macro: 0.6937 Recall_weighted: 0.6134 AUC-ROC: 0.9184 Weighted F1-score: 0.6516
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 6, 'Val Loss': 1.0305882692337036, 'Val BAcc': np.float64(0.6936695841211971), 'Val Acc': 0.6133720930232558, 'Val ROC': np.float64(0.9183785875838409), 'Val W_F1': 0.651586210755654, 'Val Recall_macro': 0.6936695841211971, 'Val Recall_weighted': 0.6133720930232558}
+Max val mean accuracy: 0.61%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [7]  [ 0/11]  eta: 0:00:31  lr: 0.000353  min_lr: 0.000001  loss: 1.3701 (1.3701)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3448 (2.3448)  time: 2.8687  data: 2.5958  max mem: 14663
+Epoch: [7]  [10/11]  eta: 0:00:00  lr: 0.000399  min_lr: 0.000001  loss: 1.3701 (1.3199)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7349 (2.8118)  time: 0.5087  data: 0.2361  max mem: 14663
+Epoch: [7] Total time: 0:00:05 (0.5151 s / it)
+2025-04-29 11:43:20 Averaged stats: lr: 0.000399  min_lr: 0.000001  loss: 1.3701 (1.3199)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7349 (2.8118)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5224  data: 2.3841  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3151  data: 1.1921  max mem: 14663
+Test: Total time: 0:00:02 (1.3417 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6158 Acc: 0.6773 Recall_macro: 0.6158 Recall_weighted: 0.6773 AUC-ROC: 0.9124 Weighted F1-score: 0.6768
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 7, 'Val Loss': 1.040771484375, 'Val BAcc': np.float64(0.6157646628614372), 'Val Acc': 0.6773255813953488, 'Val ROC': np.float64(0.9124361089473992), 'Val W_F1': 0.6767758224845801, 'Val Recall_macro': 0.6157646628614372, 'Val Recall_weighted': 0.6773255813953488}
+Max val mean accuracy: 0.68%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [8]  [ 0/11]  eta: 0:00:29  lr: 0.000404  min_lr: 0.000001  loss: 1.3132 (1.3132)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1641 (2.1641)  time: 2.7119  data: 2.4349  max mem: 14663
+Epoch: [8]  [10/11]  eta: 0:00:00  lr: 0.000450  min_lr: 0.000002  loss: 1.4600 (1.3809)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.9673 (2.7799)  time: 0.4995  data: 0.2255  max mem: 14663
+Epoch: [8] Total time: 0:00:05 (0.5065 s / it)
+2025-04-29 11:43:30 Averaged stats: lr: 0.000450  min_lr: 0.000002  loss: 1.4600 (1.3809)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.9673 (2.7799)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5687  data: 2.4301  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3401  data: 1.2151  max mem: 14663
+Test: Total time: 0:00:02 (1.3727 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6235 Acc: 0.5698 Recall_macro: 0.6235 Recall_weighted: 0.5698 AUC-ROC: 0.9181 Weighted F1-score: 0.5828
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 8, 'Val Loss': 1.0034613609313965, 'Val BAcc': np.float64(0.6235264271393303), 'Val Acc': 0.5697674418604651, 'Val ROC': np.float64(0.9180581839606662), 'Val W_F1': 0.5828262692292087, 'Val Recall_macro': 0.6235264271393303, 'Val Recall_weighted': 0.5697674418604651}
+Max val mean accuracy: 0.68%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [9]  [ 0/11]  eta: 0:00:30  lr: 0.000454  min_lr: 0.000002  loss: 1.2160 (1.2160)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3064 (2.3064)  time: 2.8011  data: 2.5271  max mem: 14663
+Epoch: [9]  [10/11]  eta: 0:00:00  lr: 0.000500  min_lr: 0.000002  loss: 1.3533 (1.3555)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6592 (2.5338)  time: 0.5043  data: 0.2298  max mem: 14663
+Epoch: [9] Total time: 0:00:05 (0.5110 s / it)
+2025-04-29 11:43:38 Averaged stats: lr: 0.000500  min_lr: 0.000002  loss: 1.3533 (1.3555)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6592 (2.5338)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5798  data: 2.4366  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3462  data: 1.2184  max mem: 14663
+Test: Total time: 0:00:02 (1.3844 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6779 Acc: 0.6192 Recall_macro: 0.6779 Recall_weighted: 0.6192 AUC-ROC: 0.9187 Weighted F1-score: 0.6530
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 9, 'Val Loss': 1.0232350826263428, 'Val BAcc': np.float64(0.677866858899117), 'Val Acc': 0.6191860465116279, 'Val ROC': np.float64(0.9187017123538072), 'Val W_F1': 0.6529559378603217, 'Val Recall_macro': 0.677866858899117, 'Val Recall_weighted': 0.6191860465116279}
+Max val mean accuracy: 0.68%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [10]  [ 0/11]  eta: 0:00:35  lr: 0.000500  min_lr: 0.000002  loss: 1.1265 (1.1265)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0875 (2.0875)  time: 3.1977  data: 2.9243  max mem: 14663
+Epoch: [10]  [10/11]  eta: 0:00:00  lr: 0.000499  min_lr: 0.000002  loss: 1.4871 (1.4111)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6669 (2.9663)  time: 0.5407  data: 0.2659  max mem: 14663
+Epoch: [10] Total time: 0:00:06 (0.5477 s / it)
+2025-04-29 11:43:47 Averaged stats: lr: 0.000499  min_lr: 0.000002  loss: 1.4871 (1.4111)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6669 (2.9663)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.7141  data: 2.5747  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.4114  data: 1.2874  max mem: 14663
+Test: Total time: 0:00:02 (1.4407 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6891 Acc: 0.5959 Recall_macro: 0.6891 Recall_weighted: 0.5959 AUC-ROC: 0.9188 Weighted F1-score: 0.6235
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 10, 'Val Loss': 1.0569626092910767, 'Val BAcc': np.float64(0.6891314288733644), 'Val Acc': 0.5959302325581395, 'Val ROC': np.float64(0.9187812248361285), 'Val W_F1': 0.6234731222417919, 'Val Recall_macro': 0.6891314288733644, 'Val Recall_weighted': 0.5959302325581395}
+Max val mean accuracy: 0.68%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [11]  [ 0/11]  eta: 0:00:31  lr: 0.000499  min_lr: 0.000002  loss: 1.4900 (1.4900)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3796 (2.3796)  time: 2.8451  data: 2.5661  max mem: 14663
+Epoch: [11]  [10/11]  eta: 0:00:00  lr: 0.000497  min_lr: 0.000002  loss: 1.4492 (1.3682)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6229 (2.5648)  time: 0.5101  data: 0.2334  max mem: 14663
+Epoch: [11] Total time: 0:00:05 (0.5167 s / it)
+2025-04-29 11:43:56 Averaged stats: lr: 0.000497  min_lr: 0.000002  loss: 1.4492 (1.3682)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6229 (2.5648)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5941  data: 2.4546  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3521  data: 1.2274  max mem: 14663
+Test: Total time: 0:00:02 (1.3886 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6633 Acc: 0.7151 Recall_macro: 0.6633 Recall_weighted: 0.7151 AUC-ROC: 0.9305 Weighted F1-score: 0.7261
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 11, 'Val Loss': 0.9544886350631714, 'Val BAcc': np.float64(0.663275830501637), 'Val Acc': 0.7151162790697675, 'Val ROC': np.float64(0.930467526756512), 'Val W_F1': 0.7261217026766789, 'Val Recall_macro': 0.663275830501637, 'Val Recall_weighted': 0.7151162790697675}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [12]  [ 0/11]  eta: 0:00:33  lr: 0.000497  min_lr: 0.000002  loss: 1.4170 (1.4170)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.8363 (2.8363)  time: 3.0200  data: 2.7448  max mem: 14663
+Epoch: [12]  [10/11]  eta: 0:00:00  lr: 0.000494  min_lr: 0.000002  loss: 1.1804 (1.2108)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4601 (2.6255)  time: 0.5252  data: 0.2496  max mem: 14663
+Epoch: [12] Total time: 0:00:05 (0.5324 s / it)
+2025-04-29 11:44:06 Averaged stats: lr: 0.000494  min_lr: 0.000002  loss: 1.1804 (1.2108)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4601 (2.6255)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5475  data: 2.4097  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3275  data: 1.2049  max mem: 14663
+Test: Total time: 0:00:02 (1.3539 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.5954 Acc: 0.6977 Recall_macro: 0.5954 Recall_weighted: 0.6977 AUC-ROC: 0.9334 Weighted F1-score: 0.7049
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 12, 'Val Loss': 0.9024296998977661, 'Val BAcc': np.float64(0.595443309249761), 'Val Acc': 0.6976744186046512, 'Val ROC': np.float64(0.933431857021255), 'Val W_F1': 0.7049384882727576, 'Val Recall_macro': 0.595443309249761, 'Val Recall_weighted': 0.6976744186046512}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [13]  [ 0/11]  eta: 0:00:32  lr: 0.000493  min_lr: 0.000002  loss: 1.6433 (1.6433)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 3.8959 (3.8959)  time: 2.9314  data: 2.6564  max mem: 14663
+Epoch: [13]  [10/11]  eta: 0:00:00  lr: 0.000488  min_lr: 0.000002  loss: 1.3089 (1.2766)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3067 (2.4507)  time: 0.5177  data: 0.2416  max mem: 14663
+Epoch: [13] Total time: 0:00:05 (0.5248 s / it)
+2025-04-29 11:44:15 Averaged stats: lr: 0.000488  min_lr: 0.000002  loss: 1.3089 (1.2766)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3067 (2.4507)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5743  data: 2.4341  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3423  data: 1.2171  max mem: 14663
+Test: Total time: 0:00:02 (1.3769 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6163 Acc: 0.6919 Recall_macro: 0.6163 Recall_weighted: 0.6919 AUC-ROC: 0.9297 Weighted F1-score: 0.6982
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 13, 'Val Loss': 0.9261723756790161, 'Val BAcc': np.float64(0.6162875569327183), 'Val Acc': 0.6918604651162791, 'Val ROC': np.float64(0.9297438263617667), 'Val W_F1': 0.6982177891004744, 'Val Recall_macro': 0.6162875569327183, 'Val Recall_weighted': 0.6918604651162791}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [14]  [ 0/11]  eta: 0:00:30  lr: 0.000488  min_lr: 0.000002  loss: 1.1990 (1.1990)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3984 (2.3984)  time: 2.7431  data: 2.4658  max mem: 14663
+Epoch: [14]  [10/11]  eta: 0:00:00  lr: 0.000482  min_lr: 0.000002  loss: 1.1302 (1.1543)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5906 (2.7645)  time: 0.5031  data: 0.2243  max mem: 14663
+Epoch: [14] Total time: 0:00:05 (0.5112 s / it)
+2025-04-29 11:44:23 Averaged stats: lr: 0.000482  min_lr: 0.000002  loss: 1.1302 (1.1543)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5906 (2.7645)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.6214  data: 2.4806  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3665  data: 1.2404  max mem: 14663
+Test: Total time: 0:00:02 (1.3994 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6373 Acc: 0.7064 Recall_macro: 0.6373 Recall_weighted: 0.7064 AUC-ROC: 0.9272 Weighted F1-score: 0.7177
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 14, 'Val Loss': 0.8442792296409607, 'Val BAcc': np.float64(0.6373486699938313), 'Val Acc': 0.7063953488372093, 'Val ROC': np.float64(0.927186222918031), 'Val W_F1': 0.7177243418253808, 'Val Recall_macro': 0.6373486699938313, 'Val Recall_weighted': 0.7063953488372093}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [15]  [ 0/11]  eta: 0:00:32  lr: 0.000481  min_lr: 0.000002  loss: 1.5735 (1.5735)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 3.3392 (3.3392)  time: 2.9416  data: 2.6629  max mem: 14663
+Epoch: [15]  [10/11]  eta: 0:00:00  lr: 0.000474  min_lr: 0.000002  loss: 1.4940 (1.3992)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7742 (2.7788)  time: 0.5197  data: 0.2422  max mem: 14663
+Epoch: [15] Total time: 0:00:05 (0.5265 s / it)
+2025-04-29 11:44:32 Averaged stats: lr: 0.000474  min_lr: 0.000002  loss: 1.4940 (1.3992)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7742 (2.7788)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5018  data: 2.3628  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3056  data: 1.1814  max mem: 14663
+Test: Total time: 0:00:02 (1.3381 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6094 Acc: 0.7151 Recall_macro: 0.6094 Recall_weighted: 0.7151 AUC-ROC: 0.9324 Weighted F1-score: 0.7141
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 15, 'Val Loss': 0.9254383444786072, 'Val BAcc': np.float64(0.6093571644539387), 'Val Acc': 0.7151162790697675, 'Val ROC': np.float64(0.9324085992959805), 'Val W_F1': 0.7140702552591992, 'Val Recall_macro': 0.6093571644539387, 'Val Recall_weighted': 0.7151162790697675}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [16]  [ 0/11]  eta: 0:00:33  lr: 0.000473  min_lr: 0.000002  loss: 1.2500 (1.2500)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1817 (2.1817)  time: 3.0287  data: 2.7530  max mem: 14663
+Epoch: [16]  [10/11]  eta: 0:00:00  lr: 0.000464  min_lr: 0.000002  loss: 1.3735 (1.3314)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3205 (2.3348)  time: 0.5281  data: 0.2504  max mem: 14663
+Epoch: [16] Total time: 0:00:05 (0.5347 s / it)
+2025-04-29 11:44:40 Averaged stats: lr: 0.000464  min_lr: 0.000002  loss: 1.3735 (1.3314)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3205 (2.3348)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.6750  data: 2.5362  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3922  data: 1.2682  max mem: 14663
+Test: Total time: 0:00:02 (1.4219 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6458 Acc: 0.7006 Recall_macro: 0.6458 Recall_weighted: 0.7006 AUC-ROC: 0.9361 Weighted F1-score: 0.7165
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 16, 'Val Loss': 0.8586280941963196, 'Val BAcc': np.float64(0.6457665692504403), 'Val Acc': 0.7005813953488372, 'Val ROC': np.float64(0.9360753273985045), 'Val W_F1': 0.7164831707616254, 'Val Recall_macro': 0.6457665692504403, 'Val Recall_weighted': 0.7005813953488372}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [17]  [ 0/11]  eta: 0:00:31  lr: 0.000463  min_lr: 0.000002  loss: 1.2960 (1.2960)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5495 (2.5495)  time: 2.8641  data: 2.5884  max mem: 14663
+Epoch: [17]  [10/11]  eta: 0:00:00  lr: 0.000453  min_lr: 0.000002  loss: 1.3497 (1.2799)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6197 (2.6539)  time: 0.5146  data: 0.2354  max mem: 14663
+Epoch: [17] Total time: 0:00:05 (0.5219 s / it)
+2025-04-29 11:44:49 Averaged stats: lr: 0.000453  min_lr: 0.000002  loss: 1.3497 (1.2799)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6197 (2.6539)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4866  data: 2.3462  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2988  data: 1.1732  max mem: 14663
+Test: Total time: 0:00:02 (1.3368 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6397 Acc: 0.7006 Recall_macro: 0.6397 Recall_weighted: 0.7006 AUC-ROC: 0.9350 Weighted F1-score: 0.7225
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 17, 'Val Loss': 0.8447739481925964, 'Val BAcc': np.float64(0.6397439030987419), 'Val Acc': 0.7005813953488372, 'Val ROC': np.float64(0.9349552363316899), 'Val W_F1': 0.7224977325605763, 'Val Recall_macro': 0.6397439030987419, 'Val Recall_weighted': 0.7005813953488372}
+Max val mean accuracy: 0.72%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [18]  [ 0/11]  eta: 0:00:31  lr: 0.000452  min_lr: 0.000002  loss: 1.4744 (1.4744)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.8318 (2.8318)  time: 2.9014  data: 2.6246  max mem: 14663
+Epoch: [18]  [10/11]  eta: 0:00:00  lr: 0.000441  min_lr: 0.000002  loss: 1.4219 (1.3455)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.8518 (3.1209)  time: 0.5177  data: 0.2387  max mem: 14663
+Epoch: [18] Total time: 0:00:05 (0.5256 s / it)
+2025-04-29 11:44:58 Averaged stats: lr: 0.000441  min_lr: 0.000002  loss: 1.4219 (1.3455)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.8518 (3.1209)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5889  data: 2.4485  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3502  data: 1.2243  max mem: 14663
+Test: Total time: 0:00:02 (1.3843 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6326 Acc: 0.7267 Recall_macro: 0.6326 Recall_weighted: 0.7267 AUC-ROC: 0.9323 Weighted F1-score: 0.7283
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 18, 'Val Loss': 0.874481201171875, 'Val BAcc': np.float64(0.632621051717826), 'Val Acc': 0.7267441860465116, 'Val ROC': np.float64(0.9323018797483421), 'Val W_F1': 0.7283158004819656, 'Val Recall_macro': 0.632621051717826, 'Val Recall_weighted': 0.7267441860465116}
+Max val mean accuracy: 0.73%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [19]  [ 0/11]  eta: 0:00:31  lr: 0.000440  min_lr: 0.000002  loss: 1.4059 (1.4059)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8925 (1.8925)  time: 2.8823  data: 2.5998  max mem: 14663
+Epoch: [19]  [10/11]  eta: 0:00:00  lr: 0.000428  min_lr: 0.000002  loss: 1.3918 (1.3305)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0818 (2.0659)  time: 0.5164  data: 0.2364  max mem: 14663
+Epoch: [19] Total time: 0:00:05 (0.5246 s / it)
+2025-04-29 11:45:08 Averaged stats: lr: 0.000428  min_lr: 0.000002  loss: 1.3918 (1.3305)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0818 (2.0659)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.6250  data: 2.4842  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3686  data: 1.2422  max mem: 14663
+Test: Total time: 0:00:02 (1.4070 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6425 Acc: 0.7558 Recall_macro: 0.6425 Recall_weighted: 0.7558 AUC-ROC: 0.9336 Weighted F1-score: 0.7495
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 19, 'Val Loss': 0.8141664266586304, 'Val BAcc': np.float64(0.6425258136225879), 'Val Acc': 0.7558139534883721, 'Val ROC': np.float64(0.9336338195369748), 'Val W_F1': 0.7495013652470036, 'Val Recall_macro': 0.6425258136225879, 'Val Recall_weighted': 0.7558139534883721}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [20]  [ 0/11]  eta: 0:00:33  lr: 0.000427  min_lr: 0.000002  loss: 1.4591 (1.4591)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.8717 (2.8717)  time: 3.0217  data: 2.7456  max mem: 14663
+Epoch: [20]  [10/11]  eta: 0:00:00  lr: 0.000414  min_lr: 0.000002  loss: 1.3059 (1.2643)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4832 (2.6968)  time: 0.5277  data: 0.2497  max mem: 14663
+Epoch: [20] Total time: 0:00:05 (0.5345 s / it)
+2025-04-29 11:45:19 Averaged stats: lr: 0.000414  min_lr: 0.000002  loss: 1.3059 (1.2643)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4832 (2.6968)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5247  data: 2.3851  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3174  data: 1.1926  max mem: 14663
+Test: Total time: 0:00:02 (1.3509 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6413 Acc: 0.7122 Recall_macro: 0.6413 Recall_weighted: 0.7122 AUC-ROC: 0.9305 Weighted F1-score: 0.7245
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 20, 'Val Loss': 0.8320015072822571, 'Val BAcc': np.float64(0.641296084521891), 'Val Acc': 0.7122093023255814, 'Val ROC': np.float64(0.9305386533625516), 'Val W_F1': 0.7244969106198468, 'Val Recall_macro': 0.641296084521891, 'Val Recall_weighted': 0.7122093023255814}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [21]  [ 0/11]  eta: 0:00:31  lr: 0.000413  min_lr: 0.000002  loss: 1.3282 (1.3282)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1099 (2.1099)  time: 2.8230  data: 2.5466  max mem: 14663
+Epoch: [21]  [10/11]  eta: 0:00:00  lr: 0.000399  min_lr: 0.000001  loss: 1.0395 (1.1340)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2718 (2.4943)  time: 0.5112  data: 0.2316  max mem: 14663
+Epoch: [21] Total time: 0:00:05 (0.5175 s / it)
+2025-04-29 11:45:27 Averaged stats: lr: 0.000399  min_lr: 0.000001  loss: 1.0395 (1.1340)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2718 (2.4943)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5956  data: 2.4559  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3533  data: 1.2280  max mem: 14663
+Test: Total time: 0:00:02 (1.3883 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6665 Acc: 0.7093 Recall_macro: 0.6665 Recall_weighted: 0.7093 AUC-ROC: 0.9331 Weighted F1-score: 0.7208
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 21, 'Val Loss': 0.816005527973175, 'Val BAcc': np.float64(0.6665315671767286), 'Val Acc': 0.7093023255813954, 'Val ROC': np.float64(0.9330548498606305), 'Val W_F1': 0.7207520418286879, 'Val Recall_macro': 0.6665315671767286, 'Val Recall_weighted': 0.7093023255813954}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [22]  [ 0/11]  eta: 0:00:31  lr: 0.000397  min_lr: 0.000001  loss: 1.2326 (1.2326)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7540 (2.7540)  time: 2.8798  data: 2.6041  max mem: 14663
+Epoch: [22]  [10/11]  eta: 0:00:00  lr: 0.000382  min_lr: 0.000001  loss: 1.1685 (1.1724)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5627 (2.6265)  time: 0.5163  data: 0.2368  max mem: 14663
+Epoch: [22] Total time: 0:00:05 (0.5236 s / it)
+2025-04-29 11:45:36 Averaged stats: lr: 0.000382  min_lr: 0.000001  loss: 1.1685 (1.1724)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5627 (2.6265)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5044  data: 2.3648  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3069  data: 1.1824  max mem: 14663
+Test: Total time: 0:00:02 (1.3440 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6552 Acc: 0.7326 Recall_macro: 0.6552 Recall_weighted: 0.7326 AUC-ROC: 0.9259 Weighted F1-score: 0.7378
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 22, 'Val Loss': 0.8043638467788696, 'Val BAcc': np.float64(0.6551624703882769), 'Val Acc': 0.7325581395348837, 'Val ROC': np.float64(0.9259075232394306), 'Val W_F1': 0.7378352929915107, 'Val Recall_macro': 0.6551624703882769, 'Val Recall_weighted': 0.7325581395348837}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [23]  [ 0/11]  eta: 0:00:31  lr: 0.000381  min_lr: 0.000001  loss: 1.3617 (1.3617)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 3.0433 (3.0433)  time: 2.8704  data: 2.5928  max mem: 14663
+Epoch: [23]  [10/11]  eta: 0:00:00  lr: 0.000365  min_lr: 0.000001  loss: 1.3150 (1.2698)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3698 (2.4852)  time: 0.5148  data: 0.2358  max mem: 14663
+Epoch: [23] Total time: 0:00:05 (0.5214 s / it)
+2025-04-29 11:45:44 Averaged stats: lr: 0.000365  min_lr: 0.000001  loss: 1.3150 (1.2698)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3698 (2.4852)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4741  data: 2.3340  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2910  data: 1.1671  max mem: 14663
+Test: Total time: 0:00:02 (1.3237 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6453 Acc: 0.7529 Recall_macro: 0.6453 Recall_weighted: 0.7529 AUC-ROC: 0.9390 Weighted F1-score: 0.7526
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 23, 'Val Loss': 0.8043453693389893, 'Val BAcc': np.float64(0.645267640493447), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.939023284833468), 'Val W_F1': 0.7526300182435608, 'Val Recall_macro': 0.645267640493447, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [24]  [ 0/11]  eta: 0:00:30  lr: 0.000364  min_lr: 0.000001  loss: 0.9752 (0.9752)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8413 (1.8413)  time: 2.7654  data: 2.4873  max mem: 14663
+Epoch: [24]  [10/11]  eta: 0:00:00  lr: 0.000348  min_lr: 0.000001  loss: 1.0629 (1.0963)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0540 (2.3477)  time: 0.5052  data: 0.2262  max mem: 14663
+Epoch: [24] Total time: 0:00:05 (0.5120 s / it)
+2025-04-29 11:45:52 Averaged stats: lr: 0.000348  min_lr: 0.000001  loss: 1.0629 (1.0963)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0540 (2.3477)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4955  data: 2.3552  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3029  data: 1.1777  max mem: 14663
+Test: Total time: 0:00:02 (1.3322 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6906 Acc: 0.7645 Recall_macro: 0.6906 Recall_weighted: 0.7645 AUC-ROC: 0.9396 Weighted F1-score: 0.7669
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 24, 'Val Loss': 0.737424373626709, 'Val BAcc': np.float64(0.6905633257891322), 'Val Acc': 0.7645348837209303, 'Val ROC': np.float64(0.9395770799148897), 'Val W_F1': 0.766888744702993, 'Val Recall_macro': 0.6905633257891322, 'Val Recall_weighted': 0.7645348837209303}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [25]  [ 0/11]  eta: 0:00:29  lr: 0.000346  min_lr: 0.000001  loss: 0.8436 (0.8436)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0088 (2.0088)  time: 2.7065  data: 2.4284  max mem: 14663
+Epoch: [25]  [10/11]  eta: 0:00:00  lr: 0.000329  min_lr: 0.000001  loss: 1.1446 (1.0948)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4494 (2.4685)  time: 0.4993  data: 0.2208  max mem: 14663
+Epoch: [25] Total time: 0:00:05 (0.5067 s / it)
+2025-04-29 11:46:02 Averaged stats: lr: 0.000329  min_lr: 0.000001  loss: 1.1446 (1.0948)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4494 (2.4685)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4980  data: 2.3583  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3042  data: 1.1792  max mem: 14663
+Test: Total time: 0:00:02 (1.3370 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6440 Acc: 0.7616 Recall_macro: 0.6440 Recall_weighted: 0.7616 AUC-ROC: 0.9411 Weighted F1-score: 0.7593
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 25, 'Val Loss': 0.7670239806175232, 'Val BAcc': np.float64(0.6440111699466539), 'Val Acc': 0.7616279069767442, 'Val ROC': np.float64(0.9410678403741272), 'Val W_F1': 0.7593435134788744, 'Val Recall_macro': 0.6440111699466539, 'Val Recall_weighted': 0.7616279069767442}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [26]  [ 0/11]  eta: 0:00:33  lr: 0.000328  min_lr: 0.000001  loss: 1.3755 (1.3755)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.9116 (2.9116)  time: 3.0042  data: 2.7283  max mem: 14663
+Epoch: [26]  [10/11]  eta: 0:00:00  lr: 0.000310  min_lr: 0.000001  loss: 1.1969 (1.1744)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5946 (2.4838)  time: 0.5271  data: 0.2481  max mem: 14663
+Epoch: [26] Total time: 0:00:05 (0.5338 s / it)
+2025-04-29 11:46:11 Averaged stats: lr: 0.000310  min_lr: 0.000001  loss: 1.1969 (1.1744)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5946 (2.4838)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4612  data: 2.3212  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2863  data: 1.1607  max mem: 14663
+Test: Total time: 0:00:02 (1.3189 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6709 Acc: 0.7355 Recall_macro: 0.6709 Recall_weighted: 0.7355 AUC-ROC: 0.9404 Weighted F1-score: 0.7523
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 26, 'Val Loss': 0.8133970499038696, 'Val BAcc': np.float64(0.6708666890602374), 'Val Acc': 0.7354651162790697, 'Val ROC': np.float64(0.940443070525574), 'Val W_F1': 0.7522676648577746, 'Val Recall_macro': 0.6708666890602374, 'Val Recall_weighted': 0.7354651162790697}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [27]  [ 0/11]  eta: 0:00:31  lr: 0.000309  min_lr: 0.000001  loss: 1.0649 (1.0649)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.9677 (1.9677)  time: 2.8693  data: 2.5917  max mem: 14663
+Epoch: [27]  [10/11]  eta: 0:00:00  lr: 0.000291  min_lr: 0.000001  loss: 1.0287 (1.1089)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4959 (2.6560)  time: 0.5153  data: 0.2357  max mem: 14663
+Epoch: [27] Total time: 0:00:05 (0.5227 s / it)
+2025-04-29 11:46:19 Averaged stats: lr: 0.000291  min_lr: 0.000001  loss: 1.0287 (1.1089)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4959 (2.6560)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4631  data: 2.3227  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2866  data: 1.1614  max mem: 14663
+Test: Total time: 0:00:02 (1.3156 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6518 Acc: 0.7442 Recall_macro: 0.6518 Recall_weighted: 0.7442 AUC-ROC: 0.9357 Weighted F1-score: 0.7530
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 27, 'Val Loss': 0.7857136130332947, 'Val BAcc': np.float64(0.651784677849194), 'Val Acc': 0.7441860465116279, 'Val ROC': np.float64(0.9356676617875709), 'Val W_F1': 0.7530245639941794, 'Val Recall_macro': 0.651784677849194, 'Val Recall_weighted': 0.7441860465116279}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [28]  [ 0/11]  eta: 0:00:29  lr: 0.000290  min_lr: 0.000001  loss: 1.2403 (1.2403)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4462 (2.4462)  time: 2.7175  data: 2.4400  max mem: 14663
+Epoch: [28]  [10/11]  eta: 0:00:00  lr: 0.000272  min_lr: 0.000001  loss: 1.1928 (1.1205)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5200 (2.5183)  time: 0.5012  data: 0.2219  max mem: 14663
+Epoch: [28] Total time: 0:00:05 (0.5071 s / it)
+2025-04-29 11:46:28 Averaged stats: lr: 0.000272  min_lr: 0.000001  loss: 1.1928 (1.1205)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5200 (2.5183)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4827  data: 2.3423  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2976  data: 1.1712  max mem: 14663
+Test: Total time: 0:00:02 (1.3262 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6779 Acc: 0.7326 Recall_macro: 0.6779 Recall_weighted: 0.7326 AUC-ROC: 0.9380 Weighted F1-score: 0.7481
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 28, 'Val Loss': 0.8004889488220215, 'Val BAcc': np.float64(0.6778697826439761), 'Val Acc': 0.7325581395348837, 'Val ROC': np.float64(0.9380151173183844), 'Val W_F1': 0.7480697168356034, 'Val Recall_macro': 0.6778697826439761, 'Val Recall_weighted': 0.7325581395348837}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [29]  [ 0/11]  eta: 0:00:31  lr: 0.000270  min_lr: 0.000001  loss: 0.7384 (0.7384)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.9870 (2.9870)  time: 2.8865  data: 2.6092  max mem: 14663
+Epoch: [29]  [10/11]  eta: 0:00:00  lr: 0.000252  min_lr: 0.000001  loss: 1.2873 (1.1205)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6378 (2.5722)  time: 0.5163  data: 0.2373  max mem: 14663
+Epoch: [29] Total time: 0:00:05 (0.5241 s / it)
+2025-04-29 11:46:36 Averaged stats: lr: 0.000252  min_lr: 0.000001  loss: 1.2873 (1.1205)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6378 (2.5722)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4840  data: 2.3447  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2979  data: 1.1724  max mem: 14663
+Test: Total time: 0:00:02 (1.3375 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6621 Acc: 0.7645 Recall_macro: 0.6621 Recall_weighted: 0.7645 AUC-ROC: 0.9418 Weighted F1-score: 0.7641
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 29, 'Val Loss': 0.7140302062034607, 'Val BAcc': np.float64(0.6620689545850836), 'Val Acc': 0.7645348837209303, 'Val ROC': np.float64(0.9417676065310152), 'Val W_F1': 0.7640617162685392, 'Val Recall_macro': 0.6620689545850836, 'Val Recall_weighted': 0.7645348837209303}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [30]  [ 0/11]  eta: 0:00:31  lr: 0.000251  min_lr: 0.000001  loss: 1.0960 (1.0960)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.9380 (1.9380)  time: 2.8840  data: 2.6063  max mem: 14663
+Epoch: [30]  [10/11]  eta: 0:00:00  lr: 0.000233  min_lr: 0.000001  loss: 1.2868 (1.1765)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3561 (2.5507)  time: 0.5172  data: 0.2370  max mem: 14663
+Epoch: [30] Total time: 0:00:05 (0.5251 s / it)
+2025-04-29 11:46:45 Averaged stats: lr: 0.000233  min_lr: 0.000001  loss: 1.2868 (1.1765)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3561 (2.5507)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4880  data: 2.3491  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2993  data: 1.1746  max mem: 14663
+Test: Total time: 0:00:02 (1.3364 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6731 Acc: 0.7587 Recall_macro: 0.6731 Recall_weighted: 0.7587 AUC-ROC: 0.9398 Weighted F1-score: 0.7603
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 30, 'Val Loss': 0.7522920370101929, 'Val BAcc': np.float64(0.6730833003091067), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.9397758350312948), 'Val W_F1': 0.7603359223685067, 'Val Recall_macro': 0.6730833003091067, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [31]  [ 0/11]  eta: 0:00:30  lr: 0.000231  min_lr: 0.000001  loss: 1.5113 (1.5113)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.9088 (2.9088)  time: 2.8099  data: 2.5333  max mem: 14663
+Epoch: [31]  [10/11]  eta: 0:00:00  lr: 0.000213  min_lr: 0.000001  loss: 1.2953 (1.2397)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4653 (2.4293)  time: 0.5102  data: 0.2304  max mem: 14663
+Epoch: [31] Total time: 0:00:05 (0.5170 s / it)
+2025-04-29 11:46:53 Averaged stats: lr: 0.000213  min_lr: 0.000001  loss: 1.2953 (1.2397)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4653 (2.4293)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4441  data: 2.3035  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2789  data: 1.1518  max mem: 14663
+Test: Total time: 0:00:02 (1.3153 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6897 Acc: 0.7645 Recall_macro: 0.6897 Recall_weighted: 0.7645 AUC-ROC: 0.9389 Weighted F1-score: 0.7658
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 31, 'Val Loss': 0.7762274742126465, 'Val BAcc': np.float64(0.6897224849482914), 'Val Acc': 0.7645348837209303, 'Val ROC': np.float64(0.9388929852925348), 'Val W_F1': 0.7658042829871273, 'Val Recall_macro': 0.6897224849482914, 'Val Recall_weighted': 0.7645348837209303}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [32]  [ 0/11]  eta: 0:00:30  lr: 0.000211  min_lr: 0.000001  loss: 1.2832 (1.2832)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1434 (2.1434)  time: 2.7423  data: 2.4632  max mem: 14663
+Epoch: [32]  [10/11]  eta: 0:00:00  lr: 0.000194  min_lr: 0.000001  loss: 1.2832 (1.2510)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2003 (2.3347)  time: 0.5031  data: 0.2240  max mem: 14663
+Epoch: [32] Total time: 0:00:05 (0.5100 s / it)
+2025-04-29 11:47:01 Averaged stats: lr: 0.000194  min_lr: 0.000001  loss: 1.2832 (1.2510)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2003 (2.3347)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4387  data: 2.2989  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2749  data: 1.1495  max mem: 14663
+Test: Total time: 0:00:02 (1.3089 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6562 Acc: 0.7529 Recall_macro: 0.6562 Recall_weighted: 0.7529 AUC-ROC: 0.9375 Weighted F1-score: 0.7528
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 32, 'Val Loss': 0.7571876645088196, 'Val BAcc': np.float64(0.6562416140480657), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9375014692464791), 'Val W_F1': 0.7528339069942737, 'Val Recall_macro': 0.6562416140480657, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [33]  [ 0/11]  eta: 0:00:32  lr: 0.000192  min_lr: 0.000001  loss: 0.7633 (0.7633)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3620 (2.3620)  time: 2.9504  data: 2.6731  max mem: 14663
+Epoch: [33]  [10/11]  eta: 0:00:00  lr: 0.000175  min_lr: 0.000001  loss: 1.0229 (1.0708)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4455 (2.4525)  time: 0.5230  data: 0.2431  max mem: 14663
+Epoch: [33] Total time: 0:00:05 (0.5294 s / it)
+2025-04-29 11:47:10 Averaged stats: lr: 0.000175  min_lr: 0.000001  loss: 1.0229 (1.0708)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4455 (2.4525)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4345  data: 2.2941  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2728  data: 1.1471  max mem: 14663
+Test: Total time: 0:00:02 (1.3038 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6699 Acc: 0.7355 Recall_macro: 0.6699 Recall_weighted: 0.7355 AUC-ROC: 0.9406 Weighted F1-score: 0.7483
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 33, 'Val Loss': 0.7408093810081482, 'Val BAcc': np.float64(0.6698735853574563), 'Val Acc': 0.7354651162790697, 'Val ROC': np.float64(0.9406386266424839), 'Val W_F1': 0.7483480714814864, 'Val Recall_macro': 0.6698735853574563, 'Val Recall_weighted': 0.7354651162790697}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [34]  [ 0/11]  eta: 0:00:30  lr: 0.000173  min_lr: 0.000001  loss: 1.2165 (1.2165)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7908 (2.7908)  time: 2.7564  data: 2.4788  max mem: 14663
+Epoch: [34]  [10/11]  eta: 0:00:00  lr: 0.000157  min_lr: 0.000001  loss: 1.1756 (1.1093)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2129 (2.5102)  time: 0.5050  data: 0.2254  max mem: 14663
+Epoch: [34] Total time: 0:00:05 (0.5126 s / it)
+2025-04-29 11:47:18 Averaged stats: lr: 0.000157  min_lr: 0.000001  loss: 1.1756 (1.1093)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2129 (2.5102)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4586  data: 2.3177  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2852  data: 1.1589  max mem: 14663
+Test: Total time: 0:00:02 (1.3193 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6548 Acc: 0.7355 Recall_macro: 0.6548 Recall_weighted: 0.7355 AUC-ROC: 0.9387 Weighted F1-score: 0.7491
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 34, 'Val Loss': 0.7583104372024536, 'Val BAcc': np.float64(0.6547622528267689), 'Val Acc': 0.7354651162790697, 'Val ROC': np.float64(0.9387077802279021), 'Val W_F1': 0.7491497350893732, 'Val Recall_macro': 0.6547622528267689, 'Val Recall_weighted': 0.7354651162790697}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [35]  [ 0/11]  eta: 0:00:30  lr: 0.000155  min_lr: 0.000001  loss: 1.3656 (1.3656)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6097 (2.6097)  time: 2.8046  data: 2.5262  max mem: 14663
+Epoch: [35]  [10/11]  eta: 0:00:00  lr: 0.000139  min_lr: 0.000001  loss: 1.2138 (1.1365)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3728 (2.3461)  time: 0.5095  data: 0.2297  max mem: 14663
+Epoch: [35] Total time: 0:00:05 (0.5165 s / it)
+2025-04-29 11:47:27 Averaged stats: lr: 0.000139  min_lr: 0.000001  loss: 1.2138 (1.1365)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3728 (2.3461)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4905  data: 2.3502  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3012  data: 1.1752  max mem: 14663
+Test: Total time: 0:00:02 (1.3305 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6559 Acc: 0.7529 Recall_macro: 0.6559 Recall_weighted: 0.7529 AUC-ROC: 0.9376 Weighted F1-score: 0.7513
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 35, 'Val Loss': 0.7303113341331482, 'Val BAcc': np.float64(0.6559425164586455), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9376465530153285), 'Val W_F1': 0.7513026233061031, 'Val Recall_macro': 0.6559425164586455, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [36]  [ 0/11]  eta: 0:00:30  lr: 0.000137  min_lr: 0.000001  loss: 1.0299 (1.0299)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0262 (2.0262)  time: 2.7753  data: 2.4967  max mem: 14663
+Epoch: [36]  [10/11]  eta: 0:00:00  lr: 0.000122  min_lr: 0.000000  loss: 1.1131 (1.1168)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2155 (2.3604)  time: 0.5073  data: 0.2270  max mem: 14663
+Epoch: [36] Total time: 0:00:05 (0.5143 s / it)
+2025-04-29 11:47:35 Averaged stats: lr: 0.000122  min_lr: 0.000000  loss: 1.1131 (1.1168)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2155 (2.3604)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4725  data: 2.3331  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2914  data: 1.1666  max mem: 14663
+Test: Total time: 0:00:02 (1.3204 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6714 Acc: 0.7616 Recall_macro: 0.6714 Recall_weighted: 0.7616 AUC-ROC: 0.9371 Weighted F1-score: 0.7616
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 36, 'Val Loss': 0.7325552105903625, 'Val BAcc': np.float64(0.6714198706456771), 'Val Acc': 0.7616279069767442, 'Val ROC': np.float64(0.9371242611305041), 'Val W_F1': 0.7616083848272045, 'Val Recall_macro': 0.6714198706456771, 'Val Recall_weighted': 0.7616279069767442}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [37]  [ 0/11]  eta: 0:00:31  lr: 0.000120  min_lr: 0.000000  loss: 1.1716 (1.1716)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1762 (2.1762)  time: 2.8266  data: 2.5472  max mem: 14663
+Epoch: [37]  [10/11]  eta: 0:00:00  lr: 0.000105  min_lr: 0.000000  loss: 1.0018 (1.0457)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1762 (2.3191)  time: 0.5121  data: 0.2316  max mem: 14663
+Epoch: [37] Total time: 0:00:05 (0.5196 s / it)
+2025-04-29 11:47:43 Averaged stats: lr: 0.000105  min_lr: 0.000000  loss: 1.0018 (1.0457)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1762 (2.3191)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4630  data: 2.3231  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2877  data: 1.1616  max mem: 14663
+Test: Total time: 0:00:02 (1.3160 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6761 Acc: 0.7529 Recall_macro: 0.6761 Recall_weighted: 0.7529 AUC-ROC: 0.9353 Weighted F1-score: 0.7561
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 37, 'Val Loss': 0.7526293396949768, 'Val BAcc': np.float64(0.6761139673397737), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9352872050814031), 'Val W_F1': 0.7560553275842289, 'Val Recall_macro': 0.6761139673397737, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [38]  [ 0/11]  eta: 0:00:33  lr: 0.000104  min_lr: 0.000000  loss: 0.9279 (0.9279)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.1573 (2.1573)  time: 3.0567  data: 2.7776  max mem: 14663
+Epoch: [38]  [10/11]  eta: 0:00:00  lr: 0.000090  min_lr: 0.000000  loss: 1.0409 (1.0204)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2165 (2.4193)  time: 0.5333  data: 0.2526  max mem: 14663
+Epoch: [38] Total time: 0:00:05 (0.5401 s / it)
+2025-04-29 11:47:52 Averaged stats: lr: 0.000090  min_lr: 0.000000  loss: 1.0409 (1.0204)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2165 (2.4193)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4724  data: 2.3326  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2912  data: 1.1664  max mem: 14663
+Test: Total time: 0:00:02 (1.3258 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6384 Acc: 0.7442 Recall_macro: 0.6384 Recall_weighted: 0.7442 AUC-ROC: 0.9342 Weighted F1-score: 0.7470
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 38, 'Val Loss': 0.737032413482666, 'Val BAcc': np.float64(0.6384162696420762), 'Val Acc': 0.7441860465116279, 'Val ROC': np.float64(0.9342463096698621), 'Val W_F1': 0.7469528884347314, 'Val Recall_macro': 0.6384162696420762, 'Val Recall_weighted': 0.7441860465116279}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [39]  [ 0/11]  eta: 0:00:29  lr: 0.000088  min_lr: 0.000000  loss: 1.3497 (1.3497)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3585 (2.3585)  time: 2.6977  data: 2.4186  max mem: 14663
+Epoch: [39]  [10/11]  eta: 0:00:00  lr: 0.000075  min_lr: 0.000000  loss: 1.1493 (1.1043)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6155 (2.6818)  time: 0.5002  data: 0.2199  max mem: 14663
+Epoch: [39] Total time: 0:00:05 (0.5067 s / it)
+2025-04-29 11:48:00 Averaged stats: lr: 0.000075  min_lr: 0.000000  loss: 1.1493 (1.1043)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.6155 (2.6818)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4982  data: 2.3581  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3042  data: 1.1791  max mem: 14663
+Test: Total time: 0:00:02 (1.3364 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6643 Acc: 0.7529 Recall_macro: 0.6643 Recall_weighted: 0.7529 AUC-ROC: 0.9330 Weighted F1-score: 0.7511
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 39, 'Val Loss': 0.7323110699653625, 'Val BAcc': np.float64(0.6643212714180455), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9329624136484429), 'Val W_F1': 0.7510863690404015, 'Val Recall_macro': 0.6643212714180455, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [40]  [ 0/11]  eta: 0:00:32  lr: 0.000074  min_lr: 0.000000  loss: 0.9150 (0.9150)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.5362 (1.5362)  time: 2.9175  data: 2.6396  max mem: 14663
+Epoch: [40]  [10/11]  eta: 0:00:00  lr: 0.000062  min_lr: 0.000000  loss: 1.1409 (1.0402)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4480 (2.4334)  time: 0.5207  data: 0.2400  max mem: 14663
+Epoch: [40] Total time: 0:00:05 (0.5270 s / it)
+2025-04-29 11:48:09 Averaged stats: lr: 0.000062  min_lr: 0.000000  loss: 1.1409 (1.0402)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4480 (2.4334)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4689  data: 2.3297  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2898  data: 1.1649  max mem: 14663
+Test: Total time: 0:00:02 (1.3260 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6181 Acc: 0.7500 Recall_macro: 0.6181 Recall_weighted: 0.7500 AUC-ROC: 0.9329 Weighted F1-score: 0.7413
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 40, 'Val Loss': 0.7272162437438965, 'Val BAcc': np.float64(0.6180642477416671), 'Val Acc': 0.75, 'Val ROC': np.float64(0.9329151555220223), 'Val W_F1': 0.74131733344267, 'Val Recall_macro': 0.6180642477416671, 'Val Recall_weighted': 0.75}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [41]  [ 0/11]  eta: 0:00:31  lr: 0.000061  min_lr: 0.000000  loss: 0.6740 (0.6740)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0344 (2.0344)  time: 2.8632  data: 2.5842  max mem: 14663
+Epoch: [41]  [10/11]  eta: 0:00:00  lr: 0.000050  min_lr: 0.000000  loss: 1.2159 (1.0743)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7886 (2.7597)  time: 0.5160  data: 0.2350  max mem: 14663
+Epoch: [41] Total time: 0:00:05 (0.5225 s / it)
+2025-04-29 11:48:17 Averaged stats: lr: 0.000050  min_lr: 0.000000  loss: 1.2159 (1.0743)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.7886 (2.7597)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4740  data: 2.3332  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2927  data: 1.1667  max mem: 14663
+Test: Total time: 0:00:02 (1.3228 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6529 Acc: 0.7587 Recall_macro: 0.6529 Recall_weighted: 0.7587 AUC-ROC: 0.9338 Weighted F1-score: 0.7590
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 41, 'Val Loss': 0.726230800151825, 'Val BAcc': np.float64(0.6528908548263388), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.9337871175528644), 'Val W_F1': 0.7589863106803816, 'Val Recall_macro': 0.6528908548263388, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [42]  [ 0/11]  eta: 0:00:30  lr: 0.000049  min_lr: 0.000000  loss: 0.9846 (0.9846)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.9342 (1.9342)  time: 2.7573  data: 2.4785  max mem: 14663
+Epoch: [42]  [10/11]  eta: 0:00:00  lr: 0.000039  min_lr: 0.000000  loss: 1.0362 (1.0609)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2389 (2.4319)  time: 0.5056  data: 0.2254  max mem: 14663
+Epoch: [42] Total time: 0:00:05 (0.5121 s / it)
+2025-04-29 11:48:25 Averaged stats: lr: 0.000039  min_lr: 0.000000  loss: 1.0362 (1.0609)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2389 (2.4319)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4744  data: 2.3349  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2933  data: 1.1675  max mem: 14663
+Test: Total time: 0:00:02 (1.3271 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6198 Acc: 0.7529 Recall_macro: 0.6198 Recall_weighted: 0.7529 AUC-ROC: 0.9330 Weighted F1-score: 0.7453
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 42, 'Val Loss': 0.7309272885322571, 'Val BAcc': np.float64(0.6198438522309491), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9330199602165467), 'Val W_F1': 0.7452871489337712, 'Val Recall_macro': 0.6198438522309491, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [43]  [ 0/11]  eta: 0:00:31  lr: 0.000038  min_lr: 0.000000  loss: 1.0912 (1.0912)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.7381 (1.7381)  time: 2.8976  data: 2.6179  max mem: 14663
+Epoch: [43]  [10/11]  eta: 0:00:00  lr: 0.000029  min_lr: 0.000000  loss: 1.0912 (1.0662)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3670 (2.3583)  time: 0.5190  data: 0.2381  max mem: 14663
+Epoch: [43] Total time: 0:00:05 (0.5269 s / it)
+2025-04-29 11:48:34 Averaged stats: lr: 0.000029  min_lr: 0.000000  loss: 1.0912 (1.0662)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3670 (2.3583)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4726  data: 2.3312  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2920  data: 1.1656  max mem: 14663
+Test: Total time: 0:00:02 (1.3203 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6622 Acc: 0.7558 Recall_macro: 0.6622 Recall_weighted: 0.7558 AUC-ROC: 0.9350 Weighted F1-score: 0.7572
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 43, 'Val Loss': 0.7276153564453125, 'Val BAcc': np.float64(0.662174164109648), 'Val Acc': 0.7558139534883721, 'Val ROC': np.float64(0.9350038210480967), 'Val W_F1': 0.7572097358233544, 'Val Recall_macro': 0.662174164109648, 'Val Recall_weighted': 0.7558139534883721}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [44]  [ 0/11]  eta: 0:00:30  lr: 0.000028  min_lr: 0.000000  loss: 1.2951 (1.2951)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3107 (2.3107)  time: 2.8130  data: 2.5303  max mem: 14663
+Epoch: [44]  [10/11]  eta: 0:00:00  lr: 0.000021  min_lr: 0.000000  loss: 1.0931 (1.1200)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5550 (2.5646)  time: 0.5117  data: 0.2301  max mem: 14663
+Epoch: [44] Total time: 0:00:05 (0.5191 s / it)
+2025-04-29 11:48:42 Averaged stats: lr: 0.000021  min_lr: 0.000000  loss: 1.0931 (1.1200)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.5550 (2.5646)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4902  data: 2.3493  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3000  data: 1.1747  max mem: 14663
+Test: Total time: 0:00:02 (1.3338 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6686 Acc: 0.7558 Recall_macro: 0.6686 Recall_weighted: 0.7558 AUC-ROC: 0.9360 Weighted F1-score: 0.7584
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 44, 'Val Loss': 0.7358863949775696, 'Val BAcc': np.float64(0.6685745385100224), 'Val Acc': 0.7558139534883721, 'Val ROC': np.float64(0.9359601566316392), 'Val W_F1': 0.7584154708580834, 'Val Recall_macro': 0.6685745385100224, 'Val Recall_weighted': 0.7558139534883721}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [45]  [ 0/11]  eta: 0:00:33  lr: 0.000020  min_lr: 0.000000  loss: 1.0794 (1.0794)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4520 (2.4520)  time: 3.0358  data: 2.7590  max mem: 14663
+Epoch: [45]  [10/11]  eta: 0:00:00  lr: 0.000014  min_lr: 0.000000  loss: 1.1483 (1.0794)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3631 (2.4506)  time: 0.5308  data: 0.2509  max mem: 14663
+Epoch: [45] Total time: 0:00:05 (0.5386 s / it)
+2025-04-29 11:48:51 Averaged stats: lr: 0.000014  min_lr: 0.000000  loss: 1.1483 (1.0794)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3631 (2.4506)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4496  data: 2.3092  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2810  data: 1.1547  max mem: 14663
+Test: Total time: 0:00:02 (1.3160 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6387 Acc: 0.7529 Recall_macro: 0.6387 Recall_weighted: 0.7529 AUC-ROC: 0.9354 Weighted F1-score: 0.7498
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 45, 'Val Loss': 0.72900390625, 'Val BAcc': np.float64(0.6387095952257243), 'Val Acc': 0.752906976744186, 'Val ROC': np.float64(0.9354382282761066), 'Val W_F1': 0.7498055706210142, 'Val Recall_macro': 0.6387095952257243, 'Val Recall_weighted': 0.752906976744186}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [46]  [ 0/11]  eta: 0:00:31  lr: 0.000013  min_lr: 0.000000  loss: 1.1313 (1.1313)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.9545 (1.9545)  time: 2.8495  data: 2.5715  max mem: 14663
+Epoch: [46]  [10/11]  eta: 0:00:00  lr: 0.000008  min_lr: 0.000000  loss: 1.0740 (1.0992)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0891 (2.3191)  time: 0.5148  data: 0.2338  max mem: 14663
+Epoch: [46] Total time: 0:00:05 (0.5215 s / it)
+2025-04-29 11:48:59 Averaged stats: lr: 0.000008  min_lr: 0.000000  loss: 1.0740 (1.0992)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.0891 (2.3191)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.5337  data: 2.3934  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3211  data: 1.1968  max mem: 14663
+Test: Total time: 0:00:02 (1.3551 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6454 Acc: 0.7587 Recall_macro: 0.6454 Recall_weighted: 0.7587 AUC-ROC: 0.9357 Weighted F1-score: 0.7561
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 46, 'Val Loss': 0.7291468381881714, 'Val BAcc': np.float64(0.6454192726450791), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.9356768524190265), 'Val W_F1': 0.7560582900048536, 'Val Recall_macro': 0.6454192726450791, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [47]  [ 0/11]  eta: 0:00:30  lr: 0.000008  min_lr: 0.000000  loss: 0.7755 (0.7755)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.7142 (1.7142)  time: 2.8038  data: 2.5256  max mem: 14663
+Epoch: [47]  [10/11]  eta: 0:00:00  lr: 0.000004  min_lr: 0.000000  loss: 0.8792 (0.9270)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8392 (2.0517)  time: 0.5104  data: 0.2297  max mem: 14663
+Epoch: [47] Total time: 0:00:05 (0.5175 s / it)
+2025-04-29 11:49:08 Averaged stats: lr: 0.000004  min_lr: 0.000000  loss: 0.8792 (0.9270)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 1.8392 (2.0517)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4841  data: 2.3433  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2993  data: 1.1717  max mem: 14663
+Test: Total time: 0:00:02 (1.3356 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6454 Acc: 0.7587 Recall_macro: 0.6454 Recall_weighted: 0.7587 AUC-ROC: 0.9356 Weighted F1-score: 0.7561
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 47, 'Val Loss': 0.7281277179718018, 'Val BAcc': np.float64(0.6454192726450791), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.9355864466795948), 'Val W_F1': 0.7560582900048536, 'Val Recall_macro': 0.6454192726450791, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [48]  [ 0/11]  eta: 0:00:31  lr: 0.000004  min_lr: 0.000000  loss: 0.9851 (0.9851)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.2059 (2.2059)  time: 2.8740  data: 2.5951  max mem: 14663
+Epoch: [48]  [10/11]  eta: 0:00:00  lr: 0.000002  min_lr: 0.000000  loss: 1.0967 (1.0951)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4294 (2.4814)  time: 0.5175  data: 0.2360  max mem: 14663
+Epoch: [48] Total time: 0:00:05 (0.5242 s / it)
+2025-04-29 11:49:16 Averaged stats: lr: 0.000002  min_lr: 0.000000  loss: 1.0967 (1.0951)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.4294 (2.4814)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:04    time: 2.4767  data: 2.3362  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.2945  data: 1.1682  max mem: 14663
+Test: Total time: 0:00:02 (1.3231 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6491 Acc: 0.7587 Recall_macro: 0.6491 Recall_weighted: 0.7587 AUC-ROC: 0.9357 Weighted F1-score: 0.7567
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 48, 'Val Loss': 0.7273069620132446, 'Val BAcc': np.float64(0.6491364443622508), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.935693187109813), 'Val W_F1': 0.756683578233892, 'Val Recall_macro': 0.6491364443622508, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:118: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch: [49]  [ 0/11]  eta: 0:00:34  lr: 0.000002  min_lr: 0.000000  loss: 1.1208 (1.1208)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3567 (2.3567)  time: 3.0972  data: 2.8192  max mem: 14663
+Epoch: [49]  [10/11]  eta: 0:00:00  lr: 0.000001  min_lr: 0.000000  loss: 1.1904 (1.1935)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3567 (2.5585)  time: 0.5371  data: 0.2564  max mem: 14663
+Epoch: [49] Total time: 0:00:05 (0.5442 s / it)
+2025-04-29 11:49:25 Averaged stats: lr: 0.000001  min_lr: 0.000000  loss: 1.1904 (1.1935)  loss_scale: 65536.0000 (65536.0000)  weight_decay: 0.0500 (0.0500)  grad_norm: 2.3567 (2.5585)
+/home/share/FM_Code/PanDerm/classification/furnace/engine_for_finetuning.py:280: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Test:  [0/2]  eta: 0:00:05    time: 2.6190  data: 2.4784  max mem: 14663
+Test:  [1/2]  eta: 0:00:01    time: 1.3657  data: 1.2393  max mem: 14663
+Test: Total time: 0:00:02 (1.4026 s / it)
+------------- val -------------
+Sklearn Metrics - BAcc: 0.6491 Acc: 0.7587 Recall_macro: 0.6491 Recall_weighted: 0.7587 AUC-ROC: 0.9357 Weighted F1-score: 0.7567
+Predictions for val saved to /home/share/FM_Code/PanDerm/PAD_Res_base/val.csv
+-------------------------- {'Epoch': 49, 'Val Loss': 0.7272065877914429, 'Val BAcc': np.float64(0.6491364443622508), 'Val Acc': 0.7587209302325582, 'Val ROC': np.float64(0.9356578188922274), 'Val W_F1': 0.756683578233892, 'Val Recall_macro': 0.6491364443622508, 'Val Recall_weighted': 0.7587209302325582}
+Max val mean accuracy: 0.76%
+/home/share/FM_Code/PanDerm/classification/run_class_finetuning.py:737: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model_dict = torch.load(model_weight)
+Starting test with tta
+Test:  [0/4]  eta: 0:00:20    time: 5.1590  data: 2.1312  max mem: 14663
+Test:  [3/4]  eta: 0:00:02    time: 2.7163  data: 0.5330  max mem: 14663
+Test: Total time: 0:00:10 (2.7409 s / it)
+{'balanced_accuracy': np.float64(0.7366413185377105), 'accuracy': 0.7527114967462039, 'top3_acc': np.float64(0.9718004338394793), 'top5_acc': np.float64(0.9934924078091106), 'sensitivity': np.float64(0.7366413185377105), 'specificity': np.float64(0.9457195291360124), 'weighted_f1': 0.760573795058542, 'recall_macro': 0.7366413185377105, 'recall_weighted': 0.7527114967462039}
+Predictions for test saved to /home/share/FM_Code/PanDerm/PAD_Res_base/test.csv
+Training time 0:07:34

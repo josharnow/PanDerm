@@ -1,7 +1,0 @@
-{"time":"2025-04-28T18:50:00.253255468+10:00","level":"INFO","msg":"stream: starting","core version":"0.19.10","symlink path":"/home/share/FM_Code/PanDerm/classification/wandb/run-20250428_185000-ngyfdicn/logs/debug-core.log"}
-{"time":"2025-04-28T18:50:00.656287611+10:00","level":"INFO","msg":"created new stream","id":"ngyfdicn"}
-{"time":"2025-04-28T18:50:00.656378473+10:00","level":"INFO","msg":"stream: started","id":"ngyfdicn"}
-{"time":"2025-04-28T18:50:00.656398191+10:00","level":"INFO","msg":"handler: started","stream_id":"ngyfdicn"}
-{"time":"2025-04-28T18:50:00.656411067+10:00","level":"INFO","msg":"sender: started","stream_id":"ngyfdicn"}
-{"time":"2025-04-28T18:50:00.656456173+10:00","level":"INFO","msg":"writer: Do: started","stream_id":"ngyfdicn"}
-{"time":"2025-04-28T18:50:01.044143752+10:00","level":"INFO","msg":"Starting system monitor"}

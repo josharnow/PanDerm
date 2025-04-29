@@ -1,12 +1,11 @@
 seed=0
 
 
-#MODEL_PATH=/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm_bb_data6_checkpoint-499.pth
 
-#RESUME_PATH=/home/syyan/XJ/PanDerm-open_source/finetune/work_dir/HAM10000_cleaned_using_lp_setting1_base/checkpoint-best.pth
-MODEL_PATH=/home/share/FM_Code/FM_Eval/Model_Weights/CAE/caev2_ll_data6_checkpoint-499.pth
+#MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth')
+MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
+
 RESUME_PATH=/home/share/FM_Code/PanDerm/PAD_Res/checkpoint-best.pth
-
 CUDA_VISIBLE_DEVICES=0 python run_class_finetuning.py \
     --model PanDerm_Large_FT \
     --pretrained_checkpoint $MODEL_PATH \
@@ -52,4 +51,5 @@ CUDA_VISIBLE_DEVICES=0 python run_class_finetuning.py \
 #    --root_path /home/share/Uni_Eval/ISIC2018_reader/images/ \
 #    --seed ${seed} \
 #    --resume ${RESUME_PATH} \
-#    --eval
+#    --eval \
+#    --TTA

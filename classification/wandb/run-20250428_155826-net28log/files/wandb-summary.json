@@ -1,1 +1,0 @@
-{"Val Loss":1.028276801109314,"Val Acc":0.7321739130434782,"_wandb":{"runtime":137},"Val Recall_weighted":0.7321739130434782,"_timestamp":1.745819976453217e+09,"_runtime":69.969911919,"Epoch":0,"_step":0,"Val W_F1":0.7852046836731498,"Val Recall_macro":0.6814673046251993,"Val ROC":666,"Val BAcc":0.6814673046251993}

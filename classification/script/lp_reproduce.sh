@@ -1,11 +1,10 @@
 
-#models=('PanDerm_Large' 'PanDerm_ Base' 'SwAVDerm'  'dinov2' 'imgnet_large21k')
+#models=('SwAVDerm'  'dinov2' 'imgnet_large21k')
 models=('PanDerm_Large_LP')
-#checkpoints=('/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-ll_data6_checkpoint-499.pth' \
-#             '/home/syyan/XJ/PanDerm-open_source/pretrain_weight/panderm-bb_data6_checkpoint-499.pth' \
-#             '/home/share/FM_Code/PanDerm/Model_Weights/swavderm_pretrained.pth' )
-checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
+#models=('PanDerm_Base_LP')
 
+checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
+#checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth')
 
 if [ ${#models[@]} -ne ${#checkpoints[@]} ]; then
   echo "Error: models and checkpoints arrays must have the same length"
@@ -19,16 +18,16 @@ for i in "${!models[@]}"; do
   
   for seed in 0; do
 
-    CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
-      --batch_size 1000 \
-      --model "$model" \
-      --nb_classes 7 \
-      --percent_data 1.0 \
-      --csv_filename "$csv_file" \
-      --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/${model}_res/" \
-      --csv_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
-      --root_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018/" \
-      --pretrained_checkpoint "$checkpoint"
+#    CUDA_VISIBLE_DEVICES=1 python3 linear_eval.py \
+#      --batch_size 1000 \
+#      --model "$model" \
+#      --nb_classes 7 \
+#      --percent_data 1.0 \
+#      --csv_filename "$csv_file" \
+#      --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/${model}_res/" \
+#      --csv_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018_splits/HAM_clean.csv" \
+#      --root_path "/home/share/Uni_Eval/HAM10000_clean/ISIC2018/" \
+#      --pretrained_checkpoint "$checkpoint"
 #
 #    CUDA_VISIBLE_DEVICES=0 python3 linear_eval.py \
 #      --batch_size 1000 \
@@ -74,16 +73,16 @@ for i in "${!models[@]}"; do
 #      --root_path '/home/share/Uni_Eval/HIBA/images/' \
 #      --pretrained_checkpoint "$checkpoint"
 #
-#    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \
-#      --batch_size 1000 \
-#      --model "$model" \
-#      --nb_classes 6 \
-#      --percent_data 1.0 \
-#      --csv_filename "$csv_file" \
-#      --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/${model}_res/" \
-#      --csv_path "/home/share/Uni_Eval/pad-ufes/2000.csv" \
-#      --root_path "/home/share/Uni_Eval/pad-ufes/images/" \
-#      --pretrained_checkpoint "$checkpoint"
+    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \
+      --batch_size 1000 \
+      --model "$model" \
+      --nb_classes 6 \
+      --percent_data 1.0 \
+      --csv_filename "$csv_file" \
+      --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/${model}_res/" \
+      --csv_path "/home/share/Uni_Eval/pad-ufes/2000.csv" \
+      --root_path "/home/share/Uni_Eval/pad-ufes/images/" \
+      --pretrained_checkpoint "$checkpoint"
 #
 #    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \
 #      --batch_size 1000 \

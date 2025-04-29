@@ -66,8 +66,7 @@ def get_encoder(args, model_name,which_img_norm='imagenet'):
                                   pretrained=True)
     elif model_name == 'PanDerm_Large_LP':
         model = panderm_large_patch16_224()
-        checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
-        state_dict = checkpoint['model']
+        state_dict = torch.load(args.pretrained_checkpoint, map_location='cpu',weights_only=True)
         state_dict = {k.replace("encoder.", ""): v for k, v in state_dict.items()}
         model.load_state_dict(state_dict, strict=False)
     elif model_name == 'PanDerm_Base_LP':
