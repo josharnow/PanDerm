@@ -51,10 +51,10 @@ pip install -r requirements.txt
 
 ### Obtaining Model Weights
 
-| Model Name    | Release Date | Model Architecture | Download Link            |
+| Model Name    | Release Date | Model Architecture | Google Drive Link            | Hugging Face Link  
 |---------------------|--------------|---------------------|-------------------------------------------------------------|
-| PanDerm_Base          |   04/2025       | ViT-B/16                | [Link](https://drive.google.com/file/d/1HJquaP1uW-PcFgCKAgNLNsADXZ7lU34P/view?usp=sharing)  |
-| PanDerm (reported in our paper)     |   10/2024       | ViT-L/16               | [Link](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing) |
+| PanDerm_Base          |   04/2025       | ViT-B/16                | [Link](https://drive.google.com/file/d/17J4MjsZu3gdBP6xAQi_NMDVvH65a00HB/view?usp=sharing)  | [Linke] ()|
+| PanDerm (reported in our paper)     |   10/2024       | ViT-L/16               | [Link](https://drive.google.com/file/d/1SwEzaOlFV_gBKf2UzeowMC8z9UH7AQbE/view?usp=sharing) |[Link]()|
 
 
 ## 2. Data Preparation
