@@ -1,11 +1,11 @@
 seed=122
 
-MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth')
-#MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
+#MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth')
+MODEL_PATH=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
 ## finetune and eval on PAD-UFES dataset
 
 CUDA_VISIBLE_DEVICES=2 python3 run_class_finetuning.py \
-    --model PanDerm_Base_FT \
+    --model PanDerm_Large_FT \
     --pretrained_checkpoint $MODEL_PATH \
     --nb_classes 6 \
     --batch_size 128 \
