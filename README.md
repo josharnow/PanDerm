@@ -119,7 +119,7 @@ We've already pre-processed several public datasets to reproduce the results in 
 
 ## 3. Linear Evaluation on Image Classification Tasks
 
-Training and evaluation using PAD-UFES dataset as an example. Replace the CSV path and root path with your own dataset.
+Training and evaluation using the PAD-UFES dataset as an example. Replace the CSV path and root path with your own dataset.
 
 ### Key Parameters
 - `batch_size`: Adjust based on the memory size of your GPU.
