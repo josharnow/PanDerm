@@ -22,7 +22,6 @@
 
 ## TODO
 - Fix segmentation environment issues
-- Add model to huggingface
 
 ## About PanDerm
 
