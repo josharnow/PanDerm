@@ -1,7 +1,3 @@
-# PanDerm
-
-<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-
 ## [Nature Medicine'25] A Multimodal Vision Foundation Model for Clinical Dermatology
 
 </div>
