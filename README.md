@@ -20,6 +20,10 @@
 
 </div>
 
+## TODO
+- Fix segmentation environment issues
+- Add model to huggingface
+  
 ## Updates
 - 29/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
 - 26/04/2025: Released the finetuning script for image classification.
