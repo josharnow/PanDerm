@@ -240,13 +240,12 @@ This code is built on [CAEv2](https://github.com/Atten4Vis/CAE), [UNI](https://g
 
 ## Citation
 ```bibtex
-@misc{yan2025multimodalvisionfoundationmodel,
-      title={A Multimodal Vision Foundation Model for Clinical Dermatology}, 
-      author={Siyuan Yan and Zhen Yu and Clare Primiero and Cristina Vico-Alonso and Zhonghua Wang and Litao Yang and Philipp Tschandl and Ming Hu and Lie Ju and Gin Tan and Vincent Tang and Aik Beng Ng and David Powell and Paul Bonnington and Simon See and Elisabetta Magnaterra and Peter Ferguson and Jennifer Nguyen and Pascale Guitera and Jose Banuls and Monika Janda and Victoria Mar and Harald Kittler and H. Peter Soyer and Zongyuan Ge},
-      year={2025},
-      eprint={2410.15038},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2410.15038}, 
+@article{yan2025multimodal,
+  title={A multimodal vision foundation model for clinical dermatology},
+  author={Yan, Siyuan and Yu, Zhen and Primiero, Clare and Vico-Alonso, Cristina and Wang, Zhonghua and Yang, Litao and Tschandl, Philipp and Hu, Ming and Ju, Lie and Tan, Gin and others},
+  journal={Nature Medicine},
+  pages={1--12},
+  year={2025},
+  publisher={Nature Publishing Group}
 }
 ```
