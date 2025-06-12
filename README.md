@@ -1,9 +1,7 @@
 ## [Nature Medicine ’25] A Multimodal Vision Foundation Model for Clinical Dermatology
 
 [![Journal Paper](https://img.shields.io/badge/Journal%20Paper-NatMed-brightgreen)](https://www.nature.com/articles/s41591-025-03747-y) 
-
 [![Arxiv Paper](https://img.shields.io/badge/Arxiv-Paper-red)](https://arxiv.org/pdf/2410.15038) 
-
 [![Cite](https://img.shields.io/badge/Cite-BibTeX-blue)](#citation)
 
 
