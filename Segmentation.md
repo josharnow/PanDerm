@@ -8,7 +8,14 @@ Main dependencies: Pytorch, Pytorch Lightning, MMSegmentation
 
 ```bash
 cd segmentation
+conda create -n dermseg python=3.10
+pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt
+
+pip install -U openmim
+mim install mmengine==0.10.4
+mim install mmcv==2.1.0
+mim install mmsegmentation==1.2.2
 ```
 
 ## Data Preparation
@@ -16,35 +23,30 @@ pip install -r requirements.txt
 1. Download datasets:
    - [ISIC2018 task1](https://challenge.isic-archive.com/data/#2018)
    - [HAM10000](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000)
-2. Update `_load_name()` in `./datasets/dataset_seg.py` with your data path
+2. Change `--parent_path` in run.sh accordingly
 
 ## Fine-tuning with PanDerm Weight
 
 1. **Download Pretrained Weights**
-   - [PanDerm weights](https://drive.google.com/file/d/1XHKRk2p-dS1PFQE-xRbOM3yx47i3bXmi/view?usp=sharing)
+   - [PanDerm weights](https://drive.google.com/file/d/1SwEzaOlFV_gBKf2UzeowMC8z9UH7AQbE/view)
 
 2. **Set Pretrained Path**
-   - Update `cae_weight` in `./models/cae_seg.py`
-   - Modify `pretrained` parameter in `run.sh`
+   - Modify `--parent_path` in run.sh accordingly
 
 3. **Start Training**
    ```bash
-   cd segmentation
    bash run.sh
    ```
    Note: Adjust the path config to your desired storage location
 
 4. **Evaluation**
    - Add `--evaluate` to `run.sh` for evaluation mode
-   - Model fine-tuned weights for evaluation on HAM10000 dataset [Download here](https://drive.google.com/drive/folders/1BsSjl1h3mxU6JNSbqvgZdyiTvV_2QBsH?usp=sharing)
    ```bash
    cd segmentation
-   bash run.sh --evaluate
+   add --evaluate
    ```
-   This loads the checkpoint from your specified model storage path
 
 ## Starter Code for Your Own Dermoscopic Images
 
 See [**evaluate.ipynb**](segmentation/evaluate.ipynb) to learn:
-- Loading our pre-trained model
 - Using it for skin lesion segmentation
