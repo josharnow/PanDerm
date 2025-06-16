@@ -9,6 +9,7 @@ Main dependencies: Pytorch, Pytorch Lightning, MMSegmentation
 ```bash
 cd segmentation
 conda create -n dermseg python=3.10
+conda activate dermseg
 pip install torch==2.2.1 torchvision==0.17.1 --index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt
 
