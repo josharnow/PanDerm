@@ -14,7 +14,7 @@ from sklearn.model_selection import KFold
 
 class SegImageDataset(Dataset):
     def __init__(self, args, split):
-        if "ISIC2018" in args.dataset_path:
+        if "ISIC2018" in args.dataset:
             self.image_paths, self.label_paths, self.names = self._get_paths_official(args, split)
         else:
             raise ValueError("Dataset not supported")
@@ -67,8 +67,8 @@ class SegImageDataset(Dataset):
         val_inputs, val_targets, val_names = [], [], []
         test_inputs, test_targets, test_names = [], [], []
 
-        input_pattern = glob.glob("/data2/wangzh/datasets/ISIC2018/Training_Data/*.jpg")
-        targetlist = ("/data2/wangzh/datasets/ISIC2018/Training_GroundTruth/{}_segmentation.png")
+        input_pattern = glob.glob(args.parent_path+"ISIC2018/Training_Data/*.jpg")
+        targetlist = (args.parent_path+"ISIC2018/Training_GroundTruth/{}_segmentation.png")
 
         for i in tqdm(range(len(input_pattern))):
             inputpath = input_pattern[i]
@@ -84,8 +84,8 @@ class SegImageDataset(Dataset):
         targets = np.array(targets)
         names = np.array(names)
 
-        val_input_pattern = glob.glob("/data2/wangzh/datasets/ISIC2018/Validation_Data/*.jpg")
-        val_targetlist = ("/data2/wangzh/datasets/ISIC2018/Validation_GroundTruth/{}_segmentation.png")
+        val_input_pattern = glob.glob(args.parent_path+"ISIC2018/Validation_Data/*.jpg")
+        val_targetlist = (args.parent_path+"ISIC2018/Validation_GroundTruth/{}_segmentation.png")
 
         val_input_pattern.sort()
 
@@ -103,8 +103,8 @@ class SegImageDataset(Dataset):
         val_targets = np.array(val_targets)
         val_names = np.array(val_names)
 
-        test_input_pattern = glob.glob("/data2/wangzh/datasets/ISIC2018/Test_Data/*.jpg")
-        test_targetlist = ("/data2/wangzh/datasets/ISIC2018/Test_GroundTruth/{}_segmentation.png")
+        test_input_pattern = glob.glob(args.parent_path+"ISIC2018/Test_Data/*.jpg")
+        test_targetlist = (args.parent_path+"ISIC2018/Test_GroundTruth/{}_segmentation.png")
 
         test_input_pattern.sort()
 
@@ -137,8 +137,8 @@ class SegImageDataset(Dataset):
     def _get_paths(self, args, split):
         inputs, targets, names = [], [], []
 
-        input_pattern = glob.glob("/data2/wangzh/datasets/ISIC2018/Training_Data/*.jpg")
-        targetlist = ("/data2/wangzh/datasets/ISIC2018/Training_GroundTruth/{}_segmentation.png")
+        input_pattern = glob.glob(args.parent_path+"ISIC2018/Training_Data/*.jpg")
+        targetlist = (args.parent_path+"ISIC2018/Training_GroundTruth/{}_segmentation.png")
 
         for i in tqdm(range(len(input_pattern))):
             inputpath = input_pattern[i]

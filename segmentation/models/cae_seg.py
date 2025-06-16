@@ -9,12 +9,12 @@ class CAEv2_seg(nn.Module):
     def __init__(self):
         super(CAEv2_seg, self).__init__()
 
-        config = Config.fromfile('/data/wangzh/code/skinfm/models/cae_config.py')
+        config = Config.fromfile('models/cae_config.py')
         self.segmentor = build_segmentor(config.model)
         self.segmentor.init_weights()
 
-        print('=> Loading CAE weights from /data2/wangzh/checkpoints/caev2_large_checkpoint.pth')
-        cae_weight = torch.load('/data2/wangzh/checkpoints/caev2_large_checkpoint.pth', map_location='cpu')['model']
+        print('=> Loading CAE weights from xxx')
+        cae_weight = torch.load('model_weights/panderm_ll_data6_checkpoint-499.pth', map_location='cpu')
         new_state_dict = {k.replace('encoder.', ''): v for k, v in cae_weight.items() if 'encoder' in k}
 
         model_dict = self.segmentor.backbone.state_dict()

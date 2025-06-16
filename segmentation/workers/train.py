@@ -19,7 +19,7 @@ def train_worker(args):
         else:
             args.fold = fold
 
-        args.dataset_folder = os.path.join(args.dataset_path, "images")
+        args.dataset_folder = os.path.join(args.parent_path+args.dataset+'/', "images")
         # args.split_path = os.path.join(args.dataset_path, args.split)
         train_dataset, val_dataset = load_seg_dataset(args, train=True)
         print('=> Preparing model for training')

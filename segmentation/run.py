@@ -12,7 +12,8 @@ import wandb
 from utils.train_utils import get_rank
 from workers.test import test_worker
 from workers.train import train_worker
-
+import models.cae_seg
+import models.cae_backbone
 torch.set_float32_matmul_precision("high")
 os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 
@@ -98,6 +99,7 @@ def main():
         help="dataset name [staining134 / dataset / HRF]",
     )
     parser.add_argument("--dataset_path", default="./data", help="path to dataset")
+    parser.add_argument("--parent_path", default="./parent", help="your path")
     parser.add_argument("--split", default=None, type=str, help="split file")
     parser.add_argument("--smoke_test", action="store_true", help="debug mode")
     parser.add_argument(
@@ -162,7 +164,7 @@ def main():
             print("=> Resuming Wandb logger")
             args.logger = WandbLogger(
                 project="skinfm",
-                entity="jerrywzh",
+                entity="mmai1",
                 name=args.log_name,
                 tags=args.tags,
                 resume=True,
@@ -186,7 +188,7 @@ def main():
             print("=> Making Wandb logger")
             args.logger = WandbLogger(
                 project="skinfm",
-                entity="jerrywzh",
+                entity="mmai1",
                 name=args.log_name,
                 tags=args.tags,
                 notes=args.description,
