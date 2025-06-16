@@ -17,9 +17,6 @@
 - 29/04/2025: The ViT-base version of PanDerm (PanDerm_base) is now available, providing a smaller model for more widespread usage scenarios.
 - 26/04/2025: Released the finetuning script for image classification.
 
-## TODO
-- Fix segmentation environment issues
-
 ## About PanDerm
 
 _**What is PanDerm?**_ PanDerm is a vision-centric multimodal foundation model pretrained on 2 million dermatological images. It provides specialized representations across four dermatological imaging modalities (dermoscopy, clinical images, TBP, and dermatopathology), delivering superior performance in skin cancer diagnosis, differential diagnosis of hundreds of skin conditions, disease progression monitoring, Total Body Photography-based applications, and image segmentation.
