@@ -1,3 +1,13 @@
+"""Model factory and preprocessing utilities for PanDerm evaluation.
+
+This module wires the encoders used in the PanDerm paper (s41591-025-03747-y.pdf)
+and provides the evaluation transforms. It supports:
+- PanDerm Large/Base encoders (factory functions in modeling_finetune)
+- Baseline backbones (e.g., dinov2, SwAVDerm)
+
+Only comments/docstrings added—no functional changes.
+"""
+
 import timm
 from .timm_wrapper import TimmCNNEncoder
 import torch
@@ -11,6 +21,10 @@ from utils.utils import cae_kwargs
 from functools import partial
 
 def get_norm_constants(which_img_norm: str = 'imagenet'):
+    """Return mean/std tuples used for normalization in eval transforms.
+
+    Options include ImageNet stats and OpenAI CLIP stats as commonly used in ViT setups.
+    """
     print('normalization method: ',which_img_norm)
     constants_zoo = {
         'imagenet': {'mean': (0.485, 0.456, 0.406), 'std': (0.228, 0.224, 0.225)},
@@ -27,13 +41,13 @@ def get_eval_transforms(
         center_crop: bool = False
 ):
     r"""
-    Gets the image transformation for normalizing images before feature extraction.
+    Build the image transformation used for PanDerm feature extraction.
 
     Args:
-        - which_img_norm (str): transformation type
+        - which_img_norm (str): key selecting normalization stats
 
     Return:
-        - eval_transform (torchvision.Transform): PyTorch transformation function for images.
+        - eval_transform (torchvision.Transform): composed torchvision transform.
     """
     mean, std = get_norm_constants(which_img_norm)
     eval_trans = [transforms.Resize(256),
@@ -45,6 +59,10 @@ def get_eval_transforms(
 
 
 def get_encoder(args, model_name,which_img_norm='imagenet'):
+    """Create the requested encoder and its eval transform, loading checkpoints as needed.
+
+    Returns: (model, eval_transform)
+    """
     # which_img_norm='imagenet'
     print('loading model checkpoint')
 
@@ -77,6 +95,7 @@ def get_encoder(args, model_name,which_img_norm='imagenet'):
     else:
         raise NotImplementedError('model {} not implemented'.format(model_name))
     
+    # Print model summary for reproducibility/debugging.
     print(model)
     # constants = MODEL2CONSTANTS[model_name]
     eval_transform = get_eval_transforms(

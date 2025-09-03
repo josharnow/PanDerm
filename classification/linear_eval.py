@@ -1,3 +1,14 @@
+"""Linear evaluation pipeline for PanDerm encoders.
+
+This script follows the evaluation setup described in the PanDerm paper (s41591-025-03747-y.pdf):
+- Load a frozen PanDerm encoder (Base or Large) and its evaluation transform.
+- Build train/val/test splits using Derm_Dataset with the eval transform.
+- Extract image embeddings with no gradient updates.
+- Fit a linear classifier (logistic regression) on top of the frozen embeddings and report metrics.
+
+Note: Documentation-only changes—no functional code modifications.
+"""
+
 import torch
 
 import pandas as pd
@@ -30,6 +41,7 @@ def get_args_parser():
     return parser
 
 def main(args):
+    # 1) Build the encoder (frozen for linear probing) and corresponding eval transforms
     model, eval_transform = get_encoder(args, args.model)
     _ = model.eval()
     model = model.to(device)
@@ -59,6 +71,7 @@ def main(args):
     import time
     from panderm_model.downstream.extract_features import extract_features_from_dataloader
 
+    # 2) Dataloaders for feature extraction (no training of the encoder occurs here)
     train_dataloader = torch.utils.data.DataLoader(
         dataset_train,
         batch_size=args.batch_size,
@@ -82,7 +95,7 @@ def main(args):
         pin_memory=True
     )
     start = time.time()
-    # extract features from the train and test datasets (returns dictionary of embeddings and labels)
+    # 3) Extract embeddings for each split using the frozen encoder
     train_features = extract_features_from_dataloader(args, model, train_dataloader)
     val_features = extract_features_from_dataloader(args, model, val_dataloader)
     test_features = extract_features_from_dataloader(args, model, test_dataloader)
@@ -97,7 +110,7 @@ def main(args):
     test_filenames = test_features['filenames']
     elapsed = time.time() - start
     print(f'Took {elapsed:.03f} seconds')
-    """linear evaluation"""
+    """linear evaluation: fit a linear probe and report metrics"""
     from panderm_model.downstream.eval_features.linear_probe import eval_linear_probe
     dataset_name=str(args.csv_path).split('/')[-1].split('.')[0]
     for i in range(1):
