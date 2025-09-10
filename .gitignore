@@ -1,3 +1,5 @@
 env/
 /Evaluation_datasets
 /pretrain_weight
+__pycache__/
+*.pyc
