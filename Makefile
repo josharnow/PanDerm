@@ -39,6 +39,7 @@ linear_eval:
 		--pretrained_checkpoint "$(PRETRAINED_CHECKPOINT)" \
 		--num_workers $(NUM_WORKERS)
 
+# NOTE - After testing, below takes longer on Mac
 # Fast variant (opt-in): higher batch, a few DataLoader workers, and more threads.
 FAST_BATCH_SIZE ?= 128
 FAST_NUM_WORKERS ?= 2
