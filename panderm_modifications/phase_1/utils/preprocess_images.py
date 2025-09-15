@@ -2,141 +2,118 @@ import cv2
 import numpy as np
 import albumentations as A
 import os
-from typing import Literal
+import glob
 
 ## Step 1: Resize Function
 def resize_image(image: np.ndarray, size: tuple = (224, 224)) -> np.ndarray:
-    """Resizes an image to the target size. Corresponds to Step 1 in Algorithm 1."""
+    """Resizes an image to the target size."""
     return cv2.resize(image, size, interpolation=cv2.INTER_AREA)
 
 ## Step 2: Normalization Function
 def normalize_image(image: np.ndarray) -> np.ndarray:
-    """Normalizes image pixel values to the [0, 1] range. Corresponds to Step 2."""
+    """Normalizes image pixel values from [0, 255] to the [0, 1] range."""
     return image.astype(np.float32) / 255.0
 
 ## Step 3: Data Augmentation Function
-def augment_image(image: np.ndarray, augmentation_type: str) -> np.ndarray:
-    """
-    Applies a series of data augmentation techniques. Corresponds to Step 3.
-    The specific augmentation "functions" are defined inside this step.
-    """
+def get_augmentation_pipeline(augmentation_type: str) -> A.Compose:
+    """Returns the appropriate augmentation pipeline for a given type."""
     augmentations = []
-    # Define the functions for the various augmentation techniques
     match augmentation_type:
         case "rotation":
-            augmentations.append(A.Rotate(limit=30, p=1))
+            augmentations.append(A.Rotate(limit=30, p=1.0))
         case "flip_horizontal":
-            augmentations.append(A.HorizontalFlip(p=1))
+            augmentations.append(A.HorizontalFlip(p=1.0))
         case "flip_vertical":
-            augmentations.append(A.VerticalFlip(p=1))
+            augmentations.append(A.VerticalFlip(p=1.0))
         case "random_cropping":
-            augmentations.append(A.RandomResizedCrop(scale=(0.8, 1.0), p=1.0, size=(224, 224))) # NOTE - SkinEHDLF don't specify scale
+            augmentations.append(A.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0), p=1.0)) # NOTE - SkinEHDLF don't specify scale
         case "brightness_adjustment":
-            augmentations.append(A.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, p=1)) # NOTE - SkinEHDLF don't specify brightness, contrast, or saturation values
-
-    # NOTE - SkinEHDLF authors apply Gaussean noise only to compare against not applying noise, so it shouldn't be necessary here
-
-    print(augmentations)
-    augmentation_pipeline = A.Compose(augmentations)
+            augmentations.append(A.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, p=1.0)) # NOTE - SkinEHDLF don't specify brightness, contrast, or saturation values
     
-    # Apply the augmentations
-    augmented_data = augmentation_pipeline(image=image)
-    return augmented_data['image']
+    # NOTE - SkinEHDLF authors apply Gaussean noise only to compare against not applying noise, so it shouldn't be necessary here
+    return A.Compose(augmentations)
 
-## Main Preprocessing Orchestrator
-def preprocess_image_stepwise(input_image: np.ndarray, augmentation_type: str | None) -> np.ndarray:
+## Main Orchestrator and Saving Function
+def process_and_save_image(input_path: str, output_dir: str, augmentation_type: str | None):
     """
-    Runs the full preprocessing pipeline by calling each step's function in order.
+    Loads a raw image, applies the full, correct processing pipeline, and saves the result.
     """
-    if not augmentation_type:
-        # Step 1: Resize
-        resized = resize_image(input_image)
-        
-        # Step 2: Normalize
-        result = normalize_image(resized)
-    else:
-        # Step 3: Augment (using previously normalized image)
-        # TODO - Pass normalized input_image to this function when no augmentation is desired; otherwise, pass the raw input_image
-        result = augment_image(input_image, augmentation_type)
-    return result
-
-## Function to Generate and Save Multiple Augmented Images
-def generate_and_save_augmentations(input_path: str, output_dir: str, augmentation_type: str | None):
-    """
-    Loads a single image and saves multiple, uniquely augmented versions of it
-    using the stepwise preprocessing function.
-    """
-    # Resolve paths relative to this script's directory unless absolute paths are provided
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    if not os.path.isabs(input_path):
-        input_path = os.path.join(script_dir, input_path)
-    if not os.path.isabs(output_dir):
-        output_dir = os.path.join(script_dir, output_dir)
-
+    # 1. Load Image (Result is BGR)
     raw_image = cv2.imread(input_path)
     if raw_image is None:
-        print(f"Error: Could not read image from {input_path}")
+        print(f"Warning: Could not read image from {input_path}, skipping.")
         return
 
+    # 2. Convert to RGB for processing
     raw_image_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
-    base_filename = os.path.splitext(os.path.basename(input_path))[0]
-
-    # Run the full, stepwise preprocessing pipeline
-    processed_image_float = preprocess_image_stepwise(
-        input_image=raw_image_rgb,
-        augmentation_type=augmentation_type
-    )
     
-    # Convert image back to a saveable format
-    image_to_save = (processed_image_float * 255).astype(np.uint8)
+    # 3. Apply transformations in the correct order
+    if augmentation_type == "random_cropping":
+        # This function handles its own resizing. Apply to raw image first.
+        pipeline = get_augmentation_pipeline(augmentation_type)
+        augmented_image = pipeline(image=raw_image_rgb)['image']
+        # Then normalize.
+        final_processed_image = normalize_image(augmented_image)
+    elif augmentation_type:
+        # For other augmentations, resize the image first.
+        resized_image = resize_image(raw_image_rgb)
+        pipeline = get_augmentation_pipeline(augmentation_type)
+        # Then apply the augmentation to the resized image.
+        augmented_image = pipeline(image=resized_image)['image']
+        # Finally, normalize.
+        final_processed_image = normalize_image(augmented_image)
+    else: # This handles the case for normalization only
+        resized_image = resize_image(raw_image_rgb)
+        final_processed_image = normalize_image(resized_image)
+
+    # 4. Convert back to a saveable format
+    image_to_save = (final_processed_image * 255).astype(np.uint8)
     image_to_save_bgr = cv2.cvtColor(image_to_save, cv2.COLOR_RGB2BGR)
     
-    # Create a new filename and save the image
-    output_filename = f"{base_filename}.png"
+    # 5. Save the final image
+    base_filename = os.path.basename(input_path)
+    base_filename_no_ext = os.path.splitext(base_filename)[0] # Get the base filename WITHOUT the original extension
+    output_filename = f"{base_filename_no_ext}.png" # Create a new filename with the .png extension
     output_path = os.path.join(output_dir, output_filename)
+    os.makedirs(output_dir, exist_ok=True)
     cv2.imwrite(output_path, image_to_save_bgr)
-    print(f"Saved to {output_path}")
 
 # --- Example Usage ---
 if __name__ == '__main__':
-    do_normalization_run = True # Set to True to run normalization
-
     augmentations_to_do = [
         "rotation", 
-        # "flip_horizontal", 
-        # "flip_vertical", 
-        # "random_cropping", 
-        # "brightness_adjustment"
+        "flip_horizontal", 
+        "flip_vertical", 
+        "random_cropping", 
+        "brightness_adjustment"
     ]
 
-    # Make default input/output directories one level above this file
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    # project_dir = os.path.dirname(script_dir)
     parent_dir = os.path.dirname(script_dir)
+    input_dir = os.path.join(parent_dir, 'raw_images')
+    output_base_dir = os.path.join(parent_dir, 'processed_images')
 
-    if do_normalization_run:
-        input_dir = os.path.join(parent_dir, 'raw_images')
-        output_dir = os.path.join(parent_dir, 'normalized_images')
-        print("Running normalization...")
+    # Get a list of all image paths from the input directory
+    image_paths = []
+    for ext in ('*.png', '*.jpg', '*.jpeg', '*.bmp', '*.tiff'):
+        image_paths.extend(glob.glob(os.path.join(input_dir, ext)))
+    if not image_paths:
+        print(f"Error: No images found in the '{input_dir}' directory. Please add some images to process.")
+        exit(1)
 
-        for image in os.listdir(input_dir):
-            if image.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff')):
-                image_path = os.path.join(input_dir, image)
-            generate_and_save_augmentations(
-                input_path=image_path, 
-                output_dir=output_dir,
-                augmentation_type=None # No augmentation type since we're just normalizing
-            )
-    
+    # Run Normalization Only
+    print("--- Running Normalization Only ---")
+    norm_output_dir = os.path.join(output_base_dir, 'normalized_images') # NOTE - THIS FOLDER CONTAINS IMAGES THAT HAVE ONLY BEEN NORMALIZED FROM RAW
+    for path in image_paths:
+        process_and_save_image(path, norm_output_dir, augmentation_type=None)
+    print("Normalization complete.")
 
-    for augmentation_type in augmentations_to_do:
-        print(f"Running augmentation: {augmentation_type}...")
-        input_dir = os.path.join(parent_dir, 'normalized_images')
-        output_dir = os.path.join(parent_dir, f'image_augmentations/{augmentation_type}')
-        for image in os.listdir(input_dir):
-            if image.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff')):
-                image_path = os.path.join(input_dir, image)
-            generate_and_save_augmentations(
-                input_path=image_path, 
-                output_dir=output_dir,
-                augmentation_type=augmentation_type
-            )
+    # Run Augmentations
+    for aug_type in augmentations_to_do:
+        print(f"--- Running Augmentation: {aug_type} ---")
+        aug_output_dir = os.path.join(output_base_dir, f'image_augmentations/{aug_type}')
+        for path in image_paths:
+            # THIS IS THE KEY FIX: Pass the full 'path' to the function
+            process_and_save_image(path, aug_output_dir, augmentation_type=aug_type)
+        print(f"Augmentation '{aug_type}' complete.")
