@@ -450,6 +450,11 @@ def main(args, ds_init):
                 state_dict = {k: v for k, v in state_dict.items() if 'visual' in k}
                 checkpoint = {}
                 checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k, v in state_dict.items()}
+        print('===========================')
+        print("CHECKPOINT MODEL:")
+        print(checkpoint_model.keys())
+        print(checkpoint_model)
+        print('===========================')
         print("Load ckpt from %s" % args.pretrained_checkpoint)
         checkpoint_model = None
         for model_key in args.model_key.split('|'):

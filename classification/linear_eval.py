@@ -113,6 +113,11 @@ def main(args):
     """linear evaluation: fit a linear probe and report metrics"""
     from panderm_model.downstream.eval_features.linear_probe import eval_linear_probe
     dataset_name=str(args.csv_path).split('/')[-1].split('.')[0]
+
+    print("==============")
+    print("CHECKING ARGS:")
+    print(args)
+    print("==============")
     for i in range(1):
         linprobe_eval_metrics, linprobe_dump = eval_linear_probe(
             train_feats=train_feats,
