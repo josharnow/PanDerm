@@ -6,6 +6,8 @@ This directory contains modifications to the PanDerm model broken into different
 2. Prepare the preprocessed data for training with PanDerm (i.e., convert to CSV format as described by PanDerm authors).
 3. Train/evaluate the PanDerm model on the preprocessed SLICE-3D dataset using linear evaluation & compare to SkinEHDLF results, as well as the published PanDerm results using all datasets.
 
+- 
+
 ### Phase 2: PanDerm Model Modifications & Training/Evaluation
 1. Modify the PanDerm model architecture to use SkinEHDLF components (e.g., the feature extractor) (possibly start with Swan Transformer? Might replace all components instead).
 2. Train/evaluate the modified PanDerm model on the SLICE-3D dataset & compare to Phase 1 results.

@@ -66,3 +66,8 @@ linear_eval_fast:
 		--root_path "$(ROOT_PATH)" \
 		--pretrained_checkpoint "$(PRETRAINED_CHECKPOINT)" \
 		--num_workers $(FAST_NUM_WORKERS)
+
+.PHONY: preprocess_images_phase_1
+preprocess_images_phase_1:
+	@cd panderm_modifications/phase_1/utils && \
+	$(PYTHON) preprocess_images.py
