@@ -2,7 +2,7 @@ timm==0.9.16
 h5py
 pandas
 PyYAML
-opencv-python-headless
+opencv-python-headless==4.9.0.80
 # opencv-python
 matplotlib
 scikit-learn
