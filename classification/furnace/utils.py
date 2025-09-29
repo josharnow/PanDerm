@@ -657,6 +657,7 @@ def get_vqgan_gumbel_f8_8192(weight_path, image_size, device):
 
 
 def get_dalle_vae(weight_path, image_size, device):
+    # NOTE - THIS FILE IS PROBABLY WHERE MODEL COMPONENT CHANGES WILL TAKE PLACE
     vae = Dalle_VAE(image_size)
     vae.load_model(model_dir=weight_path, device=device)
     return vae

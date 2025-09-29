@@ -13,7 +13,7 @@ CSV_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/Pa
 ROOT_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/PanDerm\ &\ SkinEHDLF/pad-ufes/images
 # CSV_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/2000.csv
 # ROOT_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/images
-PRETRAINED_CHECKPOINT ?= $(PROJECT_DIR)/pretrain_weight/panderm_ll_data6_checkpoint-499.pth
+PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth
 NUM_WORKERS ?= 0
 
 # CPU threading limits to reduce contention on laptops
