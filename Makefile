@@ -14,7 +14,7 @@ ROOT_PATH ?= /home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDe
 # CSV_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/2000.csv
 # ROOT_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/images
 PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth	
-NUM_WORKERS ?= 16
+NUM_WORKERS ?= 4
 
 # CPU threading limits to reduce contention on laptops
 OMP_NUM_THREADS ?= 4
