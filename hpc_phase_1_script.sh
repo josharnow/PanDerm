@@ -9,6 +9,8 @@
 
 echo $CUDA_VISIBLE_DEVICES
 
+# pip3 install virtualenv
+
 # create virtualenv with...
 python3 -m virtualenv -p python3 venv
 source venv/bin/activate
@@ -16,5 +18,5 @@ source venv/bin/activate
 # install libraries with...
 venv/bin/pip install -r requirements.txt
 sleep 10
-venv/bin/python3 make linear_eval
+make linear_eval
 # venv/bin/python3 example_script.py
