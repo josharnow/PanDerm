@@ -10,10 +10,10 @@ PROJECT_DIR ?= /home/PACE/ja50529n/MS\ Thesis/Model/PanDerm
 OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
 # OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
 CSV_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/PanDerm\ &\ SkinEHDLF/pad-ufes/2000.csv
-ROOT_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/PanDerm\ &\ SkinEHDLF/pad-ufes/images
+ROOT_PATH ?= /home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images
 # CSV_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/2000.csv
 # ROOT_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/images
-PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth
+PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth	
 NUM_WORKERS ?= 0
 
 # CPU threading limits to reduce contention on laptops
@@ -47,7 +47,23 @@ MAC_OPENBLAS_NUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 MAC_VECLIB_MAXIMUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 MAC_NUMEXPR_NUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 
-.PHONY: linear_eval
+.PHONY: linear_eval_phase_1
+linear_eval_phase_1:
+	@cd classification && \
+	mkdir -p "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/PanDerm_Large_LP_res" && \
+	ulimit -n 4096; \
+	OPENBLAS_NUM_THREADS=$(OPENBLAS_NUM_THREADS) VECLIB_MAXIMUM_THREADS=$(VECLIB_MAXIMUM_THREADS) NUMEXPR_NUM_THREADS=$(NUMEXPR_NUM_THREADS) OMP_NUM_THREADS=$(OMP_NUM_THREADS) MKL_NUM_THREADS=$(MKL_NUM_THREADS) PYTORCH_NUM_THREADS=$(PYTORCH_NUM_THREADS) CUDA_VISIBLE_DEVICES=$(CUDA) $(PYTHON) linear_eval.py \
+		--batch_size $(BATCH_SIZE) \
+		--model "$(MODEL)" \
+		--nb_classes $(NB_CLASSES) \
+		--percent_data $(PERCENT_DATA) \
+		--csv_filename "$(CSV_FILENAME)" \
+		--output_dir "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/PanDerm_Large_LP_res" \
+		--csv_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/2000.csv" \
+		--root_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images" \
+		--pretrained_checkpoint "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth" \
+		--num_workers $(NUM_WORKERS)
+
 linear_eval:
 	@cd classification && \
 	mkdir -p "$(OUTPUT_DIR)" && \

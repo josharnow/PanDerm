@@ -26,4 +26,4 @@ venv/bin/pip install -r requirements.txt
 venv/bin/pip install -r classification/requirements.txt
 venv/bin/pip install -r segmentation/requirements.txt
 sleep 10
-make linear_eval
+make linear_eval_phase_1
