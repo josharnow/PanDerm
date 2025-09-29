@@ -25,5 +25,5 @@ if [ ! -d venv ]; then
 fi
 source venv/bin/activate
 
-sleep 10
+# sleep 10
 make linear_eval_phase_1
