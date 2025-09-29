@@ -10,7 +10,7 @@ PROJECT_DIR ?= /home/PACE/ja50529n/MS\ Thesis/Model/PanDerm
 OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
 # OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
 CSV_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/PanDerm\ &\ SkinEHDLF/pad-ufes/2000.csv
-ROOT_PATH ?= /home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images
+ROOT_PATH ?= /home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images/
 # CSV_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/2000.csv
 # ROOT_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/images
 PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth	
@@ -60,7 +60,7 @@ linear_eval_phase_1:
 		--csv_filename "$(CSV_FILENAME)" \
 		--output_dir "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/PanDerm_Large_LP_res" \
 		--csv_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/2000.csv" \
-		--root_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images" \
+		--root_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images/" \
 		--pretrained_checkpoint "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth" \
 		--num_workers $(NUM_WORKERS)
 
