@@ -5,7 +5,6 @@
 
 # export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64
-#source venv/bin/activate
 
 echo $CUDA_VISIBLE_DEVICES
 
@@ -22,4 +21,3 @@ venv/bin/pip install -r requirements.txt
 venv/bin/pip install -r classification/requirements.txt
 sleep 10
 make linear_eval
-# venv/bin/python3 example_script.py

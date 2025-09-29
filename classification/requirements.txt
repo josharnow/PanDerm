@@ -2,7 +2,8 @@ timm==0.9.16
 h5py
 pandas
 PyYAML
-opencv-python
+opencv-python-headless
+# opencv-python
 matplotlib
 scikit-learn
 scipy
@@ -11,7 +12,6 @@ mlxtend
 tensorboardX
 wandb
 torchsnooper
-opencv-python
 pandas
 scikit-learn
 pycm
