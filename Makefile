@@ -47,6 +47,10 @@ MAC_OPENBLAS_NUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 MAC_VECLIB_MAXIMUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 MAC_NUMEXPR_NUM_THREADS ?= $(MAC_OMP_NUM_THREADS)
 
+.PHONY: debug_open
+debug_open:
+	$(PYTHON) debug_open.py
+
 .PHONY: linear_eval_phase_1
 linear_eval_phase_1:
 	@cd classification && \

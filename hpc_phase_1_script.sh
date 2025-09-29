@@ -26,4 +26,5 @@ fi
 source venv/bin/activate
 
 # sleep 10
+make debug_open
 make linear_eval_phase_1
