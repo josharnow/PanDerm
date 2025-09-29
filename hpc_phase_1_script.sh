@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=panderm_phase_1
+#SBATCH --job-name=panderm
 #SBATCH --output=logs/phase_1/slurm-%j.out
 #SBATCH --error=logs/phase_1/slurm-%j.err
 #SBATCH --ntasks=1
