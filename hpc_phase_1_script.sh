@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=panderm_phase_1
-#SBATCH --output=logs/panderm_phase_1_%j.out
-#SBATCH --error=logs/panderm_phase_1_%j.err
+#SBATCH --output=logs/phase_1/slurm-%j.out
+#SBATCH --error=logs/phase_1/slurm-%j.err
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
 
@@ -11,19 +11,19 @@
 
 echo "Starting job on " `date`
 echo "Running on node " `hostname`
-echo $CUDA_VISIBLE_DEVICES
+echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
 
 # pip3 install virtualenv
 
 # create virtualenv with...
 if [ ! -d venv ]; then
   python3 -m virtualenv -p python3 venv
+  # install libraries with...
+  venv/bin/pip install -r requirements.txt
+  venv/bin/pip install -r classification/requirements.txt
+  venv/bin/pip install -r segmentation/requirements.txt
 fi
 source venv/bin/activate
 
-# install libraries with...
-venv/bin/pip install -r requirements.txt
-venv/bin/pip install -r classification/requirements.txt
-venv/bin/pip install -r segmentation/requirements.txt
 sleep 10
 make linear_eval_phase_1
