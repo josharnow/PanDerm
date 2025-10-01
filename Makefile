@@ -3,16 +3,13 @@ PYTHON ?= python3
 CUDA ?= 1
 BATCH_SIZE ?= 1000
 MODEL ?= PanDerm_Large_LP
-NB_CLASSES ?= 6
+NB_CLASSES ?= 2
 PERCENT_DATA ?= 1.0
 CSV_FILENAME ?= PanDerm_Large_LP_result.csv
 PROJECT_DIR ?= /home/PACE/ja50529n/MS\ Thesis/Model/PanDerm
 OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
-# OUTPUT_DIR ?= $(PROJECT_DIR)/output/PanDerm_Large_LP_res
 CSV_PATH ?= /home/PACE/ja50529n/MS\ Thesis/Thesis\ Data/Skin\ Cancer\ Project/PanDerm\ &\ SkinEHDLF/pad-ufes/2000.csv
 ROOT_PATH ?= /home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images/
-# CSV_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/2000.csv
-# ROOT_PATH ?= $(PROJECT_DIR)/Evaluation_datasets/pad-ufes/images
 PRETRAINED_CHECKPOINT ?= /home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth	
 NUM_WORKERS ?= 0
 
@@ -63,8 +60,8 @@ linear_eval_phase_1:
 		--percent_data $(PERCENT_DATA) \
 		--csv_filename "$(CSV_FILENAME)" \
 		--output_dir "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/PanDerm_Large_LP_res" \
-		--csv_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/2000.csv" \
-		--root_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/pad-ufes/images/" \
+		--csv_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_GroundTruth.csv" \
+		--root_path "/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_Input/" \
 		--pretrained_checkpoint "/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth" \
 		--num_workers $(NUM_WORKERS)
 
