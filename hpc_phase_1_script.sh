@@ -5,6 +5,7 @@
 #SBATCH --error=logs/phase_1/slurm-%j.err
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
+#SBATCH --mem=32G
 
 # export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64
