@@ -1,7 +1,7 @@
 # Defaults (override with: make linear_eval VAR=value) (DEFAULTS ARE FOR PAD-UFES dataset with PanDerm_Large_LP model)
 PYTHON ?= python3
 CUDA ?= 1
-BATCH_SIZE ?= 128
+BATCH_SIZE ?= 4
 MODEL ?= PanDerm_Large_LP
 NB_CLASSES ?= 2
 PERCENT_DATA ?= 1.0
