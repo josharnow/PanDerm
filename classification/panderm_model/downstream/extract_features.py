@@ -27,7 +27,7 @@ def extract_features_from_dataloader(args, model, dataloader):
             else:
                 current_img = str(filename)
             # Print a line for logs and update tqdm postfix for live view
-            # print(f"Processing image: {current_img}", flush=True)
+            print(f"Processing image: {current_img}", flush=True)
             pbar.set_postfix_str(str(current_img))
         except Exception:
             # Don't fail the run if filename formatting is unexpected
