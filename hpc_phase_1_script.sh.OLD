@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#SBATCH --job-name=panderm
+#SBATCH --output=logs/phase_1/slurm-%j.out
+#SBATCH --error=logs/phase_1/slurm-%j.err
+#SBATCH --ntasks=1
+#SBATCH --gres=gpu:1
+
+# NOTE - Adding memory doesn't work (sbatch: error: Memory specification can not be satisfied sbatch: error: Batch job submission failed: Requested node configuration is not available)
+# export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+# export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64
+
+echo "Starting job on " `date`
+echo "Running on node " `hostname`
+echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
+
+# pip3 install virtualenv
+
+# create virtualenv with...
+if [ ! -d venv ]; then
+  python3 -m virtualenv -p python3 venv
+  # install libraries with...
+  venv/bin/pip install -r requirements.txt
+  venv/bin/pip install -r classification/requirements.txt
+  venv/bin/pip install -r segmentation/requirements.txt
+fi
+source venv/bin/activate
+
+# sleep 10
+make debug_open
+make linear_eval_phase_1
