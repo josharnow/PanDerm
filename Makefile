@@ -35,6 +35,8 @@ MAC_CSV_PATH ?= ../Evaluation_datasets/pad-ufes/2000.csv
 MAC_ROOT_PATH ?= ../Evaluation_datasets/pad-ufes/images/
 MAC_PRETRAINED_CHECKPOINT ?= ../pretrain_weight/panderm_ll_data6_checkpoint-499.pth
 MAC_NUM_WORKERS ?= 0
+MAC_N_SPLITS ?= 2
+MAC_LABEL_COLUMN ?= label
 
 # macOS thread/env tuning
 MAC_OMP_NUM_THREADS ?= 4
@@ -80,6 +82,25 @@ linear_eval:
 		--root_path "$(ROOT_PATH)" \
 		--pretrained_checkpoint "$(PRETRAINED_CHECKPOINT)" \
 		--num_workers $(NUM_WORKERS)
+
+.PHONY: mac_nested_kfold_linear_eval
+mac_nested_kfold_linear_eval:
+	@cd classification && \
+	mkdir -p "$(MAC_OUTPUT_DIR)" && \
+	ulimit -n 4096; \
+	OPENBLAS_NUM_THREADS=$(MAC_OPENBLAS_NUM_THREADS) VECLIB_MAXIMUM_THREADS=$(MAC_VECLIB_MAXIMUM_THREADS) NUMEXPR_NUM_THREADS=$(MAC_NUMEXPR_NUM_THREADS) OMP_NUM_THREADS=$(MAC_OMP_NUM_THREADS) MKL_NUM_THREADS=$(MAC_MKL_NUM_THREADS) PYTORCH_NUM_THREADS=$(MAC_PYTORCH_NUM_THREADS) CUDA_VISIBLE_DEVICES=$(MAC_CUDA) $(MAC_PYTHON) nested_kfold_eval.py \
+		--batch_size $(MAC_BATCH_SIZE) \
+		--model "$(MAC_MODEL)" \
+		--nb_classes $(MAC_NB_CLASSES) \
+		--percent_data $(MAC_PERCENT_DATA) \
+		--csv_filename "$(MAC_CSV_FILENAME)" \
+		--output_dir "$(MAC_OUTPUT_DIR)" \
+		--csv_path "$(MAC_CSV_PATH)" \
+		--root_path "$(MAC_ROOT_PATH)" \
+		--pretrained_checkpoint "$(MAC_PRETRAINED_CHECKPOINT)" \
+		--num_workers $(MAC_NUM_WORKERS) \
+		--n_splits $(MAC_N_SPLITS) \
+		--label_column "$(MAC_LABEL_COLUMN)"
 
 .PHONY: mac_linear_eval
 mac_linear_eval:

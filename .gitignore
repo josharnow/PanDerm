@@ -14,3 +14,5 @@ __pycache__/
 /panderm_modifications/**/*.[Ww][Ee][Bb][Pp]
 /panderm_modifications/**/*.[Ss][Vv][Gg]
 /panderm_modifications/**/*.[Hh][Ee][Ii][Cc]
+classification/wandb
+wandb/
