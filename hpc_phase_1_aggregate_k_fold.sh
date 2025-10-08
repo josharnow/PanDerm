@@ -7,7 +7,7 @@ CSV_FILENAME="PanDerm_Large_LP_result.csv"
 
 cd classification
 
-${PYTHON} aggregate_results.py \
+${PYTHON} aggregate_slurm_results.py \
     --output_dir "${OUTPUT_DIR}" \
     --n_splits ${N_SPLITS} \
     --csv_filename "${CSV_FILENAME}"
