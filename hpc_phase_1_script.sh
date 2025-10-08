@@ -8,13 +8,13 @@
 #SBATCH --gres=gpu:1 # Request 1 GPU per task
 
 # --- Important: Set the number of splits for your array ---
-#SBATCH --array=1-1 # Creates 10 jobs, with task IDs from 1 to 10; matches n_splits in Makefile
+#SBATCH --array=1-2 # Creates 10 jobs, with task IDs from 1 to 10; matches n_splits in Makefile
 
 # NOTE - Adding memory doesn't work (sbatch: error: Memory specification can not be satisfied sbatch: error: Batch job submission failed: Requested node configuration is not available)
 
 # Project-specific variables
 PYTHON="python3"
-BATCH_SIZE=8
+BATCH_SIZE=16
 MODEL="PanDerm_Large_LP"
 NB_CLASSES=2
 PERCENT_DATA=1.0
@@ -24,7 +24,7 @@ CSV_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm 
 ROOT_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_Input/"
 PRETRAINED_CHECKPOINT="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 NUM_WORKERS=0
-N_SPLITS=1 # Should match the --array range above
+N_SPLITS=2 # Should match the --array range above
 LABEL_COLUMN="binary_label"
 
 
