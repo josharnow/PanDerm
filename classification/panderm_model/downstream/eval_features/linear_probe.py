@@ -285,10 +285,24 @@ def _fit_logreg(
         LogisticRegression: Fitted logistic regression classifier.
 
     """
+    # --- CHANGE: Added class_weight='balanced' ---
+    # This parameter tells the scikit-learn Logistic Regression model to automatically adjust weights inversely proportional to class frequencies to handle imbalanced data.
     if use_sklearn:
-        classifier = sk_LogisticRegression(C=cost, max_iter=max_iter, verbose=verbose, random_state=seed)
+        classifier = sk_LogisticRegression(
+            C=cost, 
+            max_iter=max_iter, 
+            verbose=verbose, 
+            random_state=seed,
+            class_weight='balanced',
+        )
     else:
-        classifier = LogisticRegression(C=cost, max_iter=max_iter, verbose=verbose, random_state=seed)
+        classifier = LogisticRegression(
+            C=cost, 
+            max_iter=max_iter, 
+            verbose=verbose, 
+            random_state=seed,
+            class_weight='balanced',
+        )
     classifier.fit(feats, labels)
     return classifier
 

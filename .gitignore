@@ -16,3 +16,4 @@ __pycache__/
 /panderm_modifications/**/*.[Hh][Ee][Ii][Cc]
 classification/wandb
 wandb/
+output/

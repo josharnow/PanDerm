@@ -4,7 +4,7 @@ import os
 
 def main(args):
     all_metrics = []
-    
+
     print(f"Aggregating results from: {args.output_dir}")
 
     for fold in range(1, args.n_splits + 1):
@@ -12,7 +12,7 @@ def main(args):
         fold_dir = os.path.join(args.output_dir, f"fold_{fold}")
         results_filename = f"fold_{fold}_{args.csv_filename}"
         results_path = os.path.join(fold_dir, results_filename)
-        
+
         if os.path.exists(results_path):
             print(f"Reading results from: {results_path}")
             # Assuming the CSV from linear_eval.py has one row of metrics
@@ -27,11 +27,11 @@ def main(args):
 
     # Aggregate the metrics across folds
     aggregated_df = pd.DataFrame(all_metrics)
-    
-    # Calculate mean and standard deviation
-    mean_metrics = aggregated_df.mean().to_frame('mean').T
-    std_metrics = aggregated_df.std().to_frame('std').T
-    
+
+    # --- FIX: Only calculate stats for numeric columns ---
+    mean_metrics = aggregated_df.mean(numeric_only=True).to_frame('mean').T
+    std_metrics = aggregated_df.std(numeric_only=True).to_frame('std').T
+
     final_summary = pd.concat([mean_metrics, std_metrics])
 
     print("\n--- Aggregated Cross-Validation Results ---")

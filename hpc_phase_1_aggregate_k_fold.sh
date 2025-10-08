@@ -1,7 +1,7 @@
 # NOTE - Represents last stage of phase 1; aggregates results from each fold into a single CSV file
 
 PYTHON="python3"
-OUTPUT_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1" # NOTE - Adjust name according to phase of experiment
+OUTPUT_DIR="/Users/josh/Software Development/University/Thesis/PanDerm/output/phase_1" # NOTE - Adjust name according to phase of experiment
 N_SPLITS=10
 CSV_FILENAME="PanDerm_Large_LP_result.csv"
 
