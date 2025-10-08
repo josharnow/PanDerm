@@ -14,7 +14,7 @@
 
 # Project-specific variables
 PYTHON="python3"
-BATCH_SIZE=4
+BATCH_SIZE=8
 MODEL="PanDerm_Large_LP"
 NB_CLASSES=2
 PERCENT_DATA=1.0
