@@ -2,11 +2,29 @@
 import os
 from dotenv import load_dotenv
 
+# --- ADD THIS DEBUGGING BLOCK AT THE VERY TOP ---
+import torch
+import sys
+try:
+    print("--- Checking PyTorch and CUDA environment ---")
+    print(f"Python version: {sys.version}")
+    print(f"PyTorch version: {torch.__version__}")
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"CUDA version: {torch.version.cuda}")
+        print(f"cuDNN version: {torch.backends.cudnn.version()}")
+        print(f"Device count: {torch.cuda.device_count()}")
+        print(f"Device name: {torch.cuda.get_device_name(0)}")
+    print("--- Environment check complete ---")
+except Exception as e:
+    print(f"!!! An error occurred during environment check: {e} !!!")
+# --- END DEBUGGING BLOCK ---
+
 import argparse
 import datetime
 import numpy as np
 import time
-import torch
+# import torch
 import torch.backends.cudnn as cudnn
 import json
 import os
