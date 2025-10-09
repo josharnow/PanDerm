@@ -790,6 +790,8 @@ if __name__ == '__main__':
     load_dotenv()
 
     opts, ds_init = get_args()
+    print("Args received")
+    
     project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
     wandb.init(
         project=project_name,
