@@ -20,6 +20,9 @@ from sklearn.linear_model import LogisticRegression as sk_LogisticRegression
 from .logistic_regression import LogisticRegression
 from .metrics import get_eval_metrics, get_eval_metrics_stats
 
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve, PrecisionRecallDisplay
+
 
 # Silence repeated convergence warnings from scikit-learn logistic regression.
 simplefilter("ignore", category=ConvergenceWarning)
@@ -218,29 +221,38 @@ def test_linear_probe(
     # evaluate
     NUM_C = len(set(test_labels.cpu().numpy())) if num_classes is None else num_classes
 
-    # --- Get the raw probabilities for the positive class ---
     if NUM_C == 2:
-        # Probabilities for the positive class (class 1)
         probs_all = linear_classifier.predict_proba(test_feats)[:, 1].detach().cpu().numpy()
         roc_kwargs = {}
     else:
+        # This part remains for multiclass cases
         probs_all = linear_classifier.predict_proba(test_feats).detach().cpu().numpy()
         roc_kwargs = {"multi_class": "ovo", "average": "macro"}
-
-    # --- FIX for high false positives: Apply a custom threshold to the probabilities ---
-    # Instead of using the default 0.5 threshold, we can set our own.
-    # By increasing the threshold, we demand the model be more confident
-    # before it predicts a positive case, which increases precision.
-    # Experiment with this value to find the best precision/recall balance.
-    CUSTOM_THRESHOLD = 0.8  # Example: Try values like 0.7, 0.8, 0.9, etc.
-    
-    # Generate predictions based on our new threshold
-    preds_all = (probs_all > CUSTOM_THRESHOLD).astype(int)
-
-    # The original prediction method (equivalent to a 0.5 threshold) is no longer needed:
-    # preds_all = linear_classifier.predict_proba(test_feats).argmax(dim=1).detach().cpu().numpy()
     
     targets_all = test_labels.detach().cpu().numpy()
+
+    # --- IMPLEMENTATION: Generate and Save Precision-Recall Curve ---
+    # Calculate precision, recall, and thresholds for every possible threshold
+    precision, recall, thresholds = precision_recall_curve(targets_all, probs_all)
+    
+    # Create the plot
+    plt.figure()
+    disp = PrecisionRecallDisplay(precision=precision, recall=recall)
+    disp.plot()
+    plt.title(f'Precision-Recall Curve for {dataset_name}')
+    
+    # Save the plot to the output directory
+    pr_curve_path = os.path.join(out_dir, f'precision_recall_curve_{dataset_name}.png')
+    plt.savefig(pr_curve_path)
+    print(f"Precision-Recall curve saved to {pr_curve_path}")
+    plt.close()
+    # --- END OF IMPLEMENTATION ---
+
+    # Now you can choose a threshold and generate predictions
+    # You can analyze the PR curve to find a good threshold
+    CUSTOM_THRESHOLD = 0.8 # This can be set after analyzing the curve
+    preds_all = (probs_all > CUSTOM_THRESHOLD).astype(int)
+
     import sklearn
     classification_report = sklearn.metrics.classification_report(
         y_true=targets_all, y_pred=preds_all
