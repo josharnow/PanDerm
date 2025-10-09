@@ -211,6 +211,9 @@ def get_args():
     parser.set_defaults(pin_mem=True)
 
     # distributed training parameters
+    # --- ADDED THIS ARGUMENT ---
+    parser.add_argument('--distributed', action='store_true', default=False, 
+                        help='Enable distributed training')
     parser.add_argument('--world_size', default=1, type=int,
                         help='number of distributed processes')
     parser.add_argument('--local_rank', default=-1, type=int)
@@ -252,9 +255,7 @@ def main(args, ds_init):
     if not args.enable_linear_eval:
         args.aa = 'rand-m9-mstd0.5-inc1'
 
-    print("Initializing distributed mode")
     utils.init_distributed_mode(args)
-    print("Distributed mode initialized")
 
     if ds_init is not None:
         print("Creating ds_config")
@@ -783,9 +784,7 @@ def main(args, ds_init):
 
 
 if __name__ == '__main__':
-    # This will load the WANDB_API_KEY from your .env file into the environment
     load_dotenv()
-
     opts, ds_init = get_args()
     
     if not opts.no_wandb:

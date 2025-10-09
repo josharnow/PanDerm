@@ -332,6 +332,15 @@ def save_on_master(*args, **kwargs):
 
 
 def init_distributed_mode(args):
+    # This function will now ONLY run if --distributed is passed as a command line argument
+    if not args.distributed:
+        print('Not using distributed mode')
+        # We need to set these attributes manually for a single-GPU run
+        args.rank = 0
+        args.world_size = 1
+        args.gpu = 0
+        return
+    print("Initializing distributed mode")
     if args.dist_on_itp:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
@@ -362,10 +371,21 @@ def init_distributed_mode(args):
     torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                          world_size=args.world_size, rank=args.rank)
     torch.distributed.barrier()
-    if not args.enable_multi_print:
-        setup_for_distributed(args.rank == 0)
-    else:
-        setup_for_distributed_each_gpu(args.rank)
+    setup_for_distributed(args.rank == 0)
+
+def setup_for_distributed(is_master):
+    """
+    This function disables printing when not in master process
+    """
+    import builtins as __builtin__
+    builtin_print = __builtin__.print
+
+    def print(*args, **kwargs):
+        force = kwargs.pop('force', False)
+        if is_master or force:
+            builtin_print(*args, **kwargs)
+
+    __builtin__.print = print
 
 
 def load_state_dict(model, state_dict, prefix='', ignore_missing="relative_position_index"):
