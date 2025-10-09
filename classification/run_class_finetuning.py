@@ -789,9 +789,10 @@ if __name__ == '__main__':
     # This will load the WANDB_API_KEY from your .env file into the environment
     load_dotenv()
 
+    print("Getting args")
     opts, ds_init = get_args()
     print("Args received")
-    
+
     project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
     wandb.init(
         project=project_name,
