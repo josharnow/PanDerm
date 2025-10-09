@@ -10,6 +10,9 @@
 # export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64
 
+# --- Change to the project root directory ---
+cd ../..
+
 echo "Starting job on " `date`
 echo "Running on node " `hostname`
 echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"

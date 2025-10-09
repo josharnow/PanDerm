@@ -5,6 +5,9 @@ OUTPUT_DIR="/Users/josh/Software Development/University/Thesis/PanDerm/output/ph
 N_SPLITS=10
 CSV_FILENAME="PanDerm_Large_LP_result.csv"
 
+# --- Change to the project root directory ---
+cd ../..
+
 cd classification
 
 ${PYTHON} aggregate_slurm_results.py \
