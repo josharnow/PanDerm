@@ -50,6 +50,10 @@ class Derm_Dataset(Dataset):
         # Apply transformations if any
         if x is not None and self.transforms:
             x = self.transforms(x)
+
+            assert not torch.isnan(x).any(), "NaN found in image tensor"
+            assert not torch.isinf(x).any(), "Inf found in image tensor"
+
             if self.binary==True:
                 y = self.df.iloc[index]['binary_label']
             else:

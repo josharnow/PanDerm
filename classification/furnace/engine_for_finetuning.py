@@ -25,6 +25,21 @@ import torch.nn as nn
 import pandas as pd
 from tqdm import tqdm
 
+def print_tensor_stats(tensor, name="Tensor"):
+    if torch.is_tensor(tensor):
+        has_nan = torch.isnan(tensor).any()
+        has_inf = torch.isinf(tensor).any()
+        print(
+            f"\n🔍 --- STATS FOR: {name} --- 🔍\n"
+            f"Shape: {tensor.shape}, dtype: {tensor.dtype}\n"
+            f"Min: {torch.min(tensor).item():.6f}, Max: {torch.max(tensor).item():.6f}, Mean: {torch.mean(tensor).item():.6f}\n"
+            f"Has NaN: {has_nan}\n"
+            f"Has Inf: {has_inf}\n"
+            f"---------------------------------"
+        )
+    else:
+        print(f"--- {name} is not a tensor ---")
+
 def misc_measures(confusion_matrix):
     bacc = []
     sensitivity = []
@@ -60,7 +75,11 @@ def misc_measures(confusion_matrix):
     return bacc, sensitivity, specificity, precision, G, F1_score_2, mcc_
 def train_class_batch(model, samples, target, criterion):
     outputs = model(samples)
+    # --- ADD THIS CHECK ---
+    print_tensor_stats(outputs, name="Model Output (logits)")
+    # --- END CHECK ---
     loss = criterion(outputs, target)
+    print_tensor_stats(loss, name="Calculated Loss")
     return loss, outputs
 
 
