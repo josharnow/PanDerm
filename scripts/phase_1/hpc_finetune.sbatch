@@ -11,7 +11,7 @@
 
 # --- Your Project Variables ---
 PYTHON="python3"
-MODEL="PanDerm_Large_LP" # Base model to start fine-tuning from
+MODEL="PanDerm_Large_FT" # Base model to start fine-tuning from
 NB_CLASSES=2
 OUTPUT_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1"
 CSV_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1" # IMPORTANT: Directory containing your fold_data.csv files
@@ -67,9 +67,16 @@ source venv/bin/activate
 # --- Change to the correct directory ---
 cd classification
 
+
+# --- FIX: Set environment variables for torch.distributed ---
+# This tells the script to use the local machine for communication.
+export MASTER_ADDR=localhost
+export MASTER_PORT=12355 # A random, unused port
+
 # --- Run the Fine-Tuning Script ---
 ${PYTHON} run_class_finetuning.py \
     --model ${MODEL} \
+    --csv_path "${FOLD_CSV_PATH}" \
     --data_path "${FOLD_CSV_PATH}" \
     --batch_size ${BATCH_SIZE} \
     --root_path "${ROOT_PATH}" \
