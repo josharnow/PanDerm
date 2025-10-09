@@ -97,7 +97,7 @@ ${PYTHON} run_class_finetuning.py \
     --monitor ${MONITOR} \
     --no_wandb \
     --TTA \
-    --clip_grad 1.0 \ # <-- ADD THIS LINE TO PREVENT GRADIENT EXPLOSION
+    --clip_grad 1.0 \
     --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
