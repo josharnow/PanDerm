@@ -13,8 +13,8 @@
 PYTHON="python3"
 MODEL="PanDerm_Large_LP" # Base model to start fine-tuning from
 NB_CLASSES=2
-OUTPUT_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1_finetuned"
-CSV_BASE_DIR="/path/to/your/k-fold/csv_directory" # IMPORTANT: Directory containing your fold_data.csv files
+OUTPUT_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1"
+CSV_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1" # IMPORTANT: Directory containing your fold_data.csv files
 ROOT_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_Input/"
 PRETRAINED_CHECKPOINT="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 NUM_WORKERS=0
@@ -41,12 +41,13 @@ REPROB=0.25               #
 # --- Change to the project root directory ---
 cd ../..
 
+mkdir -p slurm_logs
+
 # --- Environment Setup ---
 echo "Starting job on " `date`
 echo "Running on node " `hostname`
 echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
 echo "Starting fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID} on $(hostname)"
-mkdir -p slurm_logs
 
 # create virtualenv with...
 if [ ! -d venv ]; then
@@ -60,7 +61,7 @@ source venv/bin/activate
 
 
 
-mkdir -p ${FOLD_OUTPUT_DIR}
+
 
 # --- Change to the correct directory ---
 cd classification
@@ -84,6 +85,8 @@ ${PYTHON} run_class_finetuning.py \
     --weight_decay ${WEIGHT_DECAY} \
     --mixup ${MIXUP} \
     --cutmix ${CUTMIX} \
-    --reprob ${REPROB}
+    --reprob ${REPROB} \
+    --TTA \
+    --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
