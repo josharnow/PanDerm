@@ -58,7 +58,14 @@ def misc_measures(confusion_matrix):
 
     return bacc, sensitivity, specificity, precision, G, F1_score_2, mcc_
 def train_class_batch(model, samples, target, criterion):
+    # --- Point of Interest 1: Model Output ---
+    # The model's raw output (logits) are generated here.
+    # Print the shape, min, max, and mean of `outputs` right here
+    # to see if they are extreme values (very large or very small).
+    print("Model output diagnostics:")
+    print("Samples:", samples)
     outputs = model(samples)
+    print("Outputs:", outputs)
     
     # --- ADDED FINAL DIAGNOSTIC ---
     try:
