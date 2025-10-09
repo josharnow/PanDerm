@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=panderm_%a
-#SBATCH --output=../../logs/finetune_job_%A_%a.out
-#SBATCH --error=../../logs/finetune_job_%A_%a.err
+#SBATCH --output=../../logs/phase_1/finetune_job_%A_%a.out
+#SBATCH --error=../../logs/phase_1/finetune_job_%A_%a.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1

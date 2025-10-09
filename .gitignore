@@ -1,5 +1,6 @@
 *.DS_Store
 env/
+.env
 /Evaluation_datasets
 /pretrain_weight
 __pycache__/

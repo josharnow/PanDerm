@@ -17,3 +17,4 @@ scikit-learn
 pycm
 open_clip_torch
 albumentations
+python-dotenv

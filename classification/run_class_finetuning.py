@@ -1,3 +1,7 @@
+# Add these imports at the top of the file
+import os
+from dotenv import load_dotenv
+
 import argparse
 import datetime
 import numpy as np
@@ -757,6 +761,9 @@ def main(args, ds_init):
 
 
 if __name__ == '__main__':
+    # This will load the WANDB_API_KEY from your .env file into the environment
+    load_dotenv()
+
     opts, ds_init = get_args()
     project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
     wandb.init(
