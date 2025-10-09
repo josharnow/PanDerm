@@ -1,5 +1,3 @@
-# Add these imports at the top of the file
-import os
 from dotenv import load_dotenv
 
 import argparse
@@ -216,6 +214,10 @@ def get_args():
 
     parser.add_argument('--exp_name', default='', type=str,
                         help='name of exp. it is helpful when save the checkpoint')
+    
+    # --- ADDED THIS ARGUMENT ---
+    parser.add_argument('--no_wandb', action='store_true', default=False,
+                        help='Disable Weights & Biases logging')
 
     known_args, _ = parser.parse_known_args()
 
@@ -695,9 +697,7 @@ def main(args, ds_init):
     max_auc = 0.0
     max_performance = 0.0
     for epoch in range(args.start_epoch, args.epochs):
-        # The .set_epoch() method is specific to the DistributedSampler and is needed
-        # to ensure proper shuffling in a multi-GPU environment. The WeightedRandomSampler
-        # does not have this method. This check prevents an AttributeError.
+        # The .set_epoch() method is specific to the DistributedSampler and is needed to ensure proper shuffling in a multi-GPU environment. The WeightedRandomSampler does not have this method. This check prevents an AttributeError.
         if args.distributed and isinstance(data_loader_train.sampler, torch.utils.data.DistributedSampler):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
@@ -716,7 +716,10 @@ def main(args, ds_init):
         # val_bacc, val_auc_roc, valwf1,val_sen,val_spec = wandb_res['Val Balanced Accuracy'], wandb_res['Val AUC-ROC'], wandb_res['Val F1'],wandb_res['Val Sensitivity'],wandb_res['Val Specificity']
         val_bacc, val_acc, val_auc_roc, valwf1, val_mean_recall = wandb_res['Val BAcc'], wandb_res['Val Acc'] , wandb_res['Val ROC'], \
             wandb_res['Val W_F1'], wandb_res['Val Recall_macro']
-        wandb.log(wandb_res)
+        
+        if not args.no_wandb:
+            wandb.log(wandb_res)
+
         if args.nb_classes == 2:
             if max_performance < val_auc_roc:
                 max_performance = val_auc_roc
@@ -757,7 +760,9 @@ def main(args, ds_init):
                 print(f"Starting test without tta")
                 test_stats, wandb_test = evaluate(data_loader_test, model, device, args.output_dir, epoch, mode='test',
                                                   num_class=args.nb_classes)
-                wandb.log(wandb_test)
+                if not args.no_wandb:
+                    wandb.log(wandb_test)
+
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
@@ -768,13 +773,20 @@ if __name__ == '__main__':
     load_dotenv()
 
     opts, ds_init = get_args()
-    project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
-    wandb.init(
-        project=project_name,
-        name=opts.wandb_name,
-        notes="baselines", \
-        config=opts)
+    
+    # --- WRAPPED WANDB INITIALIZATION ---
+    if not opts.no_wandb:
+        project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
+        wandb.init(
+            project=project_name,
+            name=opts.wandb_name,
+            notes="baselines",
+            config=opts)
+
     if opts.output_dir:
         Path(opts.output_dir).mkdir(parents=True, exist_ok=True)
     main(opts, ds_init)
-    wandb.finish()
+
+    # --- WRAPPED WANDB FINISH ---
+    if not opts.no_wandb:
+        wandb.finish()
