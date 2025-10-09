@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=panderm_%a
-#SBATCH --output=../../slurm_logs/finetune_job_%A_%a.out
-#SBATCH --error=../../slurm_logs/finetune_job_%A_%a.err
+#SBATCH --output=../../logs/finetune_job_%A_%a.out
+#SBATCH --error=../../logs/finetune_job_%A_%a.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
@@ -37,11 +37,12 @@ WEIGHT_DECAY=0.05         #
 MIXUP=0.8                 #
 CUTMIX=1.0                #
 REPROB=0.25               #
+MONITOR="recall"     # Metric to monitor for saving best model
 
 # --- Change to the project root directory ---
 cd ../..
 
-mkdir -p slurm_logs
+mkdir -p logs
 
 # --- Environment Setup ---
 echo "Starting job on " `date`
@@ -70,13 +71,13 @@ cd classification
 ${PYTHON} run_class_finetuning.py \
     --model ${MODEL} \
     --data_path "${FOLD_CSV_PATH}" \
+    --batch_size ${BATCH_SIZE} \
     --root_path "${ROOT_PATH}" \
-    --finetune "${PRETRAINED_CHECKPOINT}" \
+    --pretrained_checkpoint "${PRETRAINED_CHECKPOINT}" \
     --output_dir "${FOLD_OUTPUT_DIR}" \
     --log_dir "${FOLD_OUTPUT_DIR}" \
     --nb_classes ${NB_CLASSES} \
     --num_workers ${NUM_WORKERS} \
-    --batch_size ${BATCH_SIZE} \
     --lr ${LEARNING_RATE} \
     --warmup_epochs ${WARMUP_EPOCHS} \
     --epochs ${EPOCHS} \
@@ -86,6 +87,7 @@ ${PYTHON} run_class_finetuning.py \
     --mixup ${MIXUP} \
     --cutmix ${CUTMIX} \
     --reprob ${REPROB} \
+    --monitor ${MONITOR} \
     --TTA \
     --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 

@@ -20,7 +20,7 @@ NB_CLASSES=2
 PERCENT_DATA=1.0
 CSV_FILENAME="PanDerm_Large_LP_result.csv"
 OUTPUT_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1" # TODO - Change name of directory on HPC before proceeding; old name is PanDerm_Large_LP_res
-C
+CSV_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_GroundTruth.csv"
 ROOT_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_Input/"
 PRETRAINED_CHECKPOINT="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
 NUM_WORKERS=0
@@ -55,9 +55,9 @@ ulimit -n 4096
 # --- Run the Python script for the assigned fold ---
 # NOTE - This is part of the nested, stratified k-fold cross-validation setup
 ${PYTHON} slurm_runner.py \
+    --model "${MODEL}" \
     --fold ${SLURM_ARRAY_TASK_ID} \
     --batch_size ${BATCH_SIZE} \
-    --model "${MODEL}" \
     --nb_classes ${NB_CLASSES} \
     --percent_data ${PERCENT_DATA} \
     --csv_filename "${CSV_FILENAME}" \

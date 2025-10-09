@@ -17,7 +17,7 @@ if [ ! -d venv ]; then
 fi
 source venv/bin/activate
 
-mkdir -p ${OUTPUT_BASE_DIR}
+mkdir -p ${OUTPUT_DIR}
 
 
 # Navigate to your classification directory
