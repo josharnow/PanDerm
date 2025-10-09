@@ -695,7 +695,10 @@ def main(args, ds_init):
     max_auc = 0.0
     max_performance = 0.0
     for epoch in range(args.start_epoch, args.epochs):
-        if args.distributed:
+        # The .set_epoch() method is specific to the DistributedSampler and is needed
+        # to ensure proper shuffling in a multi-GPU environment. The WeightedRandomSampler
+        # does not have this method. This check prevents an AttributeError.
+        if args.distributed and isinstance(data_loader_train.sampler, torch.utils.data.DistributedSampler):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
             log_writer.set_step(epoch * num_training_steps_per_epoch * args.update_freq)
