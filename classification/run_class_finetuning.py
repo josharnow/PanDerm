@@ -252,9 +252,12 @@ def main(args, ds_init):
     if not args.enable_linear_eval:
         args.aa = 'rand-m9-mstd0.5-inc1'
 
+    print("Initializing distributed mode")
     utils.init_distributed_mode(args)
+    print("Distributed mode initialized")
 
     if ds_init is not None:
+        print("Creating ds_config")
         utils.create_ds_config(args)
 
     print(args)
