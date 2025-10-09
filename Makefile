@@ -174,7 +174,83 @@ mac_linear_eval_fast:
 		--pretrained_checkpoint "$(MAC_PRETRAINED_CHECKPOINT)" \
 		--num_workers $(MAC_FAST_NUM_WORKERS)
 
+# --- macOS CPU-only smoke test (quick local run without CUDA) ---
+MAC_SMOKE_BATCH_SIZE ?= 8
+MAC_SMOKE_PERCENT ?= 0.02
+MAC_SMOKE_NUM_WORKERS ?= 0
+
+.PHONY: mac_cpu_smoke_test
+mac_cpu_smoke_test:
+	@cd classification && \
+	mkdir -p "$(MAC_OUTPUT_DIR)" && \
+	ulimit -n 4096; \
+	PYTHONUNBUFFERED=1 WANDB_MODE=disabled \
+	OPENBLAS_NUM_THREADS=$(MAC_OPENBLAS_NUM_THREADS) VECLIB_MAXIMUM_THREADS=$(MAC_VECLIB_MAXIMUM_THREADS) NUMEXPR_NUM_THREADS=$(MAC_NUMEXPR_NUM_THREADS) OMP_NUM_THREADS=$(MAC_OMP_NUM_THREADS) MKL_NUM_THREADS=$(MAC_MKL_NUM_THREADS) PYTORCH_NUM_THREADS=$(MAC_PYTORCH_NUM_THREADS) CUDA_VISIBLE_DEVICES= $(MAC_PYTHON) linear_eval.py \
+		--batch_size $(MAC_SMOKE_BATCH_SIZE) \
+		--model "$(MAC_MODEL)" \
+		--nb_classes $(MAC_NB_CLASSES) \
+		--percent_data $(MAC_SMOKE_PERCENT) \
+		--csv_filename "mac_smoke_test.csv" \
+		--output_dir "$(MAC_OUTPUT_DIR)" \
+		--csv_path "$(MAC_CSV_PATH)" \
+		--root_path "$(MAC_ROOT_PATH)" \
+		--pretrained_checkpoint "$(MAC_PRETRAINED_CHECKPOINT)" \
+		--num_workers $(MAC_SMOKE_NUM_WORKERS)
+
 .PHONY: preprocess_images_phase_1
 preprocess_images_phase_1:
 	@cd panderm_modifications/phase_1/utils && \
 	$(PYTHON) preprocess_images.py
+
+# ===== macOS CPU-only fine-tuning smoke test (mirrors hpc_finetune.sbatch) =====
+MAC_FT_MODEL ?= PanDerm_Large_FT
+MAC_FT_BATCH_SIZE ?= 8
+MAC_FT_LR ?= 1e-5
+MAC_FT_WARMUP_EPOCHS ?= 1
+MAC_FT_EPOCHS ?= 1
+MAC_FT_LAYER_DECAY ?= 0.75
+MAC_FT_DROP_PATH ?= 0.2
+MAC_FT_WEIGHT_DECAY ?= 0.05
+MAC_FT_MIXUP ?= 0.8
+MAC_FT_CUTMIX ?= 1.0
+MAC_FT_REPROB ?= 0.25
+MAC_FT_SMOOTHING ?= 0.0
+MAC_FT_MONITOR ?= recall
+MAC_FT_NUM_WORKERS ?= $(MAC_NUM_WORKERS)
+MAC_FT_OUTPUT_DIR ?= ../output/phase_1/local_smoke
+MAC_FT_CSV_PATH ?= $(MAC_CSV_PATH)
+MAC_FT_ROOT_PATH ?= $(MAC_ROOT_PATH)
+MAC_FT_PRETRAINED_CHECKPOINT ?= $(MAC_PRETRAINED_CHECKPOINT)
+
+.PHONY: mac_finetune_cpu_smoke
+mac_finetune_cpu_smoke:
+	@cd classification && \
+	mkdir -p "$(MAC_FT_OUTPUT_DIR)" && \
+	ulimit -n 4096; \
+	PYTHONUNBUFFERED=1 WANDB_MODE=disabled MASTER_ADDR=localhost MASTER_PORT=12355 \
+	OPENBLAS_NUM_THREADS=$(MAC_OPENBLAS_NUM_THREADS) VECLIB_MAXIMUM_THREADS=$(MAC_VECLIB_MAXIMUM_THREADS) NUMEXPR_NUM_THREADS=$(MAC_NUMEXPR_NUM_THREADS) OMP_NUM_THREADS=$(MAC_OMP_NUM_THREADS) MKL_NUM_THREADS=$(MAC_MKL_NUM_THREADS) PYTORCH_NUM_THREADS=$(MAC_PYTORCH_NUM_THREADS) CUDA_VISIBLE_DEVICES= $(MAC_PYTHON) run_class_finetuning.py \
+		--model $(MAC_FT_MODEL) \
+		--csv_path "$(MAC_FT_CSV_PATH)" \
+		--data_path "$(MAC_FT_CSV_PATH)" \
+		--batch_size $(MAC_FT_BATCH_SIZE) \
+		--root_path "$(MAC_FT_ROOT_PATH)" \
+		--pretrained_checkpoint "$(MAC_FT_PRETRAINED_CHECKPOINT)" \
+		--output_dir "$(MAC_FT_OUTPUT_DIR)" \
+		--log_dir "$(MAC_FT_OUTPUT_DIR)" \
+		--nb_classes $(MAC_NB_CLASSES) \
+		--num_workers $(MAC_FT_NUM_WORKERS) \
+		--lr $(MAC_FT_LR) \
+		--warmup_epochs $(MAC_FT_WARMUP_EPOCHS) \
+		--epochs $(MAC_FT_EPOCHS) \
+		--layer_decay $(MAC_FT_LAYER_DECAY) \
+		--drop_path $(MAC_FT_DROP_PATH) \
+		--weight_decay $(MAC_FT_WEIGHT_DECAY) \
+		--mixup $(MAC_FT_MIXUP) \
+		--cutmix $(MAC_FT_CUTMIX) \
+		--reprob $(MAC_FT_REPROB) \
+		--monitor $(MAC_FT_MONITOR) \
+		--weights \
+		--TTA \
+		--clip_grad 1.0 \
+		--smoothing $(MAC_FT_SMOOTHING) \
+		--no_wandb

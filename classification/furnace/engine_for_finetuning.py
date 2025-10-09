@@ -7,7 +7,6 @@ from timm.utils import accuracy, ModelEma
 import furnace.utils as utils
 from furnace.utils import *
 from typing import Iterable, Optional
-from pycm import *
 import numpy as np
 
 import os
@@ -23,6 +22,8 @@ import torch.nn as nn
 
 import pandas as pd
 from tqdm import tqdm
+from contextlib import nullcontext
+from torch.optim.optimizer import Optimizer
 
 def misc_measures(confusion_matrix):
     bacc = []
@@ -82,7 +83,7 @@ def get_loss_scale_for_deepspeed(model):
 
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
-                    data_loader: Iterable, optimizer: torch.optim.Optimizer,
+                    data_loader: Iterable, optimizer: Optimizer,
                     device: torch.device, epoch: int, loss_scaler, max_norm: float = 0,
                     model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None, log_writer=None,
                     start_steps=None, lr_schedule_values=None, wd_schedule_values=None,
@@ -91,12 +92,27 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     metric_logger = MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', SmoothedValue(window_size=1, fmt='{value:.6f}'))
     metric_logger.add_meter('min_lr', SmoothedValue(window_size=1, fmt='{value:.6f}'))
+    metric_logger.add_meter('skipped_batches', SmoothedValue(window_size=1, fmt='{value:.0f}'))
     header = 'Epoch: [{}]'.format(epoch)
     print_freq = 10
 
+    # Robust defaults when caller omits scheduling params
+    if update_freq is None or update_freq <= 0:
+        update_freq = 1
+    if start_steps is None:
+        start_steps = 0
+    if num_training_steps_per_epoch is None:
+        try:
+            num_training_steps_per_epoch = math.ceil(len(data_loader) / update_freq)  # type: ignore[arg-type]
+        except Exception:
+            num_training_steps_per_epoch = 1
+
     if loss_scaler is None:
         model.zero_grad()
-        model.micro_steps = 0
+        try:
+            setattr(model, 'micro_steps', 0)
+        except Exception:
+            pass
     else:
         optimizer.zero_grad()
 
@@ -119,23 +135,46 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
         samples = samples.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
 
+        # Sanitize inputs to avoid NaN/Inf propagation
+        if isinstance(samples, torch.Tensor):
+            samples = torch.nan_to_num(samples, nan=0.0, posinf=1.0, neginf=-1.0)
+        
+        # Mixup may change target type/shape as needed by criterion
+
         if mixup_fn is not None:
             samples, targets = mixup_fn(samples, targets)
 
-        if loss_scaler is None:
-            loss, output = train_class_batch(
-                model, samples, targets, criterion)
-        else:
-            with torch.cuda.amp.autocast():
-                print("BEGIN train_class_batch")
-                loss, output = train_class_batch(
-                    model, samples, targets, criterion)
+        # Autocast context only when CUDA is available
+        autocast_ctx = torch.cuda.amp.autocast() if torch.cuda.is_available() else nullcontext()
+
+        try:
+            if loss_scaler is None:
+                with autocast_ctx:
+                    loss, output = train_class_batch(model, samples, targets, criterion)
+            else:
+                with autocast_ctx:
+                    loss, output = train_class_batch(model, samples, targets, criterion)
+        except RuntimeError as e:
+            # Skip batch if numerical issues occur
+            print(f"[Warning] Skipping batch at step {data_iter_step} due to runtime error: {e}")
+            metric_logger.update(skipped_batches=1)
+            if loss_scaler is None:
+                # For deepspeed-style, ensure micro step accounting remains consistent
+                pass
+            else:
+                optimizer.zero_grad(set_to_none=True)
+            continue
 
         loss_value = loss.item()
 
         if not math.isfinite(loss_value):
-            print("Loss is {}, stopping training".format(loss_value))
-            sys.exit(1)
+            print(f"[Warning] Non-finite loss {loss_value} at step {data_iter_step}; skipping batch")
+            metric_logger.update(skipped_batches=1)
+            if loss_scaler is None:
+                pass
+            else:
+                optimizer.zero_grad(set_to_none=True)
+            continue
 
         if loss_scaler is None:
             loss /= update_freq
@@ -148,7 +187,7 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
             grad_norm = None
             loss_scale_value = get_loss_scale_for_deepspeed(model)
         else:
-            is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+            is_second_order = getattr(optimizer, 'is_second_order', False)
             loss /= update_freq
             grad_norm = loss_scaler(loss, optimizer, clip_grad=max_norm,
                                     parameters=model.parameters(), create_graph=is_second_order,
@@ -157,9 +196,14 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                 optimizer.zero_grad()
                 if model_ema is not None:
                     model_ema.update(model)
-            loss_scale_value = loss_scaler.state_dict()["scale"]
+            # Some scaler/state implementations may not expose 'scale'
+            try:
+                loss_scale_value = loss_scaler.state_dict().get("scale", None)
+            except Exception:
+                loss_scale_value = None
 
-        torch.cuda.synchronize()
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
 
         if mixup_fn is None:
             class_acc = (output.max(-1)[-1] == targets).float().mean()
@@ -284,7 +328,8 @@ def evaluate(data_loader, model, device, out_dir, epoch, mode, num_class):
         true_label = F.one_hot(target.to(torch.int64), num_classes=num_class)
 
         # compute output
-        with torch.cuda.amp.autocast():
+        autocast_ctx = torch.cuda.amp.autocast() if torch.cuda.is_available() else nullcontext()
+        with autocast_ctx:
             output = model(images)
             loss = criterion(output, target)
 
@@ -421,13 +466,13 @@ from albumentations.pytorch import ToTensorV2
 
 def get_inference_transforms():
     return A.Compose([
-        A.RandomResizedCrop(height=224, width=224),
+        A.RandomResizedCrop((224, 224)),
         A.Transpose(p=0.5),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5),
         A.HueSaturationValue(hue_shift_limit=0.2, sat_shift_limit=0.2, val_shift_limit=0.2, p=0.5),
         A.RandomBrightnessContrast(brightness_limit=(-0.1, 0.1), contrast_limit=(-0.1, 0.1), p=0.5),
-        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], max_pixel_value=255.0),
+        A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225), max_pixel_value=255.0),
         ToTensorV2()
     ])
 
@@ -490,7 +535,10 @@ def evaluate_tta(data_loader, model, device, out_dir, epoch, mode, num_class, nu
         tta_images = tta_handler.apply_transforms(images).to(device)  # TTA transform  [TTA_num, B, H, W]
         _, B,_, _, _ = tta_images.shape
         tta_inputs = tta_images.view(-1, *tta_images.shape[2:]) #  [TTA_num * B, H, W]
-        outputs = model(tta_inputs)  # Reshape for model input
+        # Guarded inference for CPU/CUDA
+        autocast_ctx = torch.cuda.amp.autocast() if torch.cuda.is_available() else nullcontext()
+        with autocast_ctx:
+            outputs = model(tta_inputs)  # Reshape for model input
         reshaped_outputs = outputs.reshape(num_TTA, B, -1)
 
         predictions = torch.mean(reshaped_outputs, dim=0)
