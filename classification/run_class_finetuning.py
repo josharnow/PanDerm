@@ -28,6 +28,16 @@ from torch import nn
 import furnace.utils as utils
 from scipy import interpolate
 
+# --- ADDED THIS DEBUGGING FUNCTION ---
+def nan_checker_hook(module, G_input, G_output):
+    """
+    Hook to check for NaN values in the output of a module.
+    """
+    if isinstance(G_output, torch.Tensor) and torch.isnan(G_output).any():
+        print(f'!!! NaN Found in module: {module.__class__.__name__}')
+        # To stop execution immediately, you can uncomment the next line
+        # raise RuntimeError(f"NaN detected in {module.__class__.__name__}")
+
 def get_args():
     parser = argparse.ArgumentParser('fine-tuning and evaluation script for image classification', add_help=False)
     parser.add_argument('--mode', default='train', type=str)
@@ -215,9 +225,11 @@ def get_args():
     parser.add_argument('--exp_name', default='', type=str,
                         help='name of exp. it is helpful when save the checkpoint')
     
-    # --- ADDED THIS ARGUMENT ---
     parser.add_argument('--no_wandb', action='store_true', default=False,
                         help='Disable Weights & Biases logging')
+    
+    parser.add_argument('--disable_amp', action='store_true', default=False,
+                        help='Disable automatic mixed precision training')
 
     known_args, _ = parser.parse_known_args()
 
@@ -430,20 +442,6 @@ def main(args, ds_init):
     args.patch_size = patch_size
 
 
-    # if args.pretrained_checkpoint:
-    #     if args.pretrained_checkpoint.startswith('https'):
-    #         checkpoint = torch.hub.load_state_dict_from_url(
-    #             args.pretrained_checkpoint, map_location='cpu', check_hash=True)
-    #     else:
-    #         checkpoint = torch.load(args.pretrained_checkpoint, map_location='cpu')
-    #
-    #         if args.pretrained_checkpoint.split('/')[-1].startswith('open_clip'):
-    #             state_dict = checkpoint['state_dict']
-    #             state_dict = {k:v for k,v in state_dict.items() if 'visual' in k}
-    #             checkpoint = {}
-    #             checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k,v in state_dict.items()}
-    #
-    #     print("Load ckpt from %s" % args.pretrained_checkpoint)
     if args.pretrained_checkpoint:
         if args.pretrained_checkpoint.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
@@ -579,6 +577,15 @@ def main(args, ds_init):
 
         utils.load_state_dict(model, checkpoint_model, prefix=args.model_prefix)
 
+    # --- ADD THIS DEBUGGING CODE ---
+    print("="*50)
+    print("ACTIVATING NaN DEBUGGER: Registering forward hooks...")
+    for name, submodule in model.named_modules():
+        submodule.register_forward_hook(nan_checker_hook)
+    print("NaN debugger is active.")
+    print("="*50)
+    # --- END OF ADDED CODE ---
+
     model.to(device)
 
     model_ema = None
@@ -643,7 +650,12 @@ def main(args, ds_init):
             args, model_without_ddp, skip_list=skip_weight_decay_list,
             get_num_layer=assigner.get_layer_id if assigner is not None else None,
             get_layer_scale=assigner.get_scale if assigner is not None else None)
-        loss_scaler = NativeScaler()
+        
+        if args.disable_amp:
+            loss_scaler = None
+            print("Automatic Mixed Precision (AMP) is DISABLED.")
+        else:
+            loss_scaler = NativeScaler()
 
     if not args.eval:
         print("Use step level LR scheduler!")
@@ -697,7 +709,6 @@ def main(args, ds_init):
     max_auc = 0.0
     max_performance = 0.0
     for epoch in range(args.start_epoch, args.epochs):
-        # The .set_epoch() method is specific to the DistributedSampler and is needed to ensure proper shuffling in a multi-GPU environment. The WeightedRandomSampler does not have this method. This check prevents an AttributeError.
         if args.distributed and isinstance(data_loader_train.sampler, torch.utils.data.DistributedSampler):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
@@ -760,7 +771,7 @@ def main(args, ds_init):
                 print(f"Starting test without tta")
                 test_stats, wandb_test = evaluate(data_loader_test, model, device, args.output_dir, epoch, mode='test',
                                                   num_class=args.nb_classes)
-                if not args.no_wandb:
+                if not args.no_wandb and 'wandb_test' in locals():
                     wandb.log(wandb_test)
 
     total_time = time.time() - start_time
@@ -774,7 +785,6 @@ if __name__ == '__main__':
 
     opts, ds_init = get_args()
     
-    # --- WRAPPED WANDB INITIALIZATION ---
     if not opts.no_wandb:
         project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
         wandb.init(
@@ -787,6 +797,5 @@ if __name__ == '__main__':
         Path(opts.output_dir).mkdir(parents=True, exist_ok=True)
     main(opts, ds_init)
 
-    # --- WRAPPED WANDB FINISH ---
     if not opts.no_wandb:
         wandb.finish()

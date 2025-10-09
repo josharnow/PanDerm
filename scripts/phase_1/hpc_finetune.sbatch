@@ -96,10 +96,11 @@ ${PYTHON} run_class_finetuning.py \
     --cutmix ${CUTMIX} \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
-    --no_wandb \
+    --weights \
     --TTA \
     --clip_grad 1.0 \
     --smoothing ${SMOOTHING} \
-    --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
+    --no_wandb \
+    --disable_amp # NOTE - TEMPORARY POSSIBLE FIX FOR "NaN or Inf found in input tensor."
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
