@@ -791,8 +791,12 @@ def main(args, ds_init):
 
 
 if __name__ == '__main__':
+    print("Enter run_class_finetuning")
+
     load_dotenv()
+    print("Getting args")
     opts, ds_init = get_args()
+    print("Args received")
     
     if not opts.no_wandb:
         project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
