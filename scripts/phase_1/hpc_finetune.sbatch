@@ -14,6 +14,7 @@ PYTHON="python3"
 MODEL="PanDerm_Large_FT" # Base model to start fine-tuning from
 NB_CLASSES=2
 OUTPUT_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1"
+CSV_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_GroundTruth.csv"
 CSV_BASE_DIR="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/output/phase_1" # IMPORTANT: Directory containing your fold_data.csv files
 ROOT_PATH="/home/PACE/ja50529n/MS Thesis/Thesis Data/Skin Cancer Project/PanDerm & SkinEHDLF/ISIC 2024 (SLICE-3D)/ISIC_2024_Training_Input/"
 PRETRAINED_CHECKPOINT="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/pretrain_weight/panderm_ll_data6_checkpoint-499.pth"
@@ -76,7 +77,7 @@ export MASTER_PORT=12355 # A random, unused port
 # --- Run the Fine-Tuning Script ---
 ${PYTHON} run_class_finetuning.py \
     --model ${MODEL} \
-    --csv_path "${FOLD_CSV_PATH}" \
+    --csv_path "${CSV_PATH}" \
     --data_path "${FOLD_CSV_PATH}" \
     --batch_size ${BATCH_SIZE} \
     --root_path "${ROOT_PATH}" \
