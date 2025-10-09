@@ -322,7 +322,7 @@ def main(args, ds_init):
         for label, count in label_counts.items():
             print(f'Label {label}: {count}')
 
-        train_y = df[(df['split'] == 'train')]['label'].values.tolist()
+        train_y = df[(df['split'] == 'train')]["binary_label" if binary else "label"].values.tolist()
         sample_weights = torch.tensor([weight_dict[label] for label in train_y])
         sampler_train = WeightedRandomSampler(weights=sample_weights, num_samples=len(dataset_train), replacement=True)
         print("Using WeightedRandomSampler")
