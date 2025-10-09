@@ -333,8 +333,13 @@ def main(args, ds_init):
 
     global_rank = utils.get_rank()
     if args.weights:
+        print("Using weighted sampling")
         label_counts = dataset_train.count_label("binary_label" if binary else "label")
         total_samples = sum(label_counts)
+
+        print("Label counts:", label_counts)
+        print("Total samples:", total_samples)
+
         weights = [total_samples / (len(label_counts) * count) for count in label_counts]
         weight_dict = dict(zip(label_counts.index, weights))
 
