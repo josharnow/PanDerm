@@ -313,7 +313,7 @@ def main(args, ds_init):
 
     global_rank = utils.get_rank()
     if args.weights:
-        label_counts = dataset_train.count_label()
+        label_counts = dataset_train.count_label("binary_label" if binary else "label")
         total_samples = sum(label_counts)
         weights = [total_samples / (len(label_counts) * count) for count in label_counts]
         weight_dict = dict(zip(label_counts.index, weights))

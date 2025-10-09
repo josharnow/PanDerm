@@ -105,6 +105,6 @@ class Uni_Dataset(Dataset):
         return len(self.df)
 
 
-    def count_label(self):
-        label_counts = self.df['label'].value_counts().sort_index()
+    def count_label(self, label_col: str):
+        label_counts = self.df[label_col].value_counts().sort_index()
         return label_counts
