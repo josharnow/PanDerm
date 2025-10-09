@@ -789,7 +789,7 @@ if __name__ == '__main__':
     # This will load the WANDB_API_KEY from your .env file into the environment
     load_dotenv()
 
-    print("Getting args")
+    print("Getting args", flush=True)
     opts, ds_init = get_args()
     print("Args received")
 

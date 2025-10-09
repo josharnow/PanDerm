@@ -35,7 +35,8 @@ def print_tensor_stats(tensor, name="Tensor"):
             f"Min: {torch.min(tensor).item():.6f}, Max: {torch.max(tensor).item():.6f}, Mean: {torch.mean(tensor).item():.6f}\n"
             f"Has NaN: {has_nan}\n"
             f"Has Inf: {has_inf}\n"
-            f"---------------------------------"
+            f"---------------------------------",
+            flush=True
         )
     else:
         print(f"--- {name} is not a tensor ---")
