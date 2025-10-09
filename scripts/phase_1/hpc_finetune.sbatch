@@ -100,7 +100,6 @@ ${PYTHON} run_class_finetuning.py \
     --TTA \
     --clip_grad 1.0 \
     --smoothing ${SMOOTHING} \
-    --no_wandb \
-    --disable_amp # NOTE - TEMPORARY POSSIBLE FIX FOR "NaN or Inf found in input tensor."
+    --no_wandb
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
