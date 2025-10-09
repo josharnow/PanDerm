@@ -37,6 +37,7 @@ WEIGHT_DECAY=0.05         #
 MIXUP=0.8                 #
 CUTMIX=1.0                #
 REPROB=0.25               #
+SMOOTHING=0.0
 MONITOR="recall"     # Metric to monitor for saving best model
 
 # --- Change to the project root directory ---
@@ -98,6 +99,7 @@ ${PYTHON} run_class_finetuning.py \
     --no_wandb \
     --TTA \
     --clip_grad 1.0 \
+    --smoothing ${SMOOTHING} \
     --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
