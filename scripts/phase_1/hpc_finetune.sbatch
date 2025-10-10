@@ -71,6 +71,10 @@ export LD_LIBRARY_PATH="/opt/nvidia/cuda-12.8/lib64:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/nccl/lib:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/cusparselt/lib:$LD_LIBRARY_PATH"
 
+# Purge any modules to ensure a clean environment
+module purge
+module load cuda/12.8
+
 echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
 echo "Starting fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID} on $(hostname)"
 
