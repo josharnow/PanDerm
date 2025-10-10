@@ -9,6 +9,8 @@
 # --- Set the number of splits for your array ---
 #SBATCH --array=1-10 # Creates 10 jobs, with task IDs from 1 to 10; matches n_splits in Makefile
 
+
+
 # --- Your Project Variables ---
 PYTHON="python3"
 MODEL="PanDerm_Large_FT" # Base model to start fine-tuning from
@@ -52,6 +54,23 @@ mkdir -p logs
 # --- Environment Setup ---
 echo "Starting job on " `date`
 echo "Running on node " `hostname`
+
+# Purge modules to ensure a clean environment
+# module purge
+
+# Load the required CUDA and NCCL modules
+# module load cuda
+# module load nccl
+# module load cuda/12.1
+# module load nccl/2.11.4 
+
+# export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/nccl/lib:$LD_LIBRARY_PATH"
+# export LD_LIBRARY_PATH="/opt/nvidia/cuda-12.8/lib64:$LD_LIBRARY_PATH"
+
+export LD_LIBRARY_PATH="/opt/nvidia/cuda-12.8/lib64:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/nccl/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/cusparselt/lib:$LD_LIBRARY_PATH"
+
 echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
 echo "Starting fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID} on $(hostname)"
 
