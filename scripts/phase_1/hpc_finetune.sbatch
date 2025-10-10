@@ -28,13 +28,17 @@ FOLD_CSV_PATH="${CSV_BASE_DIR}/fold_${SLURM_ARRAY_TASK_ID}/fold_data.csv"
 
 # --- Hyperparameters from README.md ---
 # Note: Batch size and LR are adjusted for a single GPU setup
-BATCH_SIZE=32             # Smaller batch size for fine-tuning
-LEARNING_RATE=1e-5        # A smaller LR is safer for fine-tuning than the 5e-4 in the README
+BATCH_SIZE=48             # Smaller batch size for fine-tuning
+LEARNING_RATE=5e-4        # A smaller LR is safer for fine-tuning than the 5e-4 in the README
+# LEARNING_RATE=1e-5        # A smaller LR is safer for fine-tuning than the 5e-4 in the README
 WARMUP_EPOCHS=5           #
 EPOCHS=10                 # Start with 10 epochs and increase if needed (README uses 50)
 LAYER_DECAY=0.75          #
 DROP_PATH=0.2             #
 WEIGHT_DECAY=0.05         #
+# NOTE - Disabling mixup and cutmix for now
+# MIXUP=0.0                 #
+# CUTMIX=0.0                #
 MIXUP=0.8                 #
 CUTMIX=1.0                #
 REPROB=0.25               #
