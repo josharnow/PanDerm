@@ -39,10 +39,10 @@ LAYER_DECAY=0.75          #
 DROP_PATH=0.2             #
 WEIGHT_DECAY=0.05         #
 # NOTE - Disabling mixup and cutmix for now
-# MIXUP=0.0                 #
-# CUTMIX=0.0                #
-MIXUP=0.8                 #
-CUTMIX=1.0                #
+MIXUP=0.0                 #
+CUTMIX=0.0                #
+# MIXUP=0.8                 #
+# CUTMIX=1.0                #
 REPROB=0.25               #
 MONITOR="recall"     # Metric to monitor for saving best model
 
@@ -123,7 +123,9 @@ ${PYTHON} run_class_finetuning.py \
     --cutmix ${CUTMIX} \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
-    --TTA \
-    --weights # <-- ADDED THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
+    --TTA 
+
+
+    # --weights # <-- ADD THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"

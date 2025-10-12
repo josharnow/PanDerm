@@ -678,13 +678,24 @@ def main(args, ds_init):
                 args.weight_decay, args.weight_decay_end, args.epochs, num_training_steps_per_epoch)
             print("Max WD = %.7f, Min WD = %.7f" % (max(wd_schedule_values), min(wd_schedule_values)))
 
+        # MODIFICATION: Calculate class weights and apply them to the loss function
+        label_counts = dataset_train.count_label("binary_label" if binary else "label")
+        total_samples = sum(label_counts)
+        class_weights_list = [total_samples / (len(label_counts) * count) for count in label_counts]
+        class_weights = torch.tensor(class_weights_list, device=device)
+        # print("Using Class Weights for Loss:", class_weights)
+
         if mixup_fn is not None:
             # smoothing is handled with mixup label transform
             criterion = SoftTargetCrossEntropy()
         elif args.smoothing > 0.:
             criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
         else:
-            criterion = torch.nn.CrossEntropyLoss()
+            # Apply the calculated class weights here
+            print("Using Class Weights for Loss:", class_weights)
+            # NOTE - This might be the best way to address imbalanced datasets
+            criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
+
 
         print("criterion = %s" % str(criterion))
 
