@@ -332,9 +332,9 @@ def save_on_master(*args, **kwargs):
 
 
 def init_distributed_mode(args):
-    print('Forcing single-GPU mode. Distributed mode is disabled.')
-    args.distributed = False
-    return
+    # print('Forcing single-GPU mode. Distributed mode is disabled.')
+    # args.distributed = False
+    # return
 
 
     if args.dist_on_itp:
