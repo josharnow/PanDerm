@@ -123,9 +123,7 @@ ${PYTHON} run_class_finetuning.py \
     --cutmix ${CUTMIX} \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
-    --TTA 
-
-
-    # --weights # <-- ADD THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
+    --TTA \
+    --weights # <-- ADD THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
