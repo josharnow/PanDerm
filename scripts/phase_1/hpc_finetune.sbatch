@@ -43,6 +43,7 @@ MIXUP=0.0                 #
 CUTMIX=0.0                #
 # MIXUP=0.8                 #
 # CUTMIX=1.0                #
+SMOOTHING=0.0
 REPROB=0.25               #
 MONITOR="recall"     # Metric to monitor for saving best model
 
@@ -121,6 +122,7 @@ ${PYTHON} run_class_finetuning.py \
     --weight_decay ${WEIGHT_DECAY} \
     --mixup ${MIXUP} \
     --cutmix ${CUTMIX} \
+    --smoothing ${SMOOTHING} \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
     --TTA \
