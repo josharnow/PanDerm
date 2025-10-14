@@ -89,13 +89,110 @@ def get_loss_scale_for_deepspeed(model):
     optimizer = model.optimizer
     return optimizer.loss_scale if hasattr(optimizer, "loss_scale") else optimizer.cur_scale
 
+def train_full_precision(
+    model: torch.nn.Module, 
+    samples, 
+    targets: torch.Tensor, 
+    criterion: torch.nn.Module, 
+    optimizer: torch.optim.Optimizer, 
+    data_iter_step: int, 
+    update_freq: int,
+    max_norm: float = 0,
+    model_ema: Optional[ModelEma] = None
+):
+    print("Training in Full Precision (FP32) mode.")
+    # *** --- START: Full Precision (FP32) Training Logic --- ***
+    # The autocast and loss_scaler logic has been removed.
+    
+    # Forward pass
+    loss, output = train_class_batch(model, samples, targets, criterion)
+    loss_value = loss.item()
+
+    if not math.isfinite(loss_value):
+        print("Loss is {}, stopping training".format(loss_value))
+        sys.exit(1)
+
+    # Normalize loss for gradient accumulation
+    loss /= update_freq
+    
+    # Backward pass
+    loss.backward()
+
+    grad_norm = None
+    # Parameter update and gradient reset
+    if (data_iter_step + 1) % update_freq == 0:
+        if max_norm is not None:
+            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm)
+        optimizer.step()
+        optimizer.zero_grad()
+        if model_ema is not None:
+            model_ema.update(model)
+    
+    loss_scale_value = 1.0 # Not using loss scaler in FP32
+    # *** --- END: Full Precision (FP32) Training Logic *** ---
+    return loss_value, output, loss_scale_value, grad_norm
+
+def train_amp(
+    model: torch.nn.Module, 
+    samples, 
+    targets: torch.Tensor, 
+    criterion: torch.nn.Module, 
+    optimizer: torch.optim.Optimizer, 
+    data_iter_step: int, 
+    update_freq: int,
+    loss_scaler,
+    max_norm: float = 0,
+    model_ema: Optional[ModelEma] = None
+):
+    print("Training with Automatic Mixed Precision (AMP).")
+    if loss_scaler is None:
+        samples = samples.half()
+        loss, output = train_class_batch(
+            model, samples, targets, criterion)
+    else:
+        with torch.amp.autocast('cuda'):
+            loss, output = train_class_batch(
+                model, samples, targets, criterion)
+
+    loss_value = loss.item()
+
+    if not math.isfinite(loss_value):
+        print("Loss is {}, stopping training".format(loss_value))
+        sys.exit(1)
+
+    if loss_scaler is None:
+        loss /= update_freq
+        model.backward(loss)
+        model.step()
+
+        if (data_iter_step + 1) % update_freq == 0:
+            # model.zero_grad()
+            # Deepspeed will call step() & model.zero_grad() automatic
+            if model_ema is not None:
+                model_ema.update(model)
+        grad_norm = None
+        loss_scale_value = get_loss_scale_for_deepspeed(model)
+    else:
+        # this attribute is added by timm on one optimizer (adahessian)
+        is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+        loss /= update_freq
+        grad_norm = loss_scaler(loss, optimizer, clip_grad=max_norm,
+                                parameters=model.parameters(), create_graph=is_second_order,
+                                update_grad=(data_iter_step + 1) % update_freq == 0)
+        if (data_iter_step + 1) % update_freq == 0:
+            optimizer.zero_grad()
+            if model_ema is not None:
+                model_ema.update(model)
+        loss_scale_value = loss_scaler.state_dict()["scale"]
+    
+    return loss_value, output, loss_scale_value, grad_norm
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
                     device: torch.device, epoch: int, loss_scaler, max_norm: float = 0,
                     model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None, log_writer=None,
                     start_steps=None, lr_schedule_values=None, wd_schedule_values=None,
-                    num_training_steps_per_epoch=None, update_freq=None):
+                    num_training_steps_per_epoch=None, update_freq: Optional[int] = None, args=None):
     model.train(True)
     metric_logger = MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', SmoothedValue(window_size=1, fmt='{value:.6f}'))
@@ -127,35 +224,19 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
         if mixup_fn is not None:
             samples, targets = mixup_fn(samples, targets)
 
-        # --- START: Full Precision (FP32) Training Logic ---
-        # The autocast and loss_scaler logic has been removed.
-        
-        # Forward pass
-        loss, output = train_class_batch(model, samples, targets, criterion)
-        loss_value = loss.item()
-
-        if not math.isfinite(loss_value):
-            print("Loss is {}, stopping training".format(loss_value))
-            sys.exit(1)
-
-        # Normalize loss for gradient accumulation
-        loss /= update_freq
-        
-        # Backward pass
-        loss.backward()
-
-        grad_norm = None
-        # Parameter update and gradient reset
-        if (data_iter_step + 1) % update_freq == 0:
-            if max_norm is not None:
-                grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm)
-            optimizer.step()
-            optimizer.zero_grad()
-            if model_ema is not None:
-                model_ema.update(model)
-        
-        loss_scale_value = 1.0 # Not using loss scaler in FP32
-        # --- END: Full Precision (FP32) Training Logic ---
+        # TODO - Change conditional to look for --disable-amp flag
+        # if loss_scaler is None:
+        if args and args.disable_amp:
+            loss_value, output, loss_scale_value, grad_norm = train_full_precision(
+                model, samples, targets, criterion, optimizer,
+                data_iter_step, update_freq, max_norm, model_ema)
+        else:
+            # AMP or DeepSpeed
+            loss_value, output, loss_scale_value, grad_norm = train_amp(
+                model, samples, targets, criterion, optimizer,
+                data_iter_step, update_freq, loss_scaler, max_norm, model_ema)
+            
+            # raise NotImplementedError("Only Full Precision (FP32) training is implemented in this version.")
 
         torch.cuda.synchronize()
 

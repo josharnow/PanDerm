@@ -74,8 +74,8 @@ export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/pyt
 export LD_LIBRARY_PATH="/home/PACE/ja50529n/MS Thesis/Model/PanDerm/venv/lib/python3.9/site-packages/nvidia/cusparselt/lib:$LD_LIBRARY_PATH"
 
 # Purge any modules to ensure a clean environment
-module purge
-module load cuda/12.8
+# module purge
+# module load cuda/12.8
 
 echo "Visible CUDA device environment variables: $CUDA_VISIBLE_DEVICES"
 echo "Starting fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID} on $(hostname)"
@@ -127,6 +127,9 @@ ${PYTHON} run_class_finetuning.py \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
     --TTA \
-    --weights # <-- ADD THIS FLAG TO ENABLE THE WEIGHTED RANDOM SAMPLER
+    --weights
+    # --disable_amp
+
+    # NOTE - weights FLAG ENABLES THE WEIGHTED RANDOM SAMPLER
 
 echo "Finished fine-tuning job for Fold ${SLURM_ARRAY_TASK_ID}"
