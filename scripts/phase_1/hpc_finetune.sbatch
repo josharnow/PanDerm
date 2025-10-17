@@ -127,8 +127,8 @@ ${PYTHON} run_class_finetuning.py \
     --reprob ${REPROB} \
     --monitor ${MONITOR} \
     --TTA \
-    --weights
-    # --disable_amp
+    --weights \
+    --disable_amp
 
     # NOTE - weights FLAG ENABLES THE WEIGHTED RANDOM SAMPLER
 
