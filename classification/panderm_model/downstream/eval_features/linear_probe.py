@@ -20,6 +20,9 @@ from sklearn.linear_model import LogisticRegression as sk_LogisticRegression
 from .logistic_regression import LogisticRegression
 from .metrics import get_eval_metrics, get_eval_metrics_stats
 
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve, PrecisionRecallDisplay
+
 
 # Silence repeated convergence warnings from scikit-learn logistic regression.
 simplefilter("ignore", category=ConvergenceWarning)
@@ -211,17 +214,6 @@ def test_linear_probe(
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """
     Evaluate the linear probe on the test set.
-
-    Args:
-        linear_classifier: The trained linear classifier.
-        test_feats: The features of the test set.
-        test_labels: The labels of the test set.
-        num_classes: The number of classes in the dataset.
-        prefix: The prefix to use for the evaluation results.
-        verbose: Whether to print verbose output.
-
-    Returns:
-        A tuple containing the evaluation results and additional information.
     """
     if verbose:
         print(f"Linear Probe Evaluation (Test Time): Test Shape {test_feats.shape}")
@@ -233,32 +225,106 @@ def test_linear_probe(
         probs_all = linear_classifier.predict_proba(test_feats)[:, 1].detach().cpu().numpy()
         roc_kwargs = {}
     else:
+        # This part remains for multiclass cases
         probs_all = linear_classifier.predict_proba(test_feats).detach().cpu().numpy()
         roc_kwargs = {"multi_class": "ovo", "average": "macro"}
-
-    preds_all = linear_classifier.predict_proba(test_feats).argmax(dim=1).detach().cpu().numpy()
+    
     targets_all = test_labels.detach().cpu().numpy()
+
+    # --- IMPLEMENTATION: Generate and Save Precision-Recall Curve ---
+    # Calculate precision, recall, and thresholds for every possible threshold
+    precision, recall, thresholds = precision_recall_curve(targets_all, probs_all)
+    
+    # Create the plot
+    plt.figure()
+    disp = PrecisionRecallDisplay(precision=precision, recall=recall)
+    disp.plot()
+    plt.title(f'Precision-Recall Curve for {dataset_name}')
+    
+    # Save the plot to the output directory
+    pr_curve_path = os.path.join(out_dir, f'precision_recall_curve_{dataset_name}.png')
+    plt.savefig(pr_curve_path)
+    print(f"Precision-Recall curve saved to {pr_curve_path}")
+    plt.close()
+    # --- END OF IMPLEMENTATION ---
+
+    # Now you can choose a threshold and generate predictions
+    # You can analyze the PR curve to find a good threshold
+    CUSTOM_THRESHOLD = 0.8 # This can be set after analyzing the curve
+    preds_all = (probs_all > CUSTOM_THRESHOLD).astype(int)
+
     import sklearn
     classification_report = sklearn.metrics.classification_report(
         y_true=targets_all, y_pred=preds_all
     )
-    print('Classification report:')
+    print(f'Classification report (Threshold = {CUSTOM_THRESHOLD}):')
     print(classification_report)
+    
     eval_metrics = get_eval_metrics(out_dir,test_filenames,dataset_name,targets_all, preds_all, probs_all, True, prefix, roc_kwargs)
-
-    # eval_metrics = get_eval_metrics_stats(out_dir,dataset_name,targets_all, preds_all, probs_all, True, prefix, roc_kwargs)
     dump = {"preds_all": preds_all, "probs_all": probs_all, "targets_all": targets_all}
 
-
-
-    # # Now use the new function to save predictions
-    # original_csv_path =  '/home/share/Uni_Eval/SDDI/fold_3.csv'
-    # predictions = dump['preds_all']  # or eval_metrics['preds_all'], depending on where you stored the predictions
-    # output_csv_path = '/home/share/Uni_Eval/SDDI/predictions_fold_3.csv'
-    #
-    # # save_predictions_csv(original_csv_path, predictions, output_csv_path)
-
     return eval_metrics, dump
+# def test_linear_probe(
+#     linear_classifier: LogisticRegression,
+#     test_feats: torch.Tensor,
+#     test_labels: torch.Tensor,
+#     test_filenames:List[str],
+#     num_classes: int = None,
+#     prefix: str = "lin_",
+#     verbose: bool = True,
+#     out_dir: str=None,
+#     dataset_name: str=None
+# ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+#     """
+#     Evaluate the linear probe on the test set.
+
+#     Args:
+#         linear_classifier: The trained linear classifier.
+#         test_feats: The features of the test set.
+#         test_labels: The labels of the test set.
+#         num_classes: The number of classes in the dataset.
+#         prefix: The prefix to use for the evaluation results.
+#         verbose: Whether to print verbose output.
+
+#     Returns:
+#         A tuple containing the evaluation results and additional information.
+#     """
+#     if verbose:
+#         print(f"Linear Probe Evaluation (Test Time): Test Shape {test_feats.shape}")
+
+#     # evaluate
+#     NUM_C = len(set(test_labels.cpu().numpy())) if num_classes is None else num_classes
+
+#     if NUM_C == 2:
+#         probs_all = linear_classifier.predict_proba(test_feats)[:, 1].detach().cpu().numpy()
+#         roc_kwargs = {}
+#     else:
+#         probs_all = linear_classifier.predict_proba(test_feats).detach().cpu().numpy()
+#         roc_kwargs = {"multi_class": "ovo", "average": "macro"}
+
+#     preds_all = linear_classifier.predict_proba(test_feats).argmax(dim=1).detach().cpu().numpy()
+#     targets_all = test_labels.detach().cpu().numpy()
+#     import sklearn
+#     classification_report = sklearn.metrics.classification_report(
+#         y_true=targets_all, y_pred=preds_all
+#     )
+#     print('Classification report:')
+#     print(classification_report)
+#     eval_metrics = get_eval_metrics(out_dir,test_filenames,dataset_name,targets_all, preds_all, probs_all, True, prefix, roc_kwargs)
+
+#     # eval_metrics = get_eval_metrics_stats(out_dir,dataset_name,targets_all, preds_all, probs_all, True, prefix, roc_kwargs)
+#     dump = {"preds_all": preds_all, "probs_all": probs_all, "targets_all": targets_all}
+
+
+
+#     # # Now use the new function to save predictions
+#     # original_csv_path =  '/home/share/Uni_Eval/SDDI/fold_3.csv'
+#     # predictions = dump['preds_all']  # or eval_metrics['preds_all'], depending on where you stored the predictions
+#     # output_csv_path = '/home/share/Uni_Eval/SDDI/predictions_fold_3.csv'
+#     #
+#     # # save_predictions_csv(original_csv_path, predictions, output_csv_path)
+
+#     return eval_metrics, dump
 
 
 def _fit_logreg(
@@ -285,10 +351,24 @@ def _fit_logreg(
         LogisticRegression: Fitted logistic regression classifier.
 
     """
+    # --- CHANGE: Added class_weight='balanced' ---
+    # This parameter tells the scikit-learn Logistic Regression model to automatically adjust weights inversely proportional to class frequencies to handle imbalanced data.
     if use_sklearn:
-        classifier = sk_LogisticRegression(C=cost, max_iter=max_iter, verbose=verbose, random_state=seed)
+        classifier = sk_LogisticRegression(
+            C=cost, 
+            max_iter=max_iter, 
+            verbose=verbose, 
+            random_state=seed,
+            class_weight='balanced',
+        )
     else:
-        classifier = LogisticRegression(C=cost, max_iter=max_iter, verbose=verbose, random_state=seed)
+        classifier = LogisticRegression(
+            C=cost, 
+            max_iter=max_iter, 
+            verbose=verbose, 
+            random_state=seed,
+            class_weight='balanced',
+        )
     classifier.fit(feats, labels)
     return classifier
 

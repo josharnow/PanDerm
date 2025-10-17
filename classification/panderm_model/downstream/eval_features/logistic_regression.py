@@ -4,20 +4,27 @@ based on https://visualstudiomagazine.com/articles/2021/06/23/logistic-regressio
 
 import numpy as np
 import torch
+from sklearn.utils.class_weight import compute_class_weight
+from torch.nn import CrossEntropyLoss
 
 
 class LogisticRegression:
     def __init__(self, C, max_iter, verbose, random_state, **kwargs):
         self.C = C
-        self.loss_func = torch.nn.CrossEntropyLoss()
+        # --- CHANGE: Initialize loss_func later, after we have the weights ---
+        # self.loss_func = torch.nn.CrossEntropyLoss() 
+        self.loss_func: CrossEntropyLoss | None = None 
         self.max_iter = max_iter
         self.random_state = random_state
         print(self.random_state)
         self.logreg = None
         self.verbose = verbose
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # --- CHANGE: Store the class_weight parameter ---
+        self.class_weight = kwargs.get('class_weight', None)
 
     def compute_loss(self, feats, labels):
+        # The loss function now correctly weights the classes
         loss = self.loss_func(feats, labels)
         wreg = 0.5 * self.logreg.weight.norm(p=2)
         return loss.mean() + (1.0 / self.C) * wreg
@@ -34,9 +41,28 @@ class LogisticRegression:
         torch.manual_seed(self.random_state)
         np.random.seed(self.random_state)
 
+        # --- CHANGE: Calculate and apply class weights ---
+        weights = None
+        if self.class_weight == 'balanced':
+            print("Calculating balanced class weights for custom Logistic Regression.")
+            # Use scikit-learn to compute weights, which is robust
+            # We need to compute this on the CPU with numpy arrays
+            labels_np = labels.cpu().numpy()
+            classes = np.unique(labels_np)
+            
+            # This computes weights as: n_samples / (n_classes * np.bincount(y))
+            class_weights_np = compute_class_weight(class_weight='balanced', classes=classes, y=labels_np)
+            
+            # Convert weights to a PyTorch tensor and move to the correct device
+            weights = torch.tensor(class_weights_np, dtype=torch.float32).to(self.device)
+            print(f"Computed weights: {weights}")
+
+        # Initialize the loss function with the calculated weights
+        # If no weights, it behaves like the original implementation
+        self.loss_func = torch.nn.CrossEntropyLoss(weight=weights)
+        # --- END OF CHANGE ---
+
         self.logreg = torch.nn.Linear(feat_dim, num_classes, bias=True)
-        # self.logreg.weight.data.fill_(0.0)
-        # self.logreg.bias.data.fill_(0.0)
 
         # move everything to CUDA .. otherwise why are we even doing this?!
         self.logreg = self.logreg.to(self.device)

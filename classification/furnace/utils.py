@@ -332,6 +332,11 @@ def save_on_master(*args, **kwargs):
 
 
 def init_distributed_mode(args):
+    print('Forcing single-GPU mode. Distributed mode is disabled.')
+    args.distributed = False
+    return
+
+
     if args.dist_on_itp:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
@@ -421,7 +426,7 @@ class NativeScalerWithGradNormCount:
     state_dict_key = "amp_scaler"
 
     def __init__(self):
-        self._scaler = torch.cuda.amp.GradScaler()
+        self._scaler = torch.amp.GradScaler('cuda')
 
     def __call__(self, loss, optimizer, clip_grad=None, parameters=None, create_graph=False, update_grad=True):
         self._scaler.scale(loss).backward(create_graph=create_graph)
@@ -657,6 +662,7 @@ def get_vqgan_gumbel_f8_8192(weight_path, image_size, device):
 
 
 def get_dalle_vae(weight_path, image_size, device):
+    # NOTE - THIS FILE IS PROBABLY WHERE MODEL COMPONENT CHANGES WILL TAKE PLACE
     vae = Dalle_VAE(image_size)
     vae.load_model(model_dir=weight_path, device=device)
     return vae

@@ -25,6 +25,22 @@ import torch.nn as nn
 import pandas as pd
 from tqdm import tqdm
 
+def print_tensor_stats(tensor, name="Tensor"):
+    if torch.is_tensor(tensor):
+        has_nan = torch.isnan(tensor).any()
+        has_inf = torch.isinf(tensor).any()
+        print(
+            f"\n🔍 --- STATS FOR: {name} --- 🔍\n"
+            f"Shape: {tensor.shape}, dtype: {tensor.dtype}\n"
+            f"Min: {torch.min(tensor).item():.6f}, Max: {torch.max(tensor).item():.6f}, Mean: {torch.mean(tensor).item():.6f}\n"
+            f"Has NaN: {has_nan}\n"
+            f"Has Inf: {has_inf}\n"
+            f"---------------------------------",
+            flush=True
+        )
+    else:
+        print(f"--- {name} is not a tensor ---")
+
 def misc_measures(confusion_matrix):
     bacc = []
     sensitivity = []
@@ -60,7 +76,12 @@ def misc_measures(confusion_matrix):
     return bacc, sensitivity, specificity, precision, G, F1_score_2, mcc_
 def train_class_batch(model, samples, target, criterion):
     outputs = model(samples)
+    # --- ADD THIS CHECK ---
+    # print_tensor_stats(outputs, name="Model Output (logits)")
+    # --- END CHECK ---
     loss = criterion(outputs, target)
+    # print_tensor_stats(loss, name="Calculated Loss")
+    print(flush=True)
     return loss, outputs
 
 
@@ -68,13 +89,110 @@ def get_loss_scale_for_deepspeed(model):
     optimizer = model.optimizer
     return optimizer.loss_scale if hasattr(optimizer, "loss_scale") else optimizer.cur_scale
 
+def train_full_precision(
+    model: torch.nn.Module, 
+    samples, 
+    targets: torch.Tensor, 
+    criterion: torch.nn.Module, 
+    optimizer: torch.optim.Optimizer, 
+    data_iter_step: int, 
+    update_freq: int,
+    max_norm: float = 0,
+    model_ema: Optional[ModelEma] = None
+):
+    print("Training in Full Precision (FP32) mode.")
+    # *** --- START: Full Precision (FP32) Training Logic --- ***
+    # The autocast and loss_scaler logic has been removed.
+    
+    # Forward pass
+    loss, output = train_class_batch(model, samples, targets, criterion)
+    loss_value = loss.item()
+
+    if not math.isfinite(loss_value):
+        print("Loss is {}, stopping training".format(loss_value))
+        sys.exit(1)
+
+    # Normalize loss for gradient accumulation
+    loss /= update_freq
+    
+    # Backward pass
+    loss.backward()
+
+    grad_norm = None
+    # Parameter update and gradient reset
+    if (data_iter_step + 1) % update_freq == 0:
+        if max_norm is not None:
+            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm)
+        optimizer.step()
+        optimizer.zero_grad()
+        if model_ema is not None:
+            model_ema.update(model)
+    
+    loss_scale_value = 1.0 # Not using loss scaler in FP32
+    # *** --- END: Full Precision (FP32) Training Logic *** ---
+    return loss_value, output, loss_scale_value, grad_norm
+
+def train_amp(
+    model: torch.nn.Module, 
+    samples, 
+    targets: torch.Tensor, 
+    criterion: torch.nn.Module, 
+    optimizer: torch.optim.Optimizer, 
+    data_iter_step: int, 
+    update_freq: int,
+    loss_scaler,
+    max_norm: float = 0,
+    model_ema: Optional[ModelEma] = None
+):
+    print("Training with Automatic Mixed Precision (AMP).")
+    if loss_scaler is None:
+        samples = samples.half()
+        loss, output = train_class_batch(
+            model, samples, targets, criterion)
+    else:
+        with torch.amp.autocast('cuda'):
+            loss, output = train_class_batch(
+                model, samples, targets, criterion)
+
+    loss_value = loss.item()
+
+    if not math.isfinite(loss_value):
+        print("Loss is {}, stopping training".format(loss_value))
+        sys.exit(1)
+
+    if loss_scaler is None:
+        loss /= update_freq
+        model.backward(loss)
+        model.step()
+
+        if (data_iter_step + 1) % update_freq == 0:
+            # model.zero_grad()
+            # Deepspeed will call step() & model.zero_grad() automatic
+            if model_ema is not None:
+                model_ema.update(model)
+        grad_norm = None
+        loss_scale_value = get_loss_scale_for_deepspeed(model)
+    else:
+        # this attribute is added by timm on one optimizer (adahessian)
+        is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+        loss /= update_freq
+        grad_norm = loss_scaler(loss, optimizer, clip_grad=max_norm,
+                                parameters=model.parameters(), create_graph=is_second_order,
+                                update_grad=(data_iter_step + 1) % update_freq == 0)
+        if (data_iter_step + 1) % update_freq == 0:
+            optimizer.zero_grad()
+            if model_ema is not None:
+                model_ema.update(model)
+        loss_scale_value = loss_scaler.state_dict()["scale"]
+    
+    return loss_value, output, loss_scale_value, grad_norm
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
                     device: torch.device, epoch: int, loss_scaler, max_norm: float = 0,
                     model_ema: Optional[ModelEma] = None, mixup_fn: Optional[Mixup] = None, log_writer=None,
                     start_steps=None, lr_schedule_values=None, wd_schedule_values=None,
-                    num_training_steps_per_epoch=None, update_freq=None):
+                    num_training_steps_per_epoch=None, update_freq: Optional[int] = None, args=None):
     model.train(True)
     metric_logger = MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', SmoothedValue(window_size=1, fmt='{value:.6f}'))
@@ -82,11 +200,7 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     header = 'Epoch: [{}]'.format(epoch)
     print_freq = 10
 
-    if loss_scaler is None:
-        model.zero_grad()
-        model.micro_steps = 0
-    else:
-        optimizer.zero_grad()
+    optimizer.zero_grad()
 
     for data_iter_step, (samples, _, targets) in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
         step = data_iter_step // update_freq
@@ -110,45 +224,19 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
         if mixup_fn is not None:
             samples, targets = mixup_fn(samples, targets)
 
-        if loss_scaler is None:
-            samples = samples.half()
-            loss, output = train_class_batch(
-                model, samples, targets, criterion)
+        # TODO - Change conditional to look for --disable-amp flag
+        # if loss_scaler is None:
+        if args and args.disable_amp:
+            loss_value, output, loss_scale_value, grad_norm = train_full_precision(
+                model, samples, targets, criterion, optimizer,
+                data_iter_step, update_freq, max_norm, model_ema)
         else:
-            with torch.cuda.amp.autocast():
-                loss, output = train_class_batch(
-                    model, samples, targets, criterion)
-
-        loss_value = loss.item()
-
-        if not math.isfinite(loss_value):
-            print("Loss is {}, stopping training".format(loss_value))
-            sys.exit(1)
-
-        if loss_scaler is None:
-            loss /= update_freq
-            model.backward(loss)
-            model.step()
-
-            if (data_iter_step + 1) % update_freq == 0:
-                # model.zero_grad()
-                # Deepspeed will call step() & model.zero_grad() automatic
-                if model_ema is not None:
-                    model_ema.update(model)
-            grad_norm = None
-            loss_scale_value = get_loss_scale_for_deepspeed(model)
-        else:
-            # this attribute is added by timm on one optimizer (adahessian)
-            is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
-            loss /= update_freq
-            grad_norm = loss_scaler(loss, optimizer, clip_grad=max_norm,
-                                    parameters=model.parameters(), create_graph=is_second_order,
-                                    update_grad=(data_iter_step + 1) % update_freq == 0)
-            if (data_iter_step + 1) % update_freq == 0:
-                optimizer.zero_grad()
-                if model_ema is not None:
-                    model_ema.update(model)
-            loss_scale_value = loss_scaler.state_dict()["scale"]
+            # AMP or DeepSpeed
+            loss_value, output, loss_scale_value, grad_norm = train_amp(
+                model, samples, targets, criterion, optimizer,
+                data_iter_step, update_freq, loss_scaler, max_norm, model_ema)
+            
+            # raise NotImplementedError("Only Full Precision (FP32) training is implemented in this version.")
 
         torch.cuda.synchronize()
 
@@ -331,8 +419,18 @@ def evaluate(data_loader, model, device, out_dir, epoch, mode, num_class):
 
     bacc = balanced_accuracy_score(true_label_decode_array, prediction_decode_array)
     acc = accuracy_score(true_label_decode_array, prediction_decode_array)
-    top3_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=3, labels=np.arange(num_class))
-    top5_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=5, labels=np.arange(num_class))
+
+    # --- START OF FIX ---
+    # Only calculate top-k accuracy if k is less than the number of classes
+    top3_acc = 0.0
+    if num_class >= 3:
+        top3_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=3, labels=np.arange(num_class))
+
+    top5_acc = 0.0
+    if num_class >= 5:
+        top5_acc = top_k_accuracy_score(true_label_decode_array, prediction_array, k=5, labels=np.arange(num_class))
+    # --- END OF FIX ---
+
     auc_roc = roc_auc_score(true_label_onehot_array, prediction_array, multi_class='ovr', average='macro')
 
 

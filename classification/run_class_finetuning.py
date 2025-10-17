@@ -1,8 +1,30 @@
+# Add these imports at the top of the file
+import os
+from dotenv import load_dotenv
+
+# --- ADD THIS DEBUGGING BLOCK AT THE VERY TOP ---
+import torch
+import sys
+try:
+    print("--- Checking PyTorch and CUDA environment ---")
+    print(f"Python version: {sys.version}")
+    print(f"PyTorch version: {torch.__version__}")
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"CUDA version: {torch.version.cuda}")
+        print(f"cuDNN version: {torch.backends.cudnn.version()}")
+        print(f"Device count: {torch.cuda.device_count()}")
+        print(f"Device name: {torch.cuda.get_device_name(0)}")
+    print("--- Environment check complete ---")
+except Exception as e:
+    print(f"!!! An error occurred during environment check: {e} !!!")
+# --- END DEBUGGING BLOCK ---
+
 import argparse
 import datetime
 import numpy as np
 import time
-import torch
+# import torch
 import torch.backends.cudnn as cudnn
 import json
 import os
@@ -209,6 +231,7 @@ def get_args():
     parser.add_argument('--enable_deepspeed', action='store_true', default=False)
     parser.add_argument('--enable_linear_eval', action='store_true', default=False)
     parser.add_argument('--enable_multi_print', action='store_true',default=False, help='allow each gpu prints something')
+    parser.add_argument('--disable_amp', action='store_true', default=False, help='Disable automatic mixed precision training (train in float32).')
 
     parser.add_argument('--exp_name', default='', type=str,
                         help='name of exp. it is helpful when save the checkpoint')
@@ -234,7 +257,11 @@ def main(args, ds_init):
     if not args.enable_linear_eval:
         args.aa = 'rand-m9-mstd0.5-inc1'
 
+    print(args)
+
+    print("Before entering init_distributed_mode function")
     utils.init_distributed_mode(args)
+    print("After exiting init_distributed_mode function")
 
     if ds_init is not None:
         utils.create_ds_config(args)
@@ -309,7 +336,7 @@ def main(args, ds_init):
 
     global_rank = utils.get_rank()
     if args.weights:
-        label_counts = dataset_train.count_label()
+        label_counts = dataset_train.count_label("binary_label" if binary else "label")
         total_samples = sum(label_counts)
         weights = [total_samples / (len(label_counts) * count) for count in label_counts]
         weight_dict = dict(zip(label_counts.index, weights))
@@ -318,7 +345,7 @@ def main(args, ds_init):
         for label, count in label_counts.items():
             print(f'Label {label}: {count}')
 
-        train_y = df[(df['split'] == 'train')]['label'].values.tolist()
+        train_y = df[(df['split'] == 'train')]["binary_label" if binary else "label"].values.tolist()
         sample_weights = torch.tensor([weight_dict[label] for label in train_y])
         sampler_train = WeightedRandomSampler(weights=sample_weights, num_samples=len(dataset_train), replacement=True)
         print("Using WeightedRandomSampler")
@@ -450,6 +477,11 @@ def main(args, ds_init):
                 state_dict = {k: v for k, v in state_dict.items() if 'visual' in k}
                 checkpoint = {}
                 checkpoint['model'] = {k.replace('module.visual.', 'encoder.'): v for k, v in state_dict.items()}
+        print('===========================')
+        print("CHECKPOINT MODEL:")
+        print(checkpoint_model.keys())
+        print(checkpoint_model)
+        print('===========================')
         print("Load ckpt from %s" % args.pretrained_checkpoint)
         checkpoint_model = None
         for model_key in args.model_key.split('|'):
@@ -647,13 +679,24 @@ def main(args, ds_init):
                 args.weight_decay, args.weight_decay_end, args.epochs, num_training_steps_per_epoch)
             print("Max WD = %.7f, Min WD = %.7f" % (max(wd_schedule_values), min(wd_schedule_values)))
 
+        # MODIFICATION: Calculate class weights and apply them to the loss function
+        label_counts = dataset_train.count_label("binary_label" if binary else "label")
+        total_samples = sum(label_counts)
+        class_weights_list = [total_samples / (len(label_counts) * count) for count in label_counts]
+        class_weights = torch.tensor(class_weights_list, device=device)
+        # print("Using Class Weights for Loss:", class_weights)
+
         if mixup_fn is not None:
             # smoothing is handled with mixup label transform
             criterion = SoftTargetCrossEntropy()
         elif args.smoothing > 0.:
             criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
         else:
-            criterion = torch.nn.CrossEntropyLoss()
+            # Apply the calculated class weights here
+            print("Using Class Weights for Loss:", class_weights)
+            # NOTE - This might be the best way to address imbalanced datasets
+            criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
+
 
         print("criterion = %s" % str(criterion))
 
@@ -686,7 +729,10 @@ def main(args, ds_init):
     max_auc = 0.0
     max_performance = 0.0
     for epoch in range(args.start_epoch, args.epochs):
-        if args.distributed:
+        # The .set_epoch() method is specific to the DistributedSampler and is needed
+        # to ensure proper shuffling in a multi-GPU environment. The WeightedRandomSampler
+        # does not have this method. This check prevents an AttributeError.
+        if args.distributed and isinstance(data_loader_train.sampler, torch.utils.data.DistributedSampler):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
             log_writer.set_step(epoch * num_training_steps_per_epoch * args.update_freq)
@@ -697,6 +743,7 @@ def main(args, ds_init):
             log_writer=log_writer, start_steps=epoch * num_training_steps_per_epoch,
             lr_schedule_values=lr_schedule_values, wd_schedule_values=wd_schedule_values,
             num_training_steps_per_epoch=num_training_steps_per_epoch, update_freq=args.update_freq,
+            args=args
         )
         val_stats, wandb_res = evaluate(data_loader_val, model, device, args.output_dir, epoch, mode='val',
                                         num_class=args.nb_classes)
@@ -752,7 +799,13 @@ def main(args, ds_init):
 
 
 if __name__ == '__main__':
+    # This will load the WANDB_API_KEY from your .env file into the environment
+    load_dotenv()
+
+    print("Getting args", flush=True)
     opts, ds_init = get_args()
+    print("Args received")
+
     project_name = 'FM_FT_screening' if not opts.eval else 'panderm-finetune'
     wandb.init(
         project=project_name,

@@ -3,7 +3,8 @@
 models=('PanDerm_Large_LP')
 #models=('PanDerm_Base_LP')
 
-checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
+checkpoints=('../pretrain_weight/panderm_ll_data6_checkpoint-499.pth')
+# checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_ll_data6_checkpoint-499.pth')
 #checkpoints=('/home/share/FM_Code/Stage1/PanDerm/Model_Weights/panderm_bb_data6_checkpoint-499.pth')
 
 if [ ${#models[@]} -ne ${#checkpoints[@]} ]; then
@@ -73,15 +74,15 @@ for i in "${!models[@]}"; do
 #      --root_path '/home/share/Uni_Eval/HIBA/images/' \
 #      --pretrained_checkpoint "$checkpoint"
 #
-    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \
+    CUDA_VISIBLE_DEVICES=0 python3 linear_eval.py \
       --batch_size 1000 \
       --model "$model" \
       --nb_classes 6 \
       --percent_data 1.0 \
       --csv_filename "$csv_file" \
-      --output_dir "/home/share/FM_Code/FM_Eval/LP_Eval/output_dir2/ID_Res/${model}_res/" \
-      --csv_path "/home/share/Uni_Eval/pad-ufes/2000.csv" \
-      --root_path "/home/share/Uni_Eval/pad-ufes/images/" \
+      --output_dir "../output/${model}_res/" \
+      --csv_path "../Evaluation_datasets/pad-ufes/2000.csv" \
+      --root_path "../Evaluation_datasets/pad-ufes/images/" \
       --pretrained_checkpoint "$checkpoint"
 #
 #    CUDA_VISIBLE_DEVICES=3 python3 linear_eval.py \

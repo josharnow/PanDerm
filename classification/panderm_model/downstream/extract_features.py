@@ -18,9 +18,20 @@ def extract_features_from_dataloader(args, model, dataloader):
     all_embeddings, all_labels, all_filenames = [], [], []
     batch_size = dataloader.batch_size
     device = next(model.parameters()).device
-    for batch_idx, (batch, target, filename) in tqdm(
-        enumerate(dataloader), total=len(dataloader)
-    ):
+    pbar = tqdm(total=len(dataloader), desc="Extracting features")
+    for batch_idx, (batch, target, filename) in enumerate(dataloader):
+        # Show the current image being processed (first filename in batch)
+        try:
+            if isinstance(filename, (list, tuple)) and len(filename) > 0:
+                current_img = filename[0]
+            else:
+                current_img = str(filename)
+            # Print a line for logs and update tqdm postfix for live view
+            # print(f"Processing image: {current_img}", flush=True)
+            pbar.set_postfix_str(str(current_img))
+        except Exception:
+            # Don't fail the run if filename formatting is unexpected
+            pass
         remaining = batch.shape[0]
         if remaining != batch_size:
             padding = torch.zeros((batch_size - remaining,) + batch.shape[1:]).type(
@@ -35,6 +46,8 @@ def extract_features_from_dataloader(args, model, dataloader):
         all_embeddings.append(embeddings)
         all_labels.append(labels)
         all_filenames.extend(filename[:remaining])
+        pbar.update(1)
+    pbar.close()
     asset_dict = {
         "embeddings": np.vstack(all_embeddings).astype(np.float32),
         "labels": np.concatenate(all_labels),
